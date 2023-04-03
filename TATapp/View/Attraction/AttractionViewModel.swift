@@ -10,6 +10,9 @@ import SwiftUI
 class AttractionViewModel: ObservableObject {
     
     @Published var mainVM: MainViewModel
+    @Published var isLiked: Bool = false
+    @Published var isBookMark: Bool = false
+    @Published var isCommentSheet: Bool = false
     @Published var isShowMapSheet: Bool = false
     
     @Published var offset: CGFloat = 0
@@ -18,11 +21,31 @@ class AttractionViewModel: ObservableObject {
         self.mainVM = mainVM
     }
     
+    func saveLiked(){
+        // TODO : - Save to database
+        isLiked = !isLiked
+        
+        print("isLike > \(isLiked)")
+    }
+    
+    func saveBookmark(){
+        // TODO : - Save to database
+        isBookMark = !isBookMark
+    }
+    
+    func toogleComentIcon(){
+        // TODO : - Save to database
+        withAnimation(.easeInOut) {
+            isCommentSheet = !isCommentSheet
+        }
+    }
+    
     func toggleMapIcon() {
         withAnimation(.easeInOut) {
             isShowMapSheet = !isShowMapSheet
         }
     }
+    
     
     func getOffsetType() -> CGFloat {
         if offset > 200{

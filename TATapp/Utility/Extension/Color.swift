@@ -51,6 +51,8 @@ struct GreenTheme {
     let hilightText = Color(hex: "1FB18D")
     let primary = Color(hex: "464B4E")
     let card = Color(hex: "D4D7D9")
+    let active = Color(hex: "1FB18D")
+    let inactive = Color(hex: "464B4E")
 }
 
 struct OrangeTheme {
@@ -60,6 +62,8 @@ struct OrangeTheme {
     let hilightText = Color(hex: "FF7122")
     let primary = Color(hex: "464B4E")
     let card = Color(hex: "D4D7D9")
+    let active = Color(hex: "FF6000")
+    let inactive = Color(hex: "464B4E")
 }
 
 struct LaunchTheme {

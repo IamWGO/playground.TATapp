@@ -14,6 +14,8 @@ struct AttractionDetailView: View {
     
     @State var placeItem = DummyAttractionDetail
     
+    @State var testIsLiked: Bool = false
+    
     init(mainVM: MainViewModel){
         _vm = ObservedObject(wrappedValue: AttractionViewModel(mainVM: mainVM))
     }
@@ -24,37 +26,7 @@ struct AttractionDetailView: View {
         ZStack(alignment: .top) {
             
             ScrollView{
-                
-                // Since Were Pinning Header View....
-                LazyVStack(alignment: .leading, spacing: 15, pinnedViews: [.sectionHeaders], content: {
-                    
-                    // Parallax Header....
-                    GeometryReader{ reader -> AnyView in
-                        
-                        let offset = reader.frame(in: .global).minY
-                        
-                        if -offset >= 0{
-                            DispatchQueue.main.async {
-                                self.vm.offset = -offset
-                            }
-                        }
-                        
-                        return AnyView(
-                            PlaceImageView(imageName: placeItem.thumbnailUrl)
-                                .aspectRatio(contentMode: .fill)
-                                .frame(width: UIScreen.main.bounds.width, height: 250 + (offset > 0 ? offset : 0))
-                                .cornerRadius(2)
-                                .offset(y: (offset > 0 ? -offset : 0))
-                            )
-                    }
-                    .frame(height: 250)
-                    
-                    // Cards......
-                    Section(header: headerView) {
-                        // Tabs With Content.....
-                        contentBody
-                    }
-                })
+                bodyContainer
             }
             .overlay(
                 // Only Safe Area....
@@ -67,11 +39,101 @@ struct AttractionDetailView: View {
             
             
             // Will always show on top of content
-            topArea
+            topAreaSection
             
         }
-       // .background(BackgroundImageView())
+        .sheet(isPresented: $vm.isShowMapSheet, content: {
+            MapSheetView()
+        })
         .ignoresSafeArea()
+    }
+    
+    private var topAreaSection: some View {
+        HStack(alignment: .top, spacing: 8){
+            TopAreaIconActionView(systemName: "chevron.backward", action: {
+                // do something
+            })
+            
+            Spacer()
+            if vm.offset < 250 {
+                VStack {
+                    TopAreaIconActionView(systemName: "photo.on.rectangle.angled", action: {
+                        //share this page
+                    })
+                    
+                    TopAreaIconActionView(systemName: "square.and.arrow.up", action: {
+                        //share this page
+                    })
+                }
+            }
+           
+        }
+        .padding(.top, mainVM.getTopSafeAreaSize())
+        .padding(.horizontal)
+    }
+    
+    private var bodyContainer: some View {
+        // Since Were Pinning Header View....
+        LazyVStack(alignment: .leading, spacing: 15, pinnedViews: [.sectionHeaders], content: {
+            
+            // Parallax Header....
+            GeometryReader{ reader -> AnyView in
+                
+                let offset = reader.frame(in: .global).minY
+                
+                if -offset >= 0{
+                    DispatchQueue.main.async {
+                        self.vm.offset = -offset
+                    }
+                }
+                
+                return AnyView(
+                    PlaceImageView(imageName: placeItem.thumbnailUrl)
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: UIScreen.main.bounds.width, height: 250 + (offset > 0 ? offset : 0))
+                        .cornerRadius(2)
+                        .offset(y: (offset > 0 ? -offset : 0))
+                    )
+            }
+            .frame(height: 250)
+            
+            // Cards......
+            Section(header: headerSection) {
+                // Content Detail.....
+                VStack(alignment: .leading, spacing: 15) {
+                    Text(placeItem.placeInformation.detail)
+                        .modifier(TextModifier(fontStyle: .body))
+                    Spacer()
+                }.padding()
+            }
+        })
+    }
+    
+    var headerSection: some View {
+        VStack(alignment: .leading, spacing: 0){
+            ZStack{
+                shortdetail
+            }
+            // Default Frame = 60...
+            // Top Fram = 40
+            // So Total = 100
+            .frame(height: 60)
+    
+            if vm.offset > 250{
+              
+            }
+        }
+        .frame(height: vm.offset > 250 ? 200 : 160) //header with top image
+        .background(scheme == .dark ? Color.black : Color.white)
+        .overlay(alignment: .bottom) {
+            Rectangle()
+                .fill(Color.primary.opacity(vm.offset > 250 ? 0.2 : 0))
+                .frame(height: 1)
+                .shadow(
+                    color: Color.theme.primary.opacity(0.25),
+                    radius: 10, x: 0, y: 0)
+        }
+       
     }
     
     private var shortdetail: some View {
@@ -95,14 +157,14 @@ struct AttractionDetailView: View {
             }
         }
         .padding(.horizontal)
-        .frame(height: vm.offset > 250 ? 150 : 100)
+        .frame(height: vm.offset > 250 ? 100 : 160) // header with now image
         .background(scheme == .dark ? Color.black : Color.white)
         
     }
     
-    
     private var headerDescription: some View {
-        VStack(alignment: .leading, spacing: 3, content: {
+        VStack(alignment: .leading, spacing: 6, content: {
+            
             HStack{
                 Spacer()
                 Text(placeItem.placeName)
@@ -110,10 +172,9 @@ struct AttractionDetailView: View {
                 Spacer()
                 
             }
-            .padding(.bottom)
+            .padding(.horizontal)
             
-            Text(placeItem.sha.shaTypeDescription)
-                .modifier(TextModifier(fontStyle: .caption))
+            Spacer()
             
             HStack(spacing: 8){
                 
@@ -133,66 +194,39 @@ struct AttractionDetailView: View {
                     .modifier(TextModifier(fontStyle: .caption))
             }
             .frame(maxWidth: .infinity,alignment: .leading)
+            
+            HStack{
+                HStackButtonActionView(systemName: .constant(vm.isLiked ? "hand.thumbsup.fill" : "hand.thumbsup"),
+                                       textButton: .constant("123K"),
+                                       isActive: $vm.isLiked) {
+                    vm.saveLiked()
+                }
+            
+                Spacer()
+                HStackButtonActionView(systemName: .constant(vm.isBookMark ? "bookmark.fill" : "bookmark"),
+                                       textButton: .constant("Saved"),
+                                       isActive: $vm.isBookMark) {
+                    vm.saveBookmark()
+                }
+                
+                Spacer()
+                HStackButtonActionView(systemName: .constant("map"),
+                                       textButton: .constant("Map"),
+                                       isActive: $vm.isShowMapSheet) {
+                    vm.toggleMapIcon()
+                }
+                
+                Spacer()
+                HStackButtonActionView(systemName: .constant("bubble.right"),
+                                       textButton: .constant("Review"),
+                                       isActive: $vm.isCommentSheet) {
+                    vm.toogleComentIcon()
+                }
+            }
+            .frame(maxWidth: .infinity)
         })
         .padding(.bottom)
         
-    }
-    
-    private var topArea: some View {
-        HStack{
-            Image(systemName: "chevron.backward")
-                .font(.body)
-                .padding(15)
-                .background(.ultraThinMaterial)
-                .clipShape(Circle())
-            
-            Spacer()
-            
-            Image(systemName: "suit.heart.fill")
-                .font(.body)
-                .padding(10)
-                .foregroundColor(.red)
-                .background(.ultraThinMaterial)
-                .clipShape(Circle())
-            //suit.heart  suit.heart.fill
-        }
-        .padding(.top, mainVM.getTopSafeAreaSize())
-        .padding(.horizontal)
-    }
-    
-    var headerView: some View {
-        VStack(alignment: .leading, spacing: 0){
-            ZStack{
-                shortdetail
-            }
-            // Default Frame = 60...
-            // Top Fram = 40
-            // So Total = 100
-            .frame(height: 60)
-    
-            if vm.offset > 250{
-              
-            }
-        }
-        .frame(height: vm.offset > 250 ? 150 : 100)
-        .background(scheme == .dark ? Color.black : Color.white)
-        .overlay(alignment: .bottom) {
-            Rectangle()
-                .fill(Color.primary.opacity(vm.offset > 250 ? 0.2 : 0))
-                .frame(height: 1)
-                .shadow(
-                    color: Color.theme.primary.opacity(0.25),
-                    radius: 10, x: 0, y: 0)
-        }
-       
-    }
-    
-    var contentBody: some View {
-        VStack(alignment: .leading, spacing: 15) {
-            Text(placeItem.placeInformation.detail)
-                .modifier(TextModifier(fontStyle: .body))
-            Spacer()
-        }.padding()
     }
 }
 

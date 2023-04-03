@@ -47,15 +47,32 @@ struct PlaceSearchCard: View {
                 // Buttons....
                 
                 HStack{
-                    HStackButtonActionView(systemName: "hand.thumbsup", textButton: "123K", isActive: $isActive) { }
+                    HStackButtonActionView(systemName: .constant("hand.thumbsup"),
+                                           textButton: .constant("123K"),
+                                           isActive: .constant(true)) {
+                       // vm.saveLiked()
+                    }
+                
                     Spacer()
-                    HStackButtonActionView(systemName: "bookmark", textButton: "Saved", isActive: $isActive) { }
+                    HStackButtonActionView(systemName: .constant("bookmark"),
+                                           textButton: .constant("Saved"),
+                                           isActive: .constant(true)) {
+                        //vm.saveBookmark()
+                    }
                     
                     Spacer()
-                    HStackButtonActionView(systemName: "map", textButton: "Map", isActive: $isActive) { }
-                    Spacer()
-                    HStackButtonActionView(systemName: "square.and.arrow.up", textButton: "Share", isActive: $isActive) { }
+                    HStackButtonActionView(systemName: .constant("map"),
+                                           textButton: .constant("Map"),
+                                           isActive: .constant(true)) {
+                        //vm.toggleMapIcon()
+                    }
                     
+                    Spacer()
+                    HStackButtonActionView(systemName: .constant("bubble.right"),
+                                           textButton: .constant("Review"),
+                                           isActive: .constant(true)) {
+                        //vm.toogleComentIcon()
+                    }
                 }
                 .frame(maxWidth: .infinity)
             }

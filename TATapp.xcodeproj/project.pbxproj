@@ -51,7 +51,6 @@
 		AB288F8B29DDEB8500AB92B0 /* CircleButtonAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB288F8A29DDEB8500AB92B0 /* CircleButtonAnimationView.swift */; };
 		AB288F8D29DDEBFF00AB92B0 /* CircleButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB288F8C29DDEBFF00AB92B0 /* CircleButtonView.swift */; };
 		AB288F8F29DDEDC700AB92B0 /* SwipeGestureModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB288F8E29DDEDC700AB92B0 /* SwipeGestureModifier.swift */; };
-		AB288F9129DDF16600AB92B0 /* StaggeredGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB288F9029DDF16600AB92B0 /* StaggeredGrid.swift */; };
 		AB288F9329DE038F00AB92B0 /* PlaceTypeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB288F9229DE038E00AB92B0 /* PlaceTypeModel.swift */; };
 		AB288F9529DEA4D900AB92B0 /* VStackButtonActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB288F9429DEA4D900AB92B0 /* VStackButtonActionView.swift */; };
 		AB288F9729DEAFA700AB92B0 /* LandingPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB288F9629DEAFA700AB92B0 /* LandingPageViewModel.swift */; };
@@ -85,6 +84,8 @@
 		ABDCB76929DFDC3100083C52 /* MainMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABDCB76829DFDC3100083C52 /* MainMenuView.swift */; };
 		ABDCB76B29DFE6CF00083C52 /* SwipeToGetMainMenuModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABDCB76A29DFE6CF00083C52 /* SwipeToGetMainMenuModifier.swift */; };
 		ABDCB76D29DFED4300083C52 /* BackgroundImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABDCB76C29DFED4300083C52 /* BackgroundImageView.swift */; };
+		ABDCB76F29E0754C00083C52 /* MapSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABDCB76E29E0754C00083C52 /* MapSheetView.swift */; };
+		ABDCB77129E0789700083C52 /* TopAreaIconActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABDCB77029E0789700083C52 /* TopAreaIconActionView.swift */; };
 		ABDFEF8D29DC218D00699F5E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = ABDFEF8C29DC218D00699F5E /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
@@ -134,7 +135,6 @@
 		AB288F8A29DDEB8500AB92B0 /* CircleButtonAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleButtonAnimationView.swift; sourceTree = "<group>"; };
 		AB288F8C29DDEBFF00AB92B0 /* CircleButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleButtonView.swift; sourceTree = "<group>"; };
 		AB288F8E29DDEDC700AB92B0 /* SwipeGestureModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeGestureModifier.swift; sourceTree = "<group>"; };
-		AB288F9029DDF16600AB92B0 /* StaggeredGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaggeredGrid.swift; sourceTree = "<group>"; };
 		AB288F9229DE038E00AB92B0 /* PlaceTypeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceTypeModel.swift; sourceTree = "<group>"; };
 		AB288F9429DEA4D900AB92B0 /* VStackButtonActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VStackButtonActionView.swift; sourceTree = "<group>"; };
 		AB288F9629DEAFA700AB92B0 /* LandingPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingPageViewModel.swift; sourceTree = "<group>"; };
@@ -169,6 +169,8 @@
 		ABDCB76829DFDC3100083C52 /* MainMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuView.swift; sourceTree = "<group>"; };
 		ABDCB76A29DFE6CF00083C52 /* SwipeToGetMainMenuModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeToGetMainMenuModifier.swift; sourceTree = "<group>"; };
 		ABDCB76C29DFED4300083C52 /* BackgroundImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundImageView.swift; sourceTree = "<group>"; };
+		ABDCB76E29E0754C00083C52 /* MapSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSheetView.swift; sourceTree = "<group>"; };
+		ABDCB77029E0789700083C52 /* TopAreaIconActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopAreaIconActionView.swift; sourceTree = "<group>"; };
 		ABDFEF8C29DC218D00699F5E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -218,14 +220,15 @@
 		AB288F5729DDA72F00AB92B0 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				ABDCB76E29E0754C00083C52 /* MapSheetView.swift */,
 				ABDCB76429DFD9E600083C52 /* MenuIconButtonView.swift */,
 				ABDCB76829DFDC3100083C52 /* MainMenuView.swift */,
 				ABD6D18F29DB612A0090C299 /* HStackButtonActionView.swift */,
 				AB288F8A29DDEB8500AB92B0 /* CircleButtonAnimationView.swift */,
 				AB288F8C29DDEBFF00AB92B0 /* CircleButtonView.swift */,
-				AB288F9029DDF16600AB92B0 /* StaggeredGrid.swift */,
 				AB288F9429DEA4D900AB92B0 /* VStackButtonActionView.swift */,
 				ABDCB76C29DFED4300083C52 /* BackgroundImageView.swift */,
+				ABDCB77029E0789700083C52 /* TopAreaIconActionView.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -601,6 +604,7 @@
 				AB288F2129DC506300AB92B0 /* RestaurantDetailModel.swift in Sources */,
 				AB288F4029DD736F00AB92B0 /* Date.swift in Sources */,
 				ABD6D18E29DB60FD0090C299 /* PlaceImageView.swift in Sources */,
+				ABDCB76F29E0754C00083C52 /* MapSheetView.swift in Sources */,
 				ABD6D18729DB56670090C299 /* ImageService.swift in Sources */,
 				AB288F1929DC4B0D00AB92B0 /* AccommodationDetailModel.swift in Sources */,
 				ABD6D16A29DADB9C0090C299 /* AttractionDetailModel.swift in Sources */,
@@ -628,7 +632,6 @@
 				AB288F5129DD8D6400AB92B0 /* LocalizedService.swift in Sources */,
 				AB288F3529DCC35F00AB92B0 /* RouteModel.swift in Sources */,
 				ABD6D19229DB68A80090C299 /* PlaceHeaderView.swift in Sources */,
-				AB288F9129DDF16600AB92B0 /* StaggeredGrid.swift in Sources */,
 				ABD6D17129DADD9B0090C299 /* LocalFileManager.swift in Sources */,
 				ABD6D17229DADD9B0090C299 /* HapticManager.swift in Sources */,
 				ABD6D14729DAD86F0090C299 /* TATappApp.swift in Sources */,
@@ -636,6 +639,7 @@
 				AB288F9529DEA4D900AB92B0 /* VStackButtonActionView.swift in Sources */,
 				AB288F9929DEB3CC00AB92B0 /* TempView.swift in Sources */,
 				AB288F9F29DF36FE00AB92B0 /* AttractionDetailView.swift in Sources */,
+				ABDCB77129E0789700083C52 /* TopAreaIconActionView.swift in Sources */,
 				ABD6D16E29DADCF10090C299 /* MainViewModel.swift in Sources */,
 				ABDCB76329DFD82600083C52 /* AttractionViewModel.swift in Sources */,
 				AB288F5429DD8EAB00AB92B0 /* ApiStats.swift in Sources */,
