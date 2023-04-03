@@ -9,21 +9,8 @@ import SwiftUI
 
 struct ContentView: View {
     @EnvironmentObject var mainVM: MainViewModel
-    
     var body: some View {
-        /*ScrollView {
-            VStack {
-                if let items = mainVM.placeSearchItems {
-                    ForEach(items.result) { item in
-                        Text(item.placeName)
-                    }
-                }
-            }
-            .padding()
-        }*/
-        
-        PlaceDetailView()
-        
+        LandingPageView(mainVM: mainVM)
     }
 }
 

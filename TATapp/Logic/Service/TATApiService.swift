@@ -9,57 +9,9 @@ import Foundation
 import Combine
 import SwiftUI
 
-enum ParmeterOfRequest {
-    case PlaceSearch
-    case EventList
-    case RouteList
-    case SHASearch
-}
-
-enum SearchType {
-    case ALL //All Category,
-    case OTHER //Other Place Type,
-    case SHOP //Shopping Type,
-    case RESTAURANT //Restaurant Type,
-    case ACCOMMODATION //Hotel Type,
-    case ATTRACTION //Attraction Type
-    
-    var value: String {
-        return self.value
-    }
-}
-
-enum SHAType {
-    case ALL // All Types,
-    case SHOP // Department store And shopping centers,
-    case RESTAURANT // Restaurants / diners,
-    case ACCOMMODATION // Hotel / accommodation and meeting place,
-    case ATTRACTION // Recreational activity and tourist attraction,
-    case TRANSPORTATION // Transportation,
-    case TRAVEL_AGENCY // Travel agency,
-    case HEALTH_BEAUTY // Health and Beauty,
-    case SPORT // Sport for tourism,
-    case ACTIVITY_ENTERTAINMENT // Activity/meeting, Theater/entertainment,
-    case SOUVENIR // Souvenir shop and other shops
-    
-    var value: String {
-        return self.value
-    }
-}
-
-enum SHAcategoriy {
-    case ALL //All Types,
-    case SHA //SHA,
-    case SHA_PLUS //SHA Plus,
-    case SHA_EXTRA_PLUS //SHA Extra+
-    
-    var value: String {
-        return self.value
-    }
-}
- 
-
 class TATApiService {
+    
+    @Published var language: String = "th"
     
     @Published var placeSearchItems: PlaceSearchModel? = nil
     @Published var attractionDetail: AttractionDetailModel? = nil
@@ -74,7 +26,7 @@ class TATApiService {
     @Published var shaSearchItems: SHASearchModel?  = nil
     @Published var shaDetail: SHADetailModel?  = nil
     
-    @Published var language: String = "th"
+    
     
     //GetPlaceSearch
     @Published var categorycodes:String = "RESTAURANT"
@@ -99,15 +51,9 @@ class TATApiService {
     @Published var numberOfResult: Int? // place search and eventlist
     @Published var filterByUpdateDate:String?
     
-    
     @Published var parameters: [String:String] = [:]
     
-    private let fileManager = LocalFileManager.instance
-    var subscription: AnyCancellable?
-    
-    init(){
-        getPlaceSearch()
-    }
+    var subscription: AnyCancellable? 
      
     func getPlaceSearch() {
         numberOfResult = 10

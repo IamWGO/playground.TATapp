@@ -12,5 +12,5 @@ class HomeViewModel: ObservableObject{
     @Published var offset: CGFloat = 0
     
     // Selected Tab....
-    @Published var selectedtab = tabsItems.first!.tab
+    @Published var selectedtab = tabsItems.first!.tab 
 }

@@ -10,12 +10,14 @@ import SwiftUI
 @main
 struct TATappApp: App {
     @StateObject private var mainVM = MainViewModel()
+    @StateObject private var localVM = LocalizedViewModel()
+    
     @State private var showLaunchView: Bool = true
     
     init() {
-        UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor : UIColor(Color.theme.accent)]
-        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor : UIColor(Color.theme.accent)]
-        UINavigationBar.appearance().tintColor = UIColor(Color.theme.accent)
+        UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor : UIColor(Color.theme.primary)]
+        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor : UIColor(Color.theme.primary)]
+        UINavigationBar.appearance().tintColor = UIColor(Color.theme.primary)
         UITableView.appearance().backgroundColor = UIColor.clear
     }
     
@@ -23,6 +25,7 @@ struct TATappApp: App {
         WindowGroup {
             ContentView()
                 .environmentObject(mainVM)
+                .environmentObject(localVM)
         }
     }
 }

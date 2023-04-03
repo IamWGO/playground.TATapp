@@ -10,7 +10,7 @@ import SwiftUI
 struct PlaceDetailView: View {
     @StateObject var homeData = HomeViewModel()
     
-    @State var placeItem: PlaceItemModel = DummyplaceItem
+    @State var placeItem: PlaceItem = DummyplaceItem
    
     // For Dark Mode Adoption....
     @Environment(\.colorScheme) var scheme

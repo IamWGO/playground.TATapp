@@ -7,12 +7,13 @@
 
 import Foundation
 import Combine
+import SwiftUI
 
 class MainViewModel: ObservableObject {
 
     let placeService: TATApiService
     
-    @Published var placeSearchItems: PlaceSearchModel? = nil
+    @Published var placeSearchItems: [PlaceItem]? = nil
     @Published var placeDetails: AttractionDetail? = nil
     @Published var attractionDetail: AttractionDetail? = nil
     @Published var accommodationDetail: AccommodationDetail? = nil
@@ -36,16 +37,25 @@ class MainViewModel: ObservableObject {
     
     init() {
         self.placeService = TATApiService()
-        self.currentState = UIStates.GetShopDetail
+        self.currentState = UIStates.Landing
         self.getUIState()
     }
     
+    // MARK: - Combine
     func getUIState() {
         $currentState.sink{ [weak self] (currentState) in
             self?.getPreviewByUIState(currentState: currentState)
         }
         .store(in: &cancellables)
         
+        placeService.$placeSearchItems
+            .sink{ [weak self] (result) in
+                if let result = result {
+                    self?.placeSearchItems = result.result
+                    print(result)
+                }
+            }
+            .store(in: &cancellables)
         
         //placeId: String
         placeService.$attractionDetail
@@ -159,15 +169,21 @@ class MainViewModel: ObservableObject {
         
     }
     
-    // MARK: - Core
-    func sample(){}
+    // MARK: - Core UIStates
+    func getTopSafeAreaSize() -> CGFloat{
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+           let window = windowScene.windows.first {
+            return window.safeAreaInsets.top
+        } else { return 0 }
+    }
     
     func getPreviewByUIState(currentState: UIStates){
         
         switch (currentState) {
-        case .Home: getPlaceSearch()
-        case .Setting: sample()
-        case .GetPlaceSearch: getPlaceSearch()
+        case .Landing: print("-> No query") // TODO : - Some query
+        case .Home: placeService.getPlaceSearch()
+        case .Setting: print("-> No query") // TODO : - Some query
+        case .GetPlaceSearch: placeService.getPlaceSearch()
         case .GetAttractionDetail:
             placeId = "P03000001"
             if let placeId = placeId {
@@ -221,21 +237,8 @@ class MainViewModel: ObservableObject {
         
         }
     }
-    
-    // MARK: - TAT APIs
-    /// **GetAttractionDetail** //P08013991 https://tatapi.tourismthailand.org/tatapi/v5/places/search?keyword=อาหาร&location=13.6904831,100.5226014&categorycodes=RESTAURANT&provinceName=Bangkok&radius=20&numberOfResult=10&pagenumber=1&destination=Bangkok&filterByUpdateDate=2019/09/01-2021/12/31
-    func getPlaceSearch() {
-        placeService.$placeSearchItems
-            .sink { [weak self] (resultItems) in
-                self?.placeSearchItems = resultItems
-                print("\(resultItems)")
-            }
-            .store(in: &cancellables)
-    }
-     
-    
-    
-    // MARK: - UI Logic
+ 
+    // MARK: - UI Helper
     
     func getShaTypeDescription(sha: SHA) -> String {
         return placeService.getShaTypeDescription(sha: sha)

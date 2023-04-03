@@ -8,10 +8,10 @@
 import Foundation
 
 struct PlaceSearchModel: Codable {
-    let result: [PlaceItemModel]
+    let result: [PlaceItem]
 }
 
-struct PlaceItemModel: Codable,Identifiable {
+struct PlaceItem: Codable,Identifiable {
     let placeId: String
     let placeName: String
     let latitude: Double?
