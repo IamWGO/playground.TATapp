@@ -93,14 +93,16 @@ enum ApiRequest {
     case GetPlaceOtherDetail(placeId: String)
     case GetEventList
     case GetEventDetail(eventId: String)
-    case GetNewsList
-    case GetNewsDetail(newsId: String)
     case GetRecommendedRouteList
     case GetRecommendedRouteDetail(routeId: String)
-    case PostChatbotPrediction
-    case PostChatbotSendMessage
     case GetSHASearch
     case GetSHADetail(placeId: String)
+    /*
+     case GetNewsList
+     case GetNewsDetail(newsId: String)
+     case PostChatbotPrediction
+     case PostChatbotSendMessage
+     */
     
     var url: String {
         return "https://tatapi.tourismthailand.org/tatapi/v5"
@@ -116,14 +118,15 @@ enum ApiRequest {
         case .GetPlaceOtherDetail(let placeId):     return url + "/other/\(placeId)"
         case .GetEventList:                         return url + "/events"
         case .GetEventDetail(let eventId):          return url + "/events/\(eventId)"
-        case .GetNewsList:                          return url + "/news"
-        case .GetNewsDetail(let newsId):            return url + "/news/\(newsId)"
         case .GetRecommendedRouteList:              return url + "/routes"
         case .GetRecommendedRouteDetail(let routeId): return url + "/routes/\(routeId)"
-        case .PostChatbotPrediction:                return url + "/chatbot/predict"
-        case .PostChatbotSendMessage:               return url + "/chatbot/sendmessage"
         case .GetSHASearch:                         return url + "/places/sha"
         case .GetSHADetail(let placeId):            return url + "/sha/\(placeId)"
+        /*
+        case .GetNewsList:                          return url + "/news"
+        case .GetNewsDetail(let newsId):            return url + "/news/\(newsId)"
+        case .PostChatbotPrediction:                return url + "/chatbot/predict"
+        case .PostChatbotSendMessage:               return url + "/chatbot/sendmessage"*/
         }
     }
 }

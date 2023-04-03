@@ -26,6 +26,8 @@
 		AB288F3129DC6C8500AB92B0 /* GetPlaceOtherDetailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB288F3029DC6C8500AB92B0 /* GetPlaceOtherDetailModel.swift */; };
 		AB288F3329DCB97F00AB92B0 /* EventListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB288F3229DCB97F00AB92B0 /* EventListModel.swift */; };
 		AB288F3529DCC35F00AB92B0 /* RouteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB288F3429DCC35F00AB92B0 /* RouteModel.swift */; };
+		AB288F3729DD47EF00AB92B0 /* SHASearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB288F3629DD47EF00AB92B0 /* SHASearchModel.swift */; };
+		AB288F3929DD493700AB92B0 /* SHADetailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB288F3829DD493700AB92B0 /* SHADetailModel.swift */; };
 		ABD6D14729DAD86F0090C299 /* TATappApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD6D14629DAD86F0090C299 /* TATappApp.swift */; };
 		ABD6D14929DAD86F0090C299 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD6D14829DAD86F0090C299 /* ContentView.swift */; };
 		ABD6D14B29DAD8740090C299 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ABD6D14A29DAD8740090C299 /* Assets.xcassets */; };
@@ -74,6 +76,8 @@
 		AB288F3029DC6C8500AB92B0 /* GetPlaceOtherDetailModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetPlaceOtherDetailModel.swift; sourceTree = "<group>"; };
 		AB288F3229DCB97F00AB92B0 /* EventListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventListModel.swift; sourceTree = "<group>"; };
 		AB288F3429DCC35F00AB92B0 /* RouteModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteModel.swift; sourceTree = "<group>"; };
+		AB288F3629DD47EF00AB92B0 /* SHASearchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SHASearchModel.swift; sourceTree = "<group>"; };
+		AB288F3829DD493700AB92B0 /* SHADetailModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SHADetailModel.swift; sourceTree = "<group>"; };
 		ABD6D14329DAD86F0090C299 /* TATapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TATapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABD6D14629DAD86F0090C299 /* TATappApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TATappApp.swift; sourceTree = "<group>"; };
 		ABD6D14829DAD86F0090C299 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -187,8 +191,10 @@
 				AB288F2829DC676D00AB92B0 /* ShopDetailModel.swift */,
 				AB288F3029DC6C8500AB92B0 /* GetPlaceOtherDetailModel.swift */,
 				AB288F3229DCB97F00AB92B0 /* EventListModel.swift */,
-				ABD6D17C29DAE3A60090C299 /* ShareModel */,
 				AB288F3429DCC35F00AB92B0 /* RouteModel.swift */,
+				AB288F3629DD47EF00AB92B0 /* SHASearchModel.swift */,
+				ABD6D17C29DAE3A60090C299 /* ShareModel */,
+				AB288F3829DD493700AB92B0 /* SHADetailModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -412,9 +418,11 @@
 				AB288F2B29DC679200AB92B0 /* RestaurantDetail.swift in Sources */,
 				ABD6D18929DB5EB10090C299 /* DummyData.swift in Sources */,
 				AB288F2929DC676D00AB92B0 /* ShopDetailModel.swift in Sources */,
+				AB288F3929DD493700AB92B0 /* SHADetailModel.swift in Sources */,
 				AB288F1329DC48A200AB92B0 /* AttractionDetail.swift in Sources */,
 				ABD6D17429DADE3E0090C299 /* Color.swift in Sources */,
 				ABD6D16C29DADB9C0090C299 /* PlaceSearchModel.swift in Sources */,
+				AB288F3729DD47EF00AB92B0 /* SHASearchModel.swift in Sources */,
 				AB288F1029DC2FE200AB92B0 /* UIStates.swift in Sources */,
 				ABD6D18529DB4F350090C299 /* ImageViewModel.swift in Sources */,
 				AB288F1D29DC4E2200AB92B0 /* PlaceInformation.swift in Sources */,

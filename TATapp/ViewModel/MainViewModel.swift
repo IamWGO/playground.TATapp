@@ -8,8 +8,6 @@
 import Foundation
 import Combine
 
-
-
 class MainViewModel: ObservableObject {
 
     let placeService: TATApiService
@@ -25,6 +23,8 @@ class MainViewModel: ObservableObject {
     @Published var eventDetail: EventDetail? = nil
     @Published var routeItems: [Route]?  = nil
     @Published var routeDetail: RouteDetail? = nil
+    @Published var shaSearchItems: [SHAItem]?  = nil
+    @Published var shaDetail: SHADetail?  = nil
     
     @Published var currentState: UIStates = UIStates.Home
     @Published var placeId: String? = nil
@@ -36,7 +36,7 @@ class MainViewModel: ObservableObject {
     
     init() {
         self.placeService = TATApiService()
-        self.currentState = UIStates.GetRecommendedRouteList
+        self.currentState = UIStates.GetShopDetail
         self.getUIState()
     }
     
@@ -139,6 +139,24 @@ class MainViewModel: ObservableObject {
             }
             .store(in: &cancellables)
         
+        placeService.$shaSearchItems
+            .sink{ [weak self] (result) in
+                if let result = result {
+                    self?.shaSearchItems = result.result
+                    print(result)
+                }
+            }
+            .store(in: &cancellables)
+        
+        placeService.$shaDetail
+            .sink{ [weak self] (result) in
+                if let result = result {
+                    self?.shaDetail = result.result
+                    print(result)
+                }
+            }
+            .store(in: &cancellables)
+        
     }
     
     // MARK: - Core
@@ -189,15 +207,18 @@ class MainViewModel: ObservableObject {
                 placeService.getRecommendedRouteDetail(routeId: routeId)
             }
             
-        case .GetSHASearch:            sample()
-        case .GetSHADetail:            sample()
+        case .GetSHASearch: placeService.getSHASearch()
+        case .GetSHADetail:
+            placeId = "P02000147"
+            if let placeId = placeId {
+                placeService.getSHADetail(placeId: placeId)
+            }
             
-            
-        case .PostChatbotPrediction:   sample()
-        case .PostChatbotSendMessage:  sample()
-        case .GetNewsList:             sample()
-        case .GetNewsDetail:           sample()
-        //default: sample()
+        /*case .PostChatbotPrediction: break
+        case .PostChatbotSendMessage: break
+        case .GetNewsList: break
+        case .GetNewsDetail: break*/
+        
         }
     }
     

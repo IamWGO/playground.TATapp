@@ -19,12 +19,13 @@ enum UIStates {
     case GetPlaceOtherDetail
     case GetEventList
     case GetEventDetail
-    case GetNewsList
-    case GetNewsDetail
     case GetRecommendedRouteList
     case GetRecommendedRouteDetail
-    case PostChatbotPrediction
-    case PostChatbotSendMessage
     case GetSHASearch
     case GetSHADetail
+    /*
+    case PostChatbotPrediction
+    case PostChatbotSendMessage
+    case GetNewsList
+    case GetNewsDetail*/
 }

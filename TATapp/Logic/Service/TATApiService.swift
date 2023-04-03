@@ -13,7 +13,51 @@ enum ParmeterOfRequest {
     case PlaceSearch
     case EventList
     case RouteList
+    case SHASearch
 }
+
+enum SearchType {
+    case ALL //All Category,
+    case OTHER //Other Place Type,
+    case SHOP //Shopping Type,
+    case RESTAURANT //Restaurant Type,
+    case ACCOMMODATION //Hotel Type,
+    case ATTRACTION //Attraction Type
+    
+    var value: String {
+        return self.value
+    }
+}
+
+enum SHAType {
+    case ALL // All Types,
+    case SHOP // Department store And shopping centers,
+    case RESTAURANT // Restaurants / diners,
+    case ACCOMMODATION // Hotel / accommodation and meeting place,
+    case ATTRACTION // Recreational activity and tourist attraction,
+    case TRANSPORTATION // Transportation,
+    case TRAVEL_AGENCY // Travel agency,
+    case HEALTH_BEAUTY // Health and Beauty,
+    case SPORT // Sport for tourism,
+    case ACTIVITY_ENTERTAINMENT // Activity/meeting, Theater/entertainment,
+    case SOUVENIR // Souvenir shop and other shops
+    
+    var value: String {
+        return self.value
+    }
+}
+
+enum SHAcategoriy {
+    case ALL //All Types,
+    case SHA //SHA,
+    case SHA_PLUS //SHA Plus,
+    case SHA_EXTRA_PLUS //SHA Extra+
+    
+    var value: String {
+        return self.value
+    }
+}
+ 
 
 class TATApiService {
     
@@ -27,6 +71,8 @@ class TATApiService {
     @Published var eventDetail: EventDetailModel?  = nil
     @Published var routeList: RouteListModel?  = nil
     @Published var routeDetail: RouteDetailModel?  = nil
+    @Published var shaSearchItems: SHASearchModel?  = nil
+    @Published var shaDetail: SHADetailModel?  = nil
     
     @Published var language: String = "th"
     
@@ -42,10 +88,16 @@ class TATApiService {
     @Published var sortby:String?  // distance or distance[default]
     // Route Search
     @Published var day: Int?
+    // SHA Search
+    @Published var shatype:String?
+    @Published var provincename:String?
+    @Published var searchradius:Double?
+    @Published var numberofresult:Int? // only Shan search
+    @Published var shacategories:String?
     
     @Published var pagenumber: Int?
-    @Published var numberOfResult: Int?
-    @Published var updateDate:String?
+    @Published var numberOfResult: Int? // place search and eventlist
+    @Published var filterByUpdateDate:String?
     
     
     @Published var parameters: [String:String] = [:]
@@ -211,8 +263,30 @@ class TATApiService {
             })
     }
     
-    func getSHASearch(){}
-    func getSHADetail(placeId: String){}
+    func getSHASearch(){
+        numberOfResult = 10
+        pagenumber = 1
+        parameters = getQueryParameter(parmeterOfRequest: .PlaceSearch)
+        
+        let apiRequest = ApiRequest.GetSHASearch.path
+        subscription = NetworkingManager.download(apiRequest: apiRequest, language: language, parameters: parameters)
+            .decode(type: SHASearchModel.self, decoder: JSONDecoder())
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: NetworkingManager.handleCompletion, receiveValue: { [weak self] (result) in
+                self?.shaSearchItems = result
+                self?.subscription?.cancel()
+            })
+    }
+    func getSHADetail(placeId: String){
+        let apiRequest = ApiRequest.GetSHADetail(placeId: placeId).path
+        subscription = NetworkingManager.download(apiRequest: apiRequest, language: language, parameters: nil)
+            .decode(type: SHADetailModel.self, decoder: JSONDecoder())
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: NetworkingManager.handleCompletion, receiveValue: { [weak self] (result) in
+                self?.shaDetail = result
+                self?.subscription?.cancel()
+            })
+    }
     
     func gostChatbotPrediction(){}
     func gostChatbotSendMessage(){}
@@ -252,17 +326,21 @@ class TATApiService {
             if let sortby = sortby { query["sortby"] = sortby }
         case .RouteList:
             if let day = day { query["day"] = String(day) }
+        case .SHASearch:
+            if let keyword = keyword {  query["keyword"] = keyword }
+            if let geolocation = geolocation {  query["geolocation"] = geolocation }
+            if let shatype = shatype {  query["shatype"] = shatype }
+            if let provincename = provincename {  query["provincename"] = provincename }
+            if let searchradius = searchradius {  query["searchradius"] = String(searchradius) }
+            if let numberofresult = numberofresult {  query["numberofresult"] = String(numberofresult) }
+            if let shacategories = shacategories {  query["shacategories"] = shacategories }
+            
+            
         }
         
-        if let numberOfResult = numberOfResult {
-            query["numberOfResult"] = String(numberOfResult)
-        }
-        if let pagenumber = pagenumber {
-            query["pagenumber"] = String(pagenumber)
-        }
-        if let updateDate = updateDate {
-            query["updateDate"] = updateDate
-        }
+        if let numberOfResult = numberOfResult {  query["numberOfResult"] = String(numberOfResult) }
+        if let pagenumber = pagenumber {  query["pagenumber"] = String(pagenumber)}
+        if let filterByUpdateDate = filterByUpdateDate {  query["filterByUpdateDate"] = filterByUpdateDate }
         return query
         
     }
