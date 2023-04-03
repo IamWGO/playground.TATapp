@@ -11,7 +11,7 @@ struct ContentView: View {
     @EnvironmentObject var mainVM: MainViewModel
     
     var body: some View {
-        ScrollView {
+        /*ScrollView {
             VStack {
                 if let items = mainVM.placeSearchItems {
                     ForEach(items.result) { item in
@@ -20,7 +20,9 @@ struct ContentView: View {
                 }
             }
             .padding()
-        }
+        }*/
+        
+        PlaceDetailView()
         
     }
 }

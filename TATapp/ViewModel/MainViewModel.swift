@@ -10,10 +10,11 @@ import Combine
 
 class MainViewModel: ObservableObject {
 
-    private let placeSearchService: PlaceSearchService
-    private var cancellables = Set<AnyCancellable>()
+    let placeSearchService: PlaceSearchService
     
     @Published var placeSearchItems: PlaceSearchModel? = nil
+    
+    private var cancellables = Set<AnyCancellable>() 
     
     init() {
         self.placeSearchService = PlaceSearchService()
@@ -25,6 +26,7 @@ class MainViewModel: ObservableObject {
         placeSearchService.$placeSearchItems
             .sink { [weak self] (returnedArrays) in
                 self?.placeSearchItems = returnedArrays
+                print(returnedArrays)
             }
             .store(in: &cancellables)
     }

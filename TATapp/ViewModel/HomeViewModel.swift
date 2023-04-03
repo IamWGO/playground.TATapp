@@ -8,6 +8,9 @@
 import Foundation
 import Combine
 
-class HomeViewModel: ObservableObject {
+class HomeViewModel: ObservableObject{
+    @Published var offset: CGFloat = 0
     
+    // Selected Tab....
+    @Published var selectedtab = tabsItems.first!.tab
 }

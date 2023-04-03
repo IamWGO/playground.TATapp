@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import SwiftUI
 
 /**
  keyword    String    Required    A term to be matched with TAT place name, mapcode or latitude,longitude.
@@ -43,6 +44,7 @@ class PlaceSearchService {
     
     @Published var parameters: [String:String] = [:]
     
+    private let fileManager = LocalFileManager.instance
     var subscription: AnyCancellable?
     
     init(){
@@ -70,6 +72,21 @@ class PlaceSearchService {
         
     }
     
+    func getAddress(location: LocationModel) -> String {
+        var address = ""
+        if (location.address != "") { address +=  "\(location.address) " }
+        if (location.subDistrict != "") { address +=  "\(location.subDistrict) " }
+        if (location.district != "") { address +=  "\(location.district) " }
+        if (location.province != "") { address +=  "\(location.province) " }
+        if (location.postcode != "") { address +=  "\(location.postcode) " }
+        
+        return address
+    }
+    
+    func getShaTypeDescription(sha: ShaModel) -> String {
+        return "\(sha.shaTypeDescription)"
+        
+    }
     
     func getQueryParameter() -> [String:String]{
         var query: [String:String] = [:]

@@ -16,7 +16,7 @@ xcuserdata/
 **/View/SampleView.swift
 
 
-Constant.swift
+Constants.swift
 
 # Firebase
 GoogleService-Info.plist
