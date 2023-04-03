@@ -1,0 +1,512 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		ABD6D14729DAD86F0090C299 /* TATappApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD6D14629DAD86F0090C299 /* TATappApp.swift */; };
+		ABD6D14929DAD86F0090C299 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD6D14829DAD86F0090C299 /* ContentView.swift */; };
+		ABD6D14B29DAD8740090C299 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ABD6D14A29DAD8740090C299 /* Assets.xcassets */; };
+		ABD6D14E29DAD8740090C299 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ABD6D14D29DAD8740090C299 /* Preview Assets.xcassets */; };
+		ABD6D16429DADAFE0090C299 /* NetworkingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD6D16329DADAFE0090C299 /* NetworkingManager.swift */; };
+		ABD6D16929DADB9C0090C299 /* ShaModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD6D16529DADB9C0090C299 /* ShaModel.swift */; };
+		ABD6D16A29DADB9C0090C299 /* AttractionDetailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD6D16629DADB9C0090C299 /* AttractionDetailModel.swift */; };
+		ABD6D16B29DADB9C0090C299 /* LocationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD6D16729DADB9C0090C299 /* LocationModel.swift */; };
+		ABD6D16C29DADB9C0090C299 /* PlaceSearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD6D16829DADB9C0090C299 /* PlaceSearchModel.swift */; };
+		ABD6D16E29DADCF10090C299 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD6D16D29DADCF10090C299 /* MainViewModel.swift */; };
+		ABD6D17129DADD9B0090C299 /* LocalFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD6D16F29DADD9B0090C299 /* LocalFileManager.swift */; };
+		ABD6D17229DADD9B0090C299 /* HapticManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD6D17029DADD9B0090C299 /* HapticManager.swift */; };
+		ABD6D17429DADE3E0090C299 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD6D17329DADE3E0090C299 /* Color.swift */; };
+		ABD6D17729DADE950090C299 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD6D17629DADE950090C299 /* HomeView.swift */; };
+		ABD6D17929DADEC20090C299 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD6D17829DADEC20090C299 /* HomeViewModel.swift */; };
+		ABD6D17B29DADF9A0090C299 /* PreviewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD6D17A29DADF9A0090C299 /* PreviewProvider.swift */; };
+		ABD6D17F29DAE41F0090C299 /* PlaceSearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD6D17E29DAE41F0090C299 /* PlaceSearchService.swift */; };
+		ABD6D18129DAF5BB0090C299 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD6D18029DAF5BB0090C299 /* Constants.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		ABD6D14329DAD86F0090C299 /* TATapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TATapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		ABD6D14629DAD86F0090C299 /* TATappApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TATappApp.swift; sourceTree = "<group>"; };
+		ABD6D14829DAD86F0090C299 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		ABD6D14A29DAD8740090C299 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		ABD6D14D29DAD8740090C299 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		ABD6D16329DADAFE0090C299 /* NetworkingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingManager.swift; sourceTree = "<group>"; };
+		ABD6D16529DADB9C0090C299 /* ShaModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShaModel.swift; sourceTree = "<group>"; };
+		ABD6D16629DADB9C0090C299 /* AttractionDetailModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttractionDetailModel.swift; sourceTree = "<group>"; };
+		ABD6D16729DADB9C0090C299 /* LocationModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationModel.swift; sourceTree = "<group>"; };
+		ABD6D16829DADB9C0090C299 /* PlaceSearchModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceSearchModel.swift; sourceTree = "<group>"; };
+		ABD6D16D29DADCF10090C299 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
+		ABD6D16F29DADD9B0090C299 /* LocalFileManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalFileManager.swift; sourceTree = "<group>"; };
+		ABD6D17029DADD9B0090C299 /* HapticManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HapticManager.swift; sourceTree = "<group>"; };
+		ABD6D17329DADE3E0090C299 /* Color.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
+		ABD6D17629DADE950090C299 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		ABD6D17829DADEC20090C299 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		ABD6D17A29DADF9A0090C299 /* PreviewProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewProvider.swift; sourceTree = "<group>"; };
+		ABD6D17E29DAE41F0090C299 /* PlaceSearchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceSearchService.swift; sourceTree = "<group>"; };
+		ABD6D18029DAF5BB0090C299 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		ABD6D14029DAD86F0090C299 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		ABD6D13A29DAD86F0090C299 = {
+			isa = PBXGroup;
+			children = (
+				ABD6D14529DAD86F0090C299 /* TATapp */,
+				ABD6D14429DAD86F0090C299 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		ABD6D14429DAD86F0090C299 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				ABD6D14329DAD86F0090C299 /* TATapp.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		ABD6D14529DAD86F0090C299 /* TATapp */ = {
+			isa = PBXGroup;
+			children = (
+				ABD6D15429DAD8C80090C299 /* App */,
+				ABD6D15529DAD8D40090C299 /* Model */,
+				ABD6D15729DAD8E80090C299 /* View */,
+				ABD6D15629DAD8DE0090C299 /* ViewModel */,
+				ABD6D15B29DAD9550090C299 /* Logic */,
+				ABD6D15829DAD9100090C299 /* Utility */,
+				ABD6D14A29DAD8740090C299 /* Assets.xcassets */,
+				ABD6D14C29DAD8740090C299 /* Preview Content */,
+			);
+			path = TATapp;
+			sourceTree = "<group>";
+		};
+		ABD6D14C29DAD8740090C299 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				ABD6D14D29DAD8740090C299 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		ABD6D15429DAD8C80090C299 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				ABD6D14629DAD86F0090C299 /* TATappApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		ABD6D15529DAD8D40090C299 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				ABD6D16629DADB9C0090C299 /* AttractionDetailModel.swift */,
+				ABD6D16829DADB9C0090C299 /* PlaceSearchModel.swift */,
+				ABD6D17C29DAE3A60090C299 /* ShareModel */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		ABD6D15629DAD8DE0090C299 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				ABD6D16D29DADCF10090C299 /* MainViewModel.swift */,
+				ABD6D17829DADEC20090C299 /* HomeViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		ABD6D15729DAD8E80090C299 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				ABD6D17529DADE7F0090C299 /* Home */,
+				ABD6D14829DAD86F0090C299 /* ContentView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		ABD6D15829DAD9100090C299 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				ABD6D15C29DAD9690090C299 /* Fonts */,
+				ABD6D15A29DAD92D0090C299 /* Modifier */,
+				ABD6D15929DAD91C0090C299 /* Extension */,
+				ABD6D18029DAF5BB0090C299 /* Constants.swift */,
+			);
+			path = Utility;
+			sourceTree = "<group>";
+		};
+		ABD6D15929DAD91C0090C299 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				ABD6D17329DADE3E0090C299 /* Color.swift */,
+				ABD6D17A29DADF9A0090C299 /* PreviewProvider.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		ABD6D15A29DAD92D0090C299 /* Modifier */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Modifier;
+			sourceTree = "<group>";
+		};
+		ABD6D15B29DAD9550090C299 /* Logic */ = {
+			isa = PBXGroup;
+			children = (
+				ABD6D17D29DAE4090090C299 /* Service */,
+				ABD6D16229DADAE30090C299 /* Controller */,
+				ABD6D16129DADADC0090C299 /* Manager */,
+			);
+			path = Logic;
+			sourceTree = "<group>";
+		};
+		ABD6D15C29DAD9690090C299 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		ABD6D16129DADADC0090C299 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				ABD6D17029DADD9B0090C299 /* HapticManager.swift */,
+				ABD6D16F29DADD9B0090C299 /* LocalFileManager.swift */,
+				ABD6D16329DADAFE0090C299 /* NetworkingManager.swift */,
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
+		ABD6D16229DADAE30090C299 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		ABD6D17529DADE7F0090C299 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				ABD6D17629DADE950090C299 /* HomeView.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		ABD6D17C29DAE3A60090C299 /* ShareModel */ = {
+			isa = PBXGroup;
+			children = (
+				ABD6D16729DADB9C0090C299 /* LocationModel.swift */,
+				ABD6D16529DADB9C0090C299 /* ShaModel.swift */,
+			);
+			path = ShareModel;
+			sourceTree = "<group>";
+		};
+		ABD6D17D29DAE4090090C299 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				ABD6D17E29DAE41F0090C299 /* PlaceSearchService.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		ABD6D14229DAD86F0090C299 /* TATapp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ABD6D15129DAD8740090C299 /* Build configuration list for PBXNativeTarget "TATapp" */;
+			buildPhases = (
+				ABD6D13F29DAD86F0090C299 /* Sources */,
+				ABD6D14029DAD86F0090C299 /* Frameworks */,
+				ABD6D14129DAD86F0090C299 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TATapp;
+			productName = TATapp;
+			productReference = ABD6D14329DAD86F0090C299 /* TATapp.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		ABD6D13B29DAD86F0090C299 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1420;
+				LastUpgradeCheck = 1420;
+				TargetAttributes = {
+					ABD6D14229DAD86F0090C299 = {
+						CreatedOnToolsVersion = 14.2;
+					};
+				};
+			};
+			buildConfigurationList = ABD6D13E29DAD86F0090C299 /* Build configuration list for PBXProject "TATapp" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = ABD6D13A29DAD86F0090C299;
+			productRefGroup = ABD6D14429DAD86F0090C299 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				ABD6D14229DAD86F0090C299 /* TATapp */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		ABD6D14129DAD86F0090C299 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ABD6D14E29DAD8740090C299 /* Preview Assets.xcassets in Resources */,
+				ABD6D14B29DAD8740090C299 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		ABD6D13F29DAD86F0090C299 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ABD6D14929DAD86F0090C299 /* ContentView.swift in Sources */,
+				ABD6D18129DAF5BB0090C299 /* Constants.swift in Sources */,
+				ABD6D17729DADE950090C299 /* HomeView.swift in Sources */,
+				ABD6D16429DADAFE0090C299 /* NetworkingManager.swift in Sources */,
+				ABD6D17B29DADF9A0090C299 /* PreviewProvider.swift in Sources */,
+				ABD6D16A29DADB9C0090C299 /* AttractionDetailModel.swift in Sources */,
+				ABD6D16929DADB9C0090C299 /* ShaModel.swift in Sources */,
+				ABD6D17429DADE3E0090C299 /* Color.swift in Sources */,
+				ABD6D16C29DADB9C0090C299 /* PlaceSearchModel.swift in Sources */,
+				ABD6D16B29DADB9C0090C299 /* LocationModel.swift in Sources */,
+				ABD6D17929DADEC20090C299 /* HomeViewModel.swift in Sources */,
+				ABD6D17129DADD9B0090C299 /* LocalFileManager.swift in Sources */,
+				ABD6D17229DADD9B0090C299 /* HapticManager.swift in Sources */,
+				ABD6D14729DAD86F0090C299 /* TATappApp.swift in Sources */,
+				ABD6D16E29DADCF10090C299 /* MainViewModel.swift in Sources */,
+				ABD6D17F29DAE41F0090C299 /* PlaceSearchService.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		ABD6D14F29DAD8740090C299 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		ABD6D15029DAD8740090C299 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		ABD6D15229DAD8740090C299 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"TATapp/Preview Content\"";
+				DEVELOPMENT_TEAM = ZD74G4QNW2;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.iamwgo.TATapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		ABD6D15329DAD8740090C299 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"TATapp/Preview Content\"";
+				DEVELOPMENT_TEAM = ZD74G4QNW2;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.iamwgo.TATapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		ABD6D13E29DAD86F0090C299 /* Build configuration list for PBXProject "TATapp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ABD6D14F29DAD8740090C299 /* Debug */,
+				ABD6D15029DAD8740090C299 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		ABD6D15129DAD8740090C299 /* Build configuration list for PBXNativeTarget "TATapp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ABD6D15229DAD8740090C299 /* Debug */,
+				ABD6D15329DAD8740090C299 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = ABD6D13B29DAD86F0090C299 /* Project object */;
+}
