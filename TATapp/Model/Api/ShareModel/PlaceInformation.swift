@@ -11,9 +11,9 @@ struct PlaceInformation: Codable {
     let introduction: String
     let detail: String
     let attractionTypes: [AttractionType]?
-    let shopTypes: [ShopType]
+    let shopTypes: [ShopType]?
     let activities: [String]?
-    let fee: Fee
+    let fee: Fee?
     let targets: [String]?
 
     enum CodingKeys: String, CodingKey {
@@ -29,15 +29,6 @@ struct PlaceInformation: Codable {
 
 struct ShopType: Codable {
     let code, description: String
-}
-
-struct ShopInformation: Codable {
-    let introduction, detail: String
-    let shopTypes: [ShopType]
-    
-    enum CodingKeys: String, CodingKey {
-        case introduction, detail, shopTypes = "shop_types"
-    }
 }
 
 struct Facility: Codable {

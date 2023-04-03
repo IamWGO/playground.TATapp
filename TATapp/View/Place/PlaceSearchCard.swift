@@ -35,7 +35,7 @@ struct PlaceSearchCard: View {
                     }
                     
                     HStack{
-                        Text(mainVM.getAddress(location: placeItem.location))
+                        Text(mainVM.getFullAddress(location: placeItem.location))
                             .font(.caption)
                             .fontWeight(.bold)
                             .foregroundColor(.gray)

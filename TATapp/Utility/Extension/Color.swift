@@ -72,6 +72,7 @@ struct ColorSpot {
     static let attraction = Color(hex: "FD9D6F")
     static let shopping = Color(hex: "C053EB")
     static let restaurant = Color(hex: "1F639B")
-    static let accommodation = Color(hex: "3BAFA1")
+    static let accommodation = Color(hex: "CE5959")
     static let other = Color(hex: "FAE14E")
+    static let event = Color(hex: "77037B")
 }

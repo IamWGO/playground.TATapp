@@ -28,12 +28,17 @@ class MainViewModel: ObservableObject {
     @Published var shaDetail: SHADetail?  = nil
     
     @Published var currentState: UIStates = UIStates.Home
+    @Published var currentPlaceType: PlaceType? = nil
     @Published var placeId: String? = nil
     @Published var eventId: String? = nil
     @Published var routeId: String? = nil
     
+    
+    // UI
+    @Published var isShowCategotyMenu: Bool = false
+    
     private var cancellables = Set<AnyCancellable>()
-    var subscription: AnyCancellable?
+     
     
     init() {
         self.placeService = TATApiService()
@@ -52,7 +57,7 @@ class MainViewModel: ObservableObject {
             .sink{ [weak self] (result) in
                 if let result = result {
                     self?.placeSearchItems = result.result
-                    print(result)
+                    print(result.result)
                 }
             }
             .store(in: &cancellables)
@@ -62,7 +67,7 @@ class MainViewModel: ObservableObject {
             .sink{ [weak self] (result) in
                 if let result = result {
                     self?.placeDetails = result.result
-                    print(result)
+                    print(result.result)
                 }
             }
             .store(in: &cancellables)
@@ -71,7 +76,7 @@ class MainViewModel: ObservableObject {
             .sink{ [weak self] (result) in
                 if let result = result {
                     self?.attractionDetail = result.result
-                    print(result)
+                    print(result.result)
                 }
             }
             .store(in: &cancellables)
@@ -81,7 +86,7 @@ class MainViewModel: ObservableObject {
             .sink{ [weak self] (result) in
                 if let result = result {
                     self?.accommodationDetail = result.result
-                    print(result)
+                    print(result.result)
                 }
             }
             .store(in: &cancellables)
@@ -90,7 +95,7 @@ class MainViewModel: ObservableObject {
             .sink{ [weak self] (result) in
                 if let result = result {
                     self?.restaurantDetail = result.result
-                    print(result)
+                    print(result.result)
                 }
             }
             .store(in: &cancellables)
@@ -99,7 +104,7 @@ class MainViewModel: ObservableObject {
             .sink{ [weak self] (result) in
                 if let result = result {
                     self?.shopDetail = result.result
-                    print(result)
+                    print(result.result)
                 }
             }
             .store(in: &cancellables)
@@ -108,7 +113,7 @@ class MainViewModel: ObservableObject {
             .sink{ [weak self] (result) in
                 if let result = result {
                     self?.placeOtherDetail = result.result
-                    print(result)
+                    print(result.result)
                 }
             }
             .store(in: &cancellables)
@@ -241,11 +246,31 @@ class MainViewModel: ObservableObject {
     // MARK: - UI Helper
     
     func getShaTypeDescription(sha: SHA) -> String {
-        return placeService.getShaTypeDescription(sha: sha)
+        return "\(sha.shaTypeDescription)"
     }
     
-    func getAddress(location: Location) -> String {
-        return placeService.getAddress(location: location)
+    func getFullAddress(location: Location) -> String {
+        var address = ""
+        if (location.address != "") { address +=  "\(location.address) " }
+        if (location.subDistrict != "") { address +=  "\(location.subDistrict) " }
+        if (location.district != "") { address +=  "\(location.district) " }
+        if (location.province != "") { address +=  "\(location.province) " }
+        if (location.postcode != "") { address +=  "\(location.postcode) " }
+        
+        return address
     }
     
+    func getDistrictAndProvince(location: Location) -> String {
+        var address = ""
+        if (location.district != "") { address +=  "\(location.district) " }
+        if (location.province != "") { address +=  "\(location.province) " } 
+        return address
+    }
+    
+    func toggleMenuIcon() {
+        withAnimation(.easeInOut) {
+            isShowCategotyMenu = !isShowCategotyMenu
+        }
+    }
 }
+ 

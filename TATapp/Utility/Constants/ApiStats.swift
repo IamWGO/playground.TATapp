@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum ApiRequest {
+enum APIStats {
     case GetPlaceSearch
     case GetAttractionDetail(placeId: String)
     case GetAccommodationDetail(placeId: String)
@@ -51,54 +51,5 @@ enum ApiRequest {
         case .PostChatbotPrediction:                return url + "/chatbot/predict"
         case .PostChatbotSendMessage:               return url + "/chatbot/sendmessage"*/
         }
-    }
-}
-
-enum ParmeterOfRequest {
-    case PlaceSearch
-    case EventList
-    case RouteList
-    case SHASearch
-}
-
-enum SearchType: String {
-    case ALL //All Category,
-    case OTHER //Other Place Type,
-    case SHOP //Shopping Type,
-    case RESTAURANT //Restaurant Type,
-    case ACCOMMODATION //Hotel Type,
-    case ATTRACTION //Attraction Type
-    
-    var value: String {
-        return self.rawValue
-    }
-}
-
-enum SHAType: String {
-    case ALL // All Types,
-    case SHOP // Department store And shopping centers,
-    case RESTAURANT // Restaurants / diners,
-    case ACCOMMODATION // Hotel / accommodation and meeting place,
-    case ATTRACTION // Recreational activity and tourist attraction,
-    case TRANSPORTATION // Transportation,
-    case TRAVEL_AGENCY // Travel agency,
-    case HEALTH_BEAUTY // Health and Beauty,
-    case SPORT // Sport for tourism,
-    case ACTIVITY_ENTERTAINMENT // Activity/meeting, Theater/entertainment,
-    case SOUVENIR // Souvenir shop and other shops
-    
-    var value: String {
-        return self.rawValue
-    }
-}
-
-enum SHAcategoriy: String {
-    case ALL //All Types,
-    case SHA //SHA,
-    case SHA_PLUS //SHA Plus,
-    case SHA_EXTRA_PLUS //SHA Extra+
-    
-    var value: String {
-        return self.rawValue
     }
 }

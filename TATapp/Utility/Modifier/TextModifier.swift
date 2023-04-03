@@ -34,6 +34,7 @@ struct TextModifier: ViewModifier {
                       weight: fontWeight,
                       design: .default))
         .lineLimit(lineLimit)
+        .lineSpacing(8)
         .multilineTextAlignment(alignment)
         .foregroundColor(foregroundColor)
         
@@ -69,6 +70,8 @@ enum FontStyle {
     case large
     case header
     case title
+    case title2
+    case title3
     case body
     case caption
     
@@ -77,6 +80,8 @@ enum FontStyle {
         case .large: return isIpad ? 60 : 45
         case .header:  return isIpad ? 45 : 35
         case .title:  return isIpad ? 35 : 25
+        case .title2:  return isIpad ? 30 : 22
+        case .title3:  return isIpad ? 25 : 20
         case .body:  return isIpad ? 18 : 16
         case .caption:  return isIpad ? 16 : 14
         }

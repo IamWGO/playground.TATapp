@@ -9,6 +9,13 @@ import Foundation
 import Combine
 import SwiftUI
 
+enum QueryParameters {
+    case PlaceSearch
+    case EventList
+    case RouteList
+    case SHASearch
+}
+
 class TATApiService {
     
     @Published var language: String = "th"
@@ -60,7 +67,7 @@ class TATApiService {
         pagenumber = 1
         parameters = getQueryParameter(parmeterOfRequest: .PlaceSearch)
         
-        let apiRequest = ApiRequest.GetPlaceSearch.path
+        let apiRequest = APIStats.GetPlaceSearch.path
         subscription = NetworkingManager.download(apiRequest: apiRequest, language: language, parameters: parameters)
             .decode(type: PlaceSearchModel.self, decoder: JSONDecoder())
             .receive(on: DispatchQueue.main)
@@ -87,7 +94,7 @@ class TATApiService {
      */
     func getAttractionDetail(placeId: String){
         // placeId = "P03000001"
-        let apiRequest = ApiRequest.GetAttractionDetail(placeId: placeId).path 
+        let apiRequest = APIStats.GetAttractionDetail(placeId: placeId).path 
         subscription = NetworkingManager.download(apiRequest: apiRequest, language: language, parameters: nil)
             .decode(type: AttractionDetailModel.self, decoder: JSONDecoder())
             .receive(on: DispatchQueue.main)
@@ -114,7 +121,7 @@ class TATApiService {
      */
     func getAccommodationDetail(placeId: String){
          //placeId = "P02000001"
-        let apiRequest = ApiRequest.GetAccommodationDetail(placeId: placeId).path
+        let apiRequest = APIStats.GetAccommodationDetail(placeId: placeId).path
         subscription = NetworkingManager.download(apiRequest: apiRequest, language: language, parameters: nil)
             .decode(type: AccommodationDetailModel.self, decoder: JSONDecoder())
             .receive(on: DispatchQueue.main)
@@ -125,7 +132,7 @@ class TATApiService {
     }
     
     func getRestaurantDetail(placeId: String){
-        let apiRequest = ApiRequest.GetRestaurantDetail(placeId: placeId).path
+        let apiRequest = APIStats.GetRestaurantDetail(placeId: placeId).path
         subscription = NetworkingManager.download(apiRequest: apiRequest, language: language, parameters: nil)
             .decode(type: RestaurantDetailModel.self, decoder: JSONDecoder())
             .receive(on: DispatchQueue.main)
@@ -137,7 +144,7 @@ class TATApiService {
     }
     
     func getShopDetail(placeId: String){
-        let apiRequest = ApiRequest.GetShopDetail(placeId: placeId).path
+        let apiRequest = APIStats.GetShopDetail(placeId: placeId).path
         subscription = NetworkingManager.download(apiRequest: apiRequest, language: language, parameters: nil)
             .decode(type: ShopDetailModel.self, decoder: JSONDecoder())
             .receive(on: DispatchQueue.main)
@@ -148,7 +155,7 @@ class TATApiService {
     }
     
     func getPlaceOtherDetail(placeId: String){
-        let apiRequest = ApiRequest.GetPlaceOtherDetail(placeId: placeId).path
+        let apiRequest = APIStats.GetPlaceOtherDetail(placeId: placeId).path
         subscription = NetworkingManager.download(apiRequest: apiRequest, language: language, parameters: nil)
             .decode(type: PlaceOtherDetailModel.self, decoder: JSONDecoder())
             .receive(on: DispatchQueue.main)
@@ -163,7 +170,7 @@ class TATApiService {
         pagenumber = 1
         parameters = getQueryParameter(parmeterOfRequest: .EventList)
         
-        let apiRequest = ApiRequest.GetEventList.path
+        let apiRequest = APIStats.GetEventList.path
         subscription = NetworkingManager.download(apiRequest: apiRequest, language: language, parameters: parameters)
             .decode(type: EventListModel.self, decoder: JSONDecoder())
             .receive(on: DispatchQueue.main)
@@ -174,7 +181,7 @@ class TATApiService {
     }
     
     func getEventDetail(eventId: String){
-        let apiRequest = ApiRequest.GetEventDetail(eventId: eventId).path
+        let apiRequest = APIStats.GetEventDetail(eventId: eventId).path
         subscription = NetworkingManager.download(apiRequest: apiRequest, language: language, parameters: nil)
             .decode(type: EventDetailModel.self, decoder: JSONDecoder())
             .receive(on: DispatchQueue.main)
@@ -189,7 +196,7 @@ class TATApiService {
         pagenumber = 1
         parameters = getQueryParameter(parmeterOfRequest: .RouteList)
         
-        let apiRequest = ApiRequest.GetRecommendedRouteList.path
+        let apiRequest = APIStats.GetRecommendedRouteList.path
         subscription = NetworkingManager.download(apiRequest: apiRequest, language: language, parameters: parameters)
             .decode(type: RouteListModel.self, decoder: JSONDecoder())
             .receive(on: DispatchQueue.main)
@@ -199,7 +206,7 @@ class TATApiService {
             })
     }
     func getRecommendedRouteDetail(routeId: String){
-        let apiRequest = ApiRequest.GetRecommendedRouteDetail(routeId: routeId).path
+        let apiRequest = APIStats.GetRecommendedRouteDetail(routeId: routeId).path
         subscription = NetworkingManager.download(apiRequest: apiRequest, language: language, parameters: nil)
             .decode(type: RouteDetailModel.self, decoder: JSONDecoder())
             .receive(on: DispatchQueue.main)
@@ -214,7 +221,7 @@ class TATApiService {
         pagenumber = 1
         parameters = getQueryParameter(parmeterOfRequest: .PlaceSearch)
         
-        let apiRequest = ApiRequest.GetSHASearch.path
+        let apiRequest = APIStats.GetSHASearch.path
         subscription = NetworkingManager.download(apiRequest: apiRequest, language: language, parameters: parameters)
             .decode(type: SHASearchModel.self, decoder: JSONDecoder())
             .receive(on: DispatchQueue.main)
@@ -224,7 +231,7 @@ class TATApiService {
             })
     }
     func getSHADetail(placeId: String){
-        let apiRequest = ApiRequest.GetSHADetail(placeId: placeId).path
+        let apiRequest = APIStats.GetSHADetail(placeId: placeId).path
         subscription = NetworkingManager.download(apiRequest: apiRequest, language: language, parameters: nil)
             .decode(type: SHADetailModel.self, decoder: JSONDecoder())
             .receive(on: DispatchQueue.main)
@@ -240,23 +247,9 @@ class TATApiService {
     func getNewsDetail(newsId: String){}
     
     // MARK: - Helper functions
-    func getAddress(location: Location) -> String {
-        var address = ""
-        if (location.address != "") { address +=  "\(location.address) " }
-        if (location.subDistrict != "") { address +=  "\(location.subDistrict) " }
-        if (location.district != "") { address +=  "\(location.district) " }
-        if (location.province != "") { address +=  "\(location.province) " }
-        if (location.postcode != "") { address +=  "\(location.postcode) " }
-        
-        return address
-    }
     
-    func getShaTypeDescription(sha: SHA) -> String {
-        return "\(sha.shaTypeDescription)"
-        
-    }
     
-    func getQueryParameter(parmeterOfRequest : ParmeterOfRequest) -> [String:String]{
+    func getQueryParameter(parmeterOfRequest : QueryParameters) -> [String:String]{
         var query: [String:String] = [:]
         
         switch (parmeterOfRequest){

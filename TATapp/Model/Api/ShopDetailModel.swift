@@ -26,7 +26,7 @@ struct ShopDetail: Codable {
     let latitude: Double
     let longitude: Double
     let sha: SHA
-    let placeInformation: ShopInformation
+    let placeInformation: PlaceInformation
     let location: Location
     let contact: ContactInfo
     let thumbnailUrl: String

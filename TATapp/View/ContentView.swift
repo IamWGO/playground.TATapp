@@ -10,7 +10,8 @@ import SwiftUI
 struct ContentView: View {
     @EnvironmentObject var mainVM: MainViewModel
     var body: some View {
-        LandingPageView(mainVM: mainVM)
+        //LandingPageView(mainVM: mainVM)
+        AttractionDetailView(mainVM: mainVM)
     }
 }
 

@@ -3,14 +3,8 @@
 <plist version="1.0">
 <dict>
 	<key>UTImportedTypeDeclarations</key>
-	<array>
-		<dict/>
-	</array>
+	<array/>
 	<key>UIAppFonts</key>
-	<array>
-		<string></string>
-	</array>
-	<key></key>
-	<string></string>
+	<array/>
 </dict>
 </plist>

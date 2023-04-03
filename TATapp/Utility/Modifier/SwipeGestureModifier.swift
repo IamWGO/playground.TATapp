@@ -11,10 +11,6 @@ import SwiftUI
 
 struct SwipeGestureModifier : ViewModifier {
     @Binding var swipeDirection: SwipeDirection
-    @Binding var isAllowLeftSwipe: Bool
-    @Binding var isAllowRightSwipe: Bool
-    @Binding var isAllowUpSwipe:Bool
-    @Binding var isAllowDownSwipe:Bool
     
     @State var cardRemovalTransition = AnyTransition.trailingBottom
     var dragAreaThreshold: CGFloat = 40.0
@@ -88,15 +84,14 @@ struct SwipeGestureModifier : ViewModifier {
                             }
                             // reset to check if the swiping is allowed
                             swipeDirection = .notAllow
-                            
                             // Note : translation refer to MeasureDetailSheet
-                            if drag.translation.width < -10 && drag.translation.height > -50 && drag.translation.height < 50  && isAllowLeftSwipe{
+                            if drag.translation.width < -80 && (drag.translation.height > -50 && drag.translation.height < 50){
                                 swipeDirection = .left
-                            } else if drag.translation.width > 10 && drag.translation.height > -50 && drag.translation.height < 50 && isAllowRightSwipe {
+                            } else if drag.translation.width > 40 && drag.translation.height > -50 && drag.translation.height < 50{
                                 swipeDirection = .right
-                            } else if ((drag.translation.width < 0) && drag.translation.width < self.dragAreaThreshold && isAllowUpSwipe)  {
+                            } else if ((drag.translation.width < 0) && drag.translation.width < self.dragAreaThreshold)  {
                                 swipeDirection = .up
-                            } else if ((drag.translation.width > 0) && drag.translation.width < self.dragAreaThreshold) && isAllowDownSwipe  {
+                            } else if ((drag.translation.width > 0) && drag.translation.width < self.dragAreaThreshold)  {
                                 swipeDirection = .down
                             }
                             

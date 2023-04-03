@@ -8,7 +8,9 @@
 import SwiftUI 
 
 struct GridView : View {
-    var dataItems: [CategoryModel] = categoryItem
+    @EnvironmentObject var mainVM: MainViewModel
+    
+    var dataItems: [CategoryModel] = categoryItems
     var columns = Array(repeating: GridItem(.flexible(), spacing: 20), count: 2)
    
     var body: some View{
@@ -45,6 +47,50 @@ struct GridView : View {
         .padding(.horizontal)
         .padding(.top,25)
     }
+    
+    /*
+    private var header : some View {
+        VStack(alignment: .leading) {
+            Text(localVM.landingString["subHeader"] ?? "sub-header")
+                .modifier(TextModifier(fontStyle: .title, fontWeight: .bold))
+            Text(localVM.landingString["header"] ?? "header")
+                .modifier(TextModifier(fontStyle: .large, fontWeight: .regular))
+        }
+    }*/
+    
+    private var logo: some View {
+        Image("logo")
+            .resizable()
+            .scaledToFit()
+            .frame(width: 55)
+            .clipShape(Circle())
+    }
+    
+    private var templte: some View {
+        ZStack {
+            
+            VStack(spacing: 0) {
+                // Menu Icon
+                HStack{
+                    Spacer()
+                    //MenuIconButtonView(isShowMenu: $vm.isShowCategotyMenu)
+                    MenuIconButtonView(isShowMenu: .constant(true))
+                }
+                .padding(.horizontal)
+                // Menu List
+               /* if vm.isShowCategotyMenu {
+                   MainMenuView(currentPlaceType: $mainVM.currentPlaceType)
+                }*/
+                Spacer()
+                
+            }
+            .padding(.top, mainVM.getTopSafeAreaSize())
+        }
+        //.background(backgroundImage)
+        .ignoresSafeArea()
+        //.modifier(SwipeToGetMainMenuModifier(isShowCategotyMenu: $vm.isShowCategotyMenu))
+    }
+     
 }
 
 /*
