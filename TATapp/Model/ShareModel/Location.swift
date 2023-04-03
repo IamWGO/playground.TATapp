@@ -1,13 +1,13 @@
 //
-//  LocationModel.swift
-//  tourismthailand
+//  Location.swift
+//  TATapp
 //
-//  Created by Waleerat Gottlieb on 2023-03-27.
+//  Created by Waleerat Gottlieb on 2023-04-04.
 //
 
 import Foundation
 
-struct LocationModel: Codable {
+struct Location: Codable {
     let address: String
     let subDistrict: String
     let district: String
@@ -19,3 +19,4 @@ struct LocationModel: Codable {
         case district, province, postcode
     }
 }
+ 

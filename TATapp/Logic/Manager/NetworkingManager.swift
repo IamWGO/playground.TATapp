@@ -30,22 +30,28 @@ class NetworkingManager {
             .eraseToAnyPublisher()
     }
     
-    static func download(apiRequest: ApiRequest, language: String, parameters: [String : Any]) -> AnyPublisher<Data, Error> {
+    static func download(apiRequest: String, language: String, parameters: [String : Any]?) -> AnyPublisher<Data, Error> {
         // Define the URL and Authorization header
-        let requestUrl = URL(string: apiRequest.path)!
+        let requestUrl = URL(string: apiRequest)!
         
         var url = requestUrl
         // Define the API key
         let apiKey = "GA5koDndjlPCwf6ib(qEYC59isitwqIqV9iG3ILU(YtO60qz4fTBXm2kjq1SmpIJ02TiYh7KQYn((NC)T5B71jG=====2" 
 
         // Create the URL with the parameters and API key
-        var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)!
-        urlComponents.queryItems = parameters.map { URLQueryItem(name: $0.key, value: $0.value as? String) }
-        url = urlComponents.url!
+        if let parameters = parameters {
+            var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)!
+            urlComponents.queryItems = parameters.map { URLQueryItem(name: $0.key, value: $0.value as? String) }
+            url = urlComponents.url!
+        } else {
+            var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)! 
+            url = urlComponents.url!
+        }
        
         // Create a URLSession with the API key header
         let configuration = URLSessionConfiguration.default
         configuration.httpAdditionalHeaders = ["Authorization": "Bearer \(apiKey)",
+                                               "Content-Type": "application/json",
                                                "Accept-Language": language]
         let session = URLSession(configuration: configuration)
         
@@ -56,12 +62,13 @@ class NetworkingManager {
     }
     
     static func handleURLResponse(output: URLSession.DataTaskPublisher.Output, url: URL) throws -> Data {
-      
+        print("\(output)")
         guard let response = output.response as? HTTPURLResponse,
               response.statusCode >= 200 && response.statusCode < 300 else {
+           
             throw NetworkingError.badURLResponse(url: url)
         }
-        
+       
         return output.data
     }
     
@@ -77,44 +84,46 @@ class NetworkingManager {
 }
 
 
-enum ApiRequest: String {
-    case GetPlaceSearch = "/places/search"
-    case GetAttractionDetail = "/attraction/{place_id}"
-    case GetAccommodationDetail = "/accommodation/{place_id}"
-    case GetRestaurantDetail = "/restaurant/{place_id}"
-    case GetShopDetail = "/shop/{place_id}"
-    case GetPlaceOtherDetail = "/other/{place_id}"
-    case GetEventList = "/events"
-    case GetEventDetail = "/events/{event_id}"
-    case GetNewsList = "/news"
-    case GetNewsDetail = "/news/{news_id}"
-    case GetRecommendedRouteList = "/routes"
-    case GetRecommendedRouteDetail = "/routes/{route_id}"
-    case PostChatbotPrediction = "/chatbot/predict"
-    case PostChatbotSendMessage = "/chatbot/sendmessage"
-    case GetSHASearch = "/places/sha"
-    case GetSHADetail = "/sha/{place_id}"
+enum ApiRequest {
+    case GetPlaceSearch
+    case GetAttractionDetail(placeId: String)
+    case GetAccommodationDetail(placeId: String)
+    case GetRestaurantDetail(placeId: String)
+    case GetShopDetail(placeId: String)
+    case GetPlaceOtherDetail(placeId: String)
+    case GetEventList
+    case GetEventDetail(eventId: String)
+    case GetNewsList
+    case GetNewsDetail(newsId: String)
+    case GetRecommendedRouteList
+    case GetRecommendedRouteDetail(routeId: String)
+    case PostChatbotPrediction
+    case PostChatbotSendMessage
+    case GetSHASearch
+    case GetSHADetail(placeId: String)
+    
+    var url: String {
+        return "https://tatapi.tourismthailand.org/tatapi/v5"
+    }
     
     var path: String {
-        let baseURL = "https://tatapi.tourismthailand.org/tatapi/v5"
-        
         switch self {
-        case .GetPlaceSearch: return baseURL + "/places/search"
-        case .GetAttractionDetail: return baseURL + "/attraction/{place_id}"
-        case .GetAccommodationDetail: return baseURL + "/accommodation/{place_id}"
-        case .GetRestaurantDetail: return baseURL + "/restaurant/{place_id}"
-        case .GetShopDetail: return baseURL + "/shop/{place_id}"
-        case .GetPlaceOtherDetail: return baseURL + "/other/{place_id}"
-        case .GetEventList: return baseURL + "/events"
-        case .GetEventDetail: return baseURL + "/events/{event_id}"
-        case .GetNewsList: return baseURL + "/news"
-        case .GetNewsDetail: return baseURL + "/news/{news_id}"
-        case .GetRecommendedRouteList: return baseURL + "/routes"
-        case .GetRecommendedRouteDetail: return baseURL + "/routes/{route_id}"
-        case .PostChatbotPrediction: return baseURL + "/chatbot/predict"
-        case .PostChatbotSendMessage: return baseURL + "/chatbot/sendmessage"
-        case .GetSHASearch: return baseURL + "/places/sha"
-        case .GetSHADetail: return baseURL + "/sha/{place_id}"
+        case .GetPlaceSearch:                       return url + "/places/search"
+        case .GetAttractionDetail(let placeId):     return url + "/attraction/\(placeId)"
+        case .GetAccommodationDetail(let placeId):  return url + "/accommodation/\(placeId)"
+        case .GetRestaurantDetail(let placeId):     return url + "/restaurant/\(placeId)"
+        case .GetShopDetail(let placeId):           return url + "/shop/\(placeId)"
+        case .GetPlaceOtherDetail(let placeId):     return url + "/other/\(placeId)"
+        case .GetEventList:                         return url + "/events"
+        case .GetEventDetail(let eventId):          return url + "/events/\(eventId)"
+        case .GetNewsList:                          return url + "/news"
+        case .GetNewsDetail(let newsId):            return url + "/news/\(newsId)"
+        case .GetRecommendedRouteList:              return url + "/routes"
+        case .GetRecommendedRouteDetail(let routeId): return url + "/routes/\(routeId)"
+        case .PostChatbotPrediction:                return url + "/chatbot/predict"
+        case .PostChatbotSendMessage:               return url + "/chatbot/sendmessage"
+        case .GetSHASearch:                         return url + "/places/sha"
+        case .GetSHADetail(let placeId):            return url + "/sha/\(placeId)"
         }
     }
 }

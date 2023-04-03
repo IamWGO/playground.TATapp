@@ -14,12 +14,12 @@ struct PlaceSearchModel: Codable {
 struct PlaceItemModel: Codable,Identifiable {
     let placeId: String
     let placeName: String
-    let latitude: Double
-    let longitude: Double
+    let latitude: Double?
+    let longitude: Double?
     let categoryCode: String
     let categoryDescription: String
-    let sha: ShaModel
-    let location: LocationModel
+    let sha: SHA
+    let location: Location
     let thumbnailUrl: String
     let destination: String
     let tags: String?
