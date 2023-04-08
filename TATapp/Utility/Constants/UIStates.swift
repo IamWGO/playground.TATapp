@@ -16,8 +16,8 @@ enum ScreenState {
 enum UIStates {
     case Landing
     case Home
-    case Setting
     case GetPlaceSearch
+    case GetPlaceNearBy
     case GetAttractionDetail
     case GetAccommodationDetail
     case GetRestaurantDetail

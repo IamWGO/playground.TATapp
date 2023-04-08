@@ -6,16 +6,17 @@
 //
 
 import Foundation
+import MapKit
  
 struct AttractionDetailModel: Codable {
     let result: AttractionDetail
 }
 
-struct AttractionDetail: Codable {
+struct AttractionDetail: Codable,Identifiable {
     let placeId: String
     let placeName: String
-    let latitude: Double
-    let longitude: Double
+    let latitude: Double?
+    let longitude: Double?
     let mapCode: String?
     let sha: SHA
     let placeInformation: PlaceInformation
@@ -52,6 +53,18 @@ struct AttractionDetail: Codable {
     
     var id: String {
         placeId
+    }
+    
+    func isHasLocation() -> Bool {
+        return (latitude != nil && longitude != nil)
+    }
+    
+    func getCoordinate() -> CLLocationCoordinate2D {
+        if let latitude = latitude, let longitude = longitude {
+            return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        } else {
+            return CLLocationCoordinate2D(latitude: 0, longitude: 0)
+        }
     }
 }
 

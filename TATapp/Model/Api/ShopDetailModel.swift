@@ -6,15 +6,7 @@
 //
 
 import Foundation
-
-//
-//  ShopDetailModel.swift
-//  TATapp
-//
-//  Created by Waleerat Gottlieb on 2023-04-04.
-//
-
-import Foundation
+import MapKit
 
 struct ShopDetailModel: Codable {
     let result: ShopDetail
@@ -23,8 +15,8 @@ struct ShopDetailModel: Codable {
 struct ShopDetail: Codable {
     let placeId: String
     let placeName: String
-    let latitude: Double
-    let longitude: Double
+    let latitude: Double?
+    let longitude: Double?
     let sha: SHA
     let placeInformation: PlaceInformation
     let location: Location
@@ -64,6 +56,14 @@ struct ShopDetail: Codable {
         case destination, tags, standard, awards
         case updateDate = "update_date"
         case hitScore = "hit_score"
+    }
+    
+    var coordinates: CLLocationCoordinate2D? {
+        if let latitude = latitude, let longitude = longitude {
+            return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        } else {
+            return nil
+        }
     }
 }
 

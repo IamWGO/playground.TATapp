@@ -14,6 +14,10 @@ class AttractionViewModel: ObservableObject {
     @Published var isBookMark: Bool = false
     @Published var isCommentSheet: Bool = false
     @Published var isShowMapSheet: Bool = false
+    @Published var isShowMoreImagesSheet: Bool = false
+    @Published var isShowSharedSheet: Bool = false
+    @Published var isOpenHoursDialog: Bool = false
+    
     
     @Published var offset: CGFloat = 0
     
@@ -41,11 +45,22 @@ class AttractionViewModel: ObservableObject {
     }
     
     func toggleMapIcon() {
+        isShowMapSheet = !isShowMapSheet
+    }
+    
+    func toggleClockIcon() {
         withAnimation(.easeInOut) {
-            isShowMapSheet = !isShowMapSheet
+            isOpenHoursDialog = !isOpenHoursDialog
         }
     }
     
+    func toggleMoreImageIcon(){
+        isShowMoreImagesSheet = !isShowMoreImagesSheet
+    }
+    
+    func toggleSharedIcon(){
+        isShowSharedSheet = !isShowSharedSheet
+    }
     
     func getOffsetType() -> CGFloat {
         if offset > 200{

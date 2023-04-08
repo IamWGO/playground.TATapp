@@ -11,7 +11,9 @@ struct ContentView: View {
     @EnvironmentObject var mainVM: MainViewModel
     var body: some View {
         //LandingPageView(mainVM: mainVM)
-        AttractionDetailView(mainVM: mainVM)
+        //AttractionDetailView(mainVM: mainVM)
+        MapSearchView()
+        //Text("Hello")
     }
 }
 

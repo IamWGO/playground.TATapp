@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import MapKit
 
 struct EventListModel: Codable {
     let result: [EventItem]
@@ -46,6 +47,14 @@ struct EventItem: Codable {
     
     var id: String {
         eventId
+    }
+    
+    var coordinates: CLLocationCoordinate2D? {
+        if let latitude = latitude, let longitude = longitude {
+            return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        } else {
+            return nil
+        }
     }
 }
 

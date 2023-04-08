@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import MapKit
 
 struct AttractionDetailView: View {
     @EnvironmentObject var mainVM: MainViewModel
@@ -25,7 +26,7 @@ struct AttractionDetailView: View {
     var body: some View {
         ZStack(alignment: .top) {
             
-            ScrollView{
+            ScrollView(showsIndicators: false){
                 bodyContainer
             }
             .overlay(
@@ -41,12 +42,31 @@ struct AttractionDetailView: View {
             // Will always show on top of content
             topAreaSection
             
+            
+            if vm.isOpenHoursDialog {
+                openHoursDialog
+            }
+            
         }
         .sheet(isPresented: $vm.isShowMapSheet, content: {
-            MapSheetView()
+           // DispatchQueue.main.async {}
+            MapSheetView(mainVM: mainVM, placeItem: placeItem)
         })
+        .sheet(isPresented: $vm.isShowMoreImagesSheet, content: {
+            //
+        })
+       
         .ignoresSafeArea()
     }
+}
+
+struct AttractionDetailView_Previews: PreviewProvider {
+    static var previews: some View {
+        AttractionDetailView(mainVM: MainViewModel())
+    }
+}
+
+extension AttractionDetailView {
     
     private var topAreaSection: some View {
         HStack(alignment: .top, spacing: 8){
@@ -58,11 +78,15 @@ struct AttractionDetailView: View {
             if vm.offset < 250 {
                 VStack {
                     TopAreaIconActionView(systemName: "photo.on.rectangle.angled", action: {
-                        //share this page
+                        vm.toggleMoreImageIcon()
                     })
                     
                     TopAreaIconActionView(systemName: "square.and.arrow.up", action: {
-                        //share this page
+                        vm.toggleSharedIcon()
+                    })
+                    
+                    TopAreaIconActionView(systemName: "clock", action: {
+                        vm.toggleClockIcon()
                     })
                 }
             }
@@ -167,10 +191,11 @@ struct AttractionDetailView: View {
             
             HStack{
                 Spacer()
+                
                 Text(placeItem.placeName)
                     .modifier(TextModifier(fontStyle: .title3, fontWeight: .semibold))
-                Spacer()
                 
+                Spacer()
             }
             .padding(.horizontal)
             
@@ -196,30 +221,38 @@ struct AttractionDetailView: View {
             .frame(maxWidth: .infinity,alignment: .leading)
             
             HStack{
-                HStackButtonActionView(systemName: .constant(vm.isLiked ? "hand.thumbsup.fill" : "hand.thumbsup"),
+                
+                Spacer()
+                VStackButtonActionView(systemName: .constant(vm.isLiked ? "hand.thumbsup.fill" : "hand.thumbsup"),
                                        textButton: .constant("123K"),
-                                       isActive: $vm.isLiked) {
+                                       foregroundColor: .constant(vm.isLiked ? Color.theme.active : Color.theme.inactive),
+                                       isDisable: $vm.isLiked) {
                     vm.saveLiked()
                 }
             
                 Spacer()
-                HStackButtonActionView(systemName: .constant(vm.isBookMark ? "bookmark.fill" : "bookmark"),
+                VStackButtonActionView(systemName: .constant(vm.isBookMark ? "bookmark.fill" : "bookmark"),
                                        textButton: .constant("Saved"),
-                                       isActive: $vm.isBookMark) {
+                                       foregroundColor: .constant(vm.isBookMark ? Color.theme.active : Color.theme.inactive),
+                                       isDisable: $vm.isBookMark) {
                     vm.saveBookmark()
                 }
                 
                 Spacer()
-                HStackButtonActionView(systemName: .constant("map"),
+                VStackButtonActionView(systemName: .constant("map"),
                                        textButton: .constant("Map"),
-                                       isActive: $vm.isShowMapSheet) {
+                                       foregroundColor: .constant(vm.isShowMapSheet ? Color.theme.active : Color.theme.inactive),
+                                       isDisable: .constant(!placeItem.isHasLocation())) {
+                    
                     vm.toggleMapIcon()
                 }
                 
+                
                 Spacer()
-                HStackButtonActionView(systemName: .constant("bubble.right"),
+                VStackButtonActionView(systemName: .constant("bubble.right"),
                                        textButton: .constant("Review"),
-                                       isActive: $vm.isCommentSheet) {
+                                       foregroundColor: .constant(vm.isCommentSheet ? Color.theme.active : Color.theme.inactive),
+                                       isDisable: $vm.isCommentSheet) {
                     vm.toogleComentIcon()
                 }
             }
@@ -228,10 +261,74 @@ struct AttractionDetailView: View {
         .padding(.bottom)
         
     }
-}
-
-struct AttractionDetailView_Previews: PreviewProvider {
-    static var previews: some View {
-        AttractionDetailView(mainVM: MainViewModel())
+    
+    private var openHoursDialog: some View {
+        ZStack(alignment: .top){
+            Rectangle()
+                .fill(Color.theme.primary.opacity(0.3))
+                .onTapGesture {
+                    vm.toggleClockIcon()
+                }
+            
+            VStack {
+                
+                if let openingHours = placeItem.openingHours {
+                    VStack(alignment: .trailing, spacing: 8) {
+                        
+                        VStack {
+                            if openingHours.openNow {
+                                Text("Open Now")
+                                    .modifier(TextModifier(fontStyle: .body))
+                            } else {
+                                Text("Close Now")
+                                    .modifier(TextModifier(fontStyle: .body, foregroundColor: Color.red))
+                            }
+                        }.padding(.bottom)
+                        
+                        getOpenHours(day: openingHours.weekdayText.day1.day,
+                                     time: openingHours.weekdayText.day1.time)
+                        
+                        getOpenHours(day: openingHours.weekdayText.day2.day,
+                                     time: openingHours.weekdayText.day2.time)
+                        
+                        getOpenHours(day: openingHours.weekdayText.day3.day,
+                                     time: openingHours.weekdayText.day3.time)
+                        
+                        getOpenHours(day: openingHours.weekdayText.day4.day,
+                                     time: openingHours.weekdayText.day4.time)
+                        
+                        getOpenHours(day: openingHours.weekdayText.day5.day,
+                                     time: openingHours.weekdayText.day5.time)
+                        
+                        getOpenHours(day: openingHours.weekdayText.day6.day,
+                                     time: openingHours.weekdayText.day6.time)
+                        
+                        getOpenHours(day: openingHours.weekdayText.day7.day,
+                                     time: openingHours.weekdayText.day7.time)
+                        
+                    }
+                    .padding(20)
+                    .background(Color.theme.background)
+                    .cornerRadius(20)
+                    .offset(y: 20)
+                    .shadow(
+                        color: Color.theme.primary.opacity(0.25),
+                        radius: 10, x: 0, y: 0)
+                }
+            }
+           // .frame(height: kScreen.height * 0.5)
+            .padding(.top, 210)
+        }
+    }
+    
+    func getOpenHours(day: String, time: String)  -> some View {
+       return HStack {
+            Text(day)
+               .modifier(TextModifier(fontStyle: .body))
+            Spacer()
+            Text(time)
+                .modifier(TextModifier(fontStyle: .body))
+        }
+       .frame(width: isIpad ? 350 : 300)
     }
 }

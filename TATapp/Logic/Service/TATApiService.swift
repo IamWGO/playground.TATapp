@@ -11,6 +11,7 @@ import SwiftUI
 
 enum QueryParameters {
     case PlaceSearch
+    case PlaceNearBy
     case EventList
     case RouteList
     case SHASearch
@@ -21,6 +22,7 @@ class TATApiService {
     @Published var language: String = "th"
     
     @Published var placeSearchItems: PlaceSearchModel? = nil
+    @Published var placeNearByItems: PlaceSearchModel? = nil
     @Published var attractionDetail: AttractionDetailModel? = nil
     @Published var accommodationDetail: AccommodationDetailModel?  = nil
     @Published var restaurantDetail: RestaurantDetailModel?  = nil
@@ -33,16 +35,12 @@ class TATApiService {
     @Published var shaSearchItems: SHASearchModel?  = nil
     @Published var shaDetail: SHADetailModel?  = nil
     
-    
-    
     //GetPlaceSearch
     @Published var categorycodes:String = "RESTAURANT"
     @Published var keyword:String?
-    @Published var location:String?
     @Published var provinceName:String?
     @Published var radius:Int?
     @Published var destination:String?
-    //Event Search
     @Published var geolocation:String?
     @Published var sortby:String?  // distance or distance[default]
     // Route Search
@@ -61,8 +59,10 @@ class TATApiService {
     @Published var parameters: [String:String] = [:]
     
     var subscription: AnyCancellable? 
-     
+    var nearbySubscription: AnyCancellable?
+    
     func getPlaceSearch() {
+       
         numberOfResult = 10
         pagenumber = 1
         parameters = getQueryParameter(parmeterOfRequest: .PlaceSearch)
@@ -73,6 +73,23 @@ class TATApiService {
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: NetworkingManager.handleCompletion, receiveValue: { [weak self] (result) in
                 self?.placeSearchItems = result
+                self?.subscription?.cancel()
+            })
+        
+    }
+    
+    func getPlaceNearBy() {
+        geolocation = "18.805148,98.901021"
+        radius = 100 
+        
+        parameters = getQueryParameter(parmeterOfRequest: .PlaceNearBy)
+        
+        let apiRequest = APIStats.GetPlaceSearch.path
+        subscription = NetworkingManager.download(apiRequest: apiRequest, language: language, parameters: parameters)
+            .decode(type: PlaceSearchModel.self, decoder: JSONDecoder())
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: NetworkingManager.handleCompletion, receiveValue: { [weak self] (result) in
+                self?.placeNearByItems = result
                 self?.subscription?.cancel()
             })
         
@@ -256,10 +273,13 @@ class TATApiService {
         case .PlaceSearch:
             query["categorycodes"] = categorycodes
             if let keyword = keyword {  query["keyword"] = keyword }
-            if let location = location { query["location"] = location }
+            if let geolocation = geolocation { query["geolocation"] = geolocation }
             if let provinceName = provinceName { query["provinceName"] = provinceName }
             if let radius = radius { query["radius"] = String(radius) }
             if let destination = destination { query["destination"] = destination }
+        case .PlaceNearBy:
+            if let geolocation = geolocation { query["geolocation"] = geolocation }
+            if let radius = radius { query["radius"] = String(radius) }
         case .EventList:
             if let geolocation = geolocation {  query["geolocation"] = geolocation }
             if let sortby = sortby { query["sortby"] = sortby }
@@ -331,5 +351,5 @@ This service allows you to search place information in TAT POI, You can query sp
    - destination: String? Refer to destination name in TAT.
    - updateDate: String? Filter by update date of value the POI
 - Returns: PlaceSearchModel
-
+ 
 */

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import MapKit
 
 struct RestaurantDetailModel: Codable {
     let result: RestaurantDetail
@@ -14,8 +15,8 @@ struct RestaurantDetailModel: Codable {
 struct RestaurantDetail: Codable {
     let placeID: String
     let placeName: String
-    let latitude: Double
-    let longitude: Double
+    let latitude: Double?
+    let longitude: Double?
     let sha: SHA
     let placeInformation: RestaurantInfo
     let location: Location
@@ -46,5 +47,13 @@ struct RestaurantDetail: Codable {
         case updateDate = "update_date"
         case destination, standard, awards, area
        
+    }
+    
+    var coordinates: CLLocationCoordinate2D? {
+        if let latitude = latitude, let longitude = longitude {
+            return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        } else {
+            return nil
+        }
     }
 }

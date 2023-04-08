@@ -8,12 +8,14 @@
 import Foundation
 import Combine
 import SwiftUI
+import MapKit
 
 class MainViewModel: ObservableObject {
 
     let placeService: TATApiService
     
     @Published var placeSearchItems: [PlaceItem]? = nil
+    @Published var placeNearByItems: [PlaceItem]? = nil
     @Published var placeDetails: AttractionDetail? = nil
     @Published var attractionDetail: AttractionDetail? = nil
     @Published var accommodationDetail: AccommodationDetail? = nil
@@ -29,59 +31,73 @@ class MainViewModel: ObservableObject {
     
     @Published var currentState: UIStates = UIStates.Home
     @Published var currentPlaceType: PlaceType? = nil
+    @Published var currentPinLocation: String? = nil
     @Published var placeId: String? = nil
     @Published var eventId: String? = nil
     @Published var routeId: String? = nil
     
-    
     // UI
     @Published var isShowCategotyMenu: Bool = false
-    
     private var cancellables = Set<AnyCancellable>()
-     
     
     init() {
         self.placeService = TATApiService()
-        self.currentState = UIStates.Landing
+        self.currentState = UIStates.GetPlaceNearBy
+        
         self.getUIState()
+        
     }
-    
     // MARK: - Combine
     func getUIState() {
+        
+        
         $currentState.sink{ [weak self] (currentState) in
             self?.getPreviewByUIState(currentState: currentState)
         }
         .store(in: &cancellables)
         
         placeService.$placeSearchItems
-            .sink{ [weak self] (result) in
+            .sink{ (result) in
                 if let result = result {
-                    self?.placeSearchItems = result.result
+                    self.placeSearchItems = result.result
                     print(result.result)
                 }
             }
             .store(in: &cancellables)
         
-        //placeId: String
+        placeService.$placeNearByItems
+            .sink{ (result) in
+                if let result = result {
+                    self.placeNearByItems = result.result
+                    print("**-----*****placeNearByItems****------")
+                    print("** \(result.result)")
+                }
+            }
+            .store(in: &cancellables)
+       
+        //ATTRACTION
         placeService.$attractionDetail
-            .sink{ [weak self] (result) in
+            .sink{ (result) in
                 if let result = result {
-                    self?.placeDetails = result.result
-                    print(result.result)
+                    print("**-----attractionDetail------")
+                    self.attractionDetail = result.result
+                    //print(result.result)
                 }
             }
             .store(in: &cancellables)
         
-        placeService.$attractionDetail
-            .sink{ [weak self] (result) in
-                if let result = result {
-                    self?.attractionDetail = result.result
-                    print(result.result)
+        $attractionDetail.sink{ result in
+            if let placeItem = result {
+                if let latitude = placeItem.latitude, let longitude = placeItem.longitude {
+                    self.placeService.geolocation = "\(latitude),\(longitude)"
+                    print("**-----attractionDetail getPlaceNearBy------")
+                    self.placeService.getPlaceNearBy()
                 }
             }
-            .store(in: &cancellables)
+        }
+        .store(in: &cancellables)
         
-        
+        //ACCOMMODATION
         placeService.$accommodationDetail
             .sink{ [weak self] (result) in
                 if let result = result {
@@ -90,6 +106,16 @@ class MainViewModel: ObservableObject {
                 }
             }
             .store(in: &cancellables)
+        
+        $accommodationDetail.sink{ result in
+            if let placeItem = result {
+                if let latitude = placeItem.latitude, let longitude = placeItem.longitude {
+                    self.placeService.geolocation = "\(latitude),\(longitude)"
+                    self.placeService.getPlaceNearBy()
+                }
+            }
+        }
+        .store(in: &cancellables)
         
         placeService.$restaurantDetail
             .sink{ [weak self] (result) in
@@ -187,7 +213,9 @@ class MainViewModel: ObservableObject {
         switch (currentState) {
         case .Landing: print("-> No query") // TODO : - Some query
         case .Home: placeService.getPlaceSearch()
-        case .Setting: print("-> No query") // TODO : - Some query
+        case .GetPlaceNearBy:
+            placeService.getPlaceNearBy()
+            
         case .GetPlaceSearch: placeService.getPlaceSearch()
         case .GetAttractionDetail:
             placeId = "P03000001"
@@ -272,5 +300,8 @@ class MainViewModel: ObservableObject {
             isShowCategotyMenu = !isShowCategotyMenu
         }
     }
+    
+   // MARK: - Location
+   
 }
  

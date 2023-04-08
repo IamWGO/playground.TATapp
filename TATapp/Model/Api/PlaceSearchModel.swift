@@ -6,12 +6,17 @@
 //
 
 import Foundation
+import MapKit
 
 struct PlaceSearchModel: Codable {
     let result: [PlaceItem]
 }
 
-struct PlaceItem: Codable,Identifiable {
+struct PlaceItem: Codable,Identifiable,Equatable {
+    static func == (lhs: PlaceItem, rhs: PlaceItem) -> Bool {
+        return lhs.id == rhs.id
+    }
+    
     let placeId: String
     let placeName: String
     let latitude: Double?
@@ -23,7 +28,7 @@ struct PlaceItem: Codable,Identifiable {
     let thumbnailUrl: String
     let destination: String
     let tags: String?
-    let distance: Int
+    let distance: Double?
     let updateDate: String
     
     private enum CodingKeys: String, CodingKey {
@@ -38,8 +43,20 @@ struct PlaceItem: Codable,Identifiable {
         case updateDate = "update_date"
     }
     
-    
     var id: String {
         placeId
     }
+    
+    func isHasLocation() -> Bool {
+        return (latitude != nil && longitude != nil)
+    }
+    
+    func getCoordinate() -> CLLocationCoordinate2D {
+        if let latitude = latitude, let longitude = longitude {
+            return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        } else {
+            return CLLocationCoordinate2D(latitude: kDefaultLocation.latitude, longitude: kDefaultLocation.longitude)
+        }
+    }
+  
 }

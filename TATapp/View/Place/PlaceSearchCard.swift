@@ -47,30 +47,34 @@ struct PlaceSearchCard: View {
                 // Buttons....
                 
                 HStack{
-                    HStackButtonActionView(systemName: .constant("hand.thumbsup"),
+                    VStackButtonActionView(systemName: .constant("hand.thumbsup"),
                                            textButton: .constant("123K"),
-                                           isActive: .constant(true)) {
+                                           foregroundColor: .constant(Color.primary),
+                                           isDisable: .constant(true)) {
                        // vm.saveLiked()
                     }
                 
                     Spacer()
-                    HStackButtonActionView(systemName: .constant("bookmark"),
+                    VStackButtonActionView(systemName: .constant("bookmark"),
                                            textButton: .constant("Saved"),
-                                           isActive: .constant(true)) {
+                                           foregroundColor: .constant(Color.primary),
+                                           isDisable: .constant(true)) {
                         //vm.saveBookmark()
                     }
                     
                     Spacer()
-                    HStackButtonActionView(systemName: .constant("map"),
+                    VStackButtonActionView(systemName: .constant("map"),
                                            textButton: .constant("Map"),
-                                           isActive: .constant(true)) {
+                                           foregroundColor: .constant(Color.primary),
+                                           isDisable: .constant(true)) {
                         //vm.toggleMapIcon()
                     }
                     
                     Spacer()
-                    HStackButtonActionView(systemName: .constant("bubble.right"),
+                    VStackButtonActionView(systemName: .constant("bubble.right"),
                                            textButton: .constant("Review"),
-                                           isActive: .constant(true)) {
+                                           foregroundColor: .constant(Color.primary),
+                                           isDisable: .constant(true)) {
                         //vm.toogleComentIcon()
                     }
                 }
