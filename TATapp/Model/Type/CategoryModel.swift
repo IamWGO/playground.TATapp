@@ -19,6 +19,8 @@ enum PlaceType: String {
     var value: String {
         return self.rawValue
     }
+    
+     
 }
 
 

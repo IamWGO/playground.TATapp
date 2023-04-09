@@ -11,10 +11,10 @@ import MapKit
 struct MapSheetView: View {
     @ObservedObject var mainVM: MainViewModel
     @ObservedObject var vm: LocationsViewModel
-    @State var placeItem: AttractionDetail
+    @State var placeItem: PlaceItemModel
     @State var mapRegion: MKCoordinateRegion = MKCoordinateRegion()
     
-    init(mainVM: MainViewModel,placeItem: AttractionDetail){
+    init(mainVM: MainViewModel,placeItem: PlaceItemModel){
         self.mainVM = mainVM
         self.placeItem = placeItem
         _vm = ObservedObject(wrappedValue: LocationsViewModel(mainVM: mainVM))
@@ -24,58 +24,51 @@ struct MapSheetView: View {
         ZStack(alignment: .top) {
             
            if let placeNearByItems = mainVM.placeNearByItems {
-                
-                Map(coordinateRegion: $mapRegion,
-                             annotationItems: placeNearByItems,
-                             annotationContent: { placeItem in
-                             MapAnnotation(coordinate: placeItem.getCoordinate()) {
-                                 LocationMapAnnotationView(placeName: placeItem.placeName)
-                                     .scaleEffect(vm.mapLocation == placeItem ? 1 : 0.7)
-                                     .shadow(radius: 10)
-                                     .onTapGesture {
-                                         vm.showNextLocation(location: placeItem)
-                                     }
-                             }
-                         })
+               if placeNearByItems.count > 0 {
+                   Map(coordinateRegion: $mapRegion,
+                                annotationItems: placeNearByItems,
+                                annotationContent: { placeItem in
+                                MapAnnotation(coordinate: placeItem.getCoordinate()) {
+                                    LocationMapAnnotationView(placeName: placeItem.placeName)
+                                        .scaleEffect(vm.mapPlaceItem == placeItem ? 1 : 0.7)
+                                        .shadow(radius: 10)
+                                        .onTapGesture {
+                                            vm.showNextLocation(placeItem: placeItem)
+                                        }
+                                }
+                            })
+               } else {
+                   singlePinLocation
+               }
             } else {
-                Map(coordinateRegion: $mapRegion,
-                    annotationItems:  [placeItem],
-                    annotationContent: { placeItem in
-                    MapAnnotation(coordinate: placeItem.getCoordinate()) {
-                        LocationMapAnnotationView(placeName: placeItem.placeName)
-                        .scaleEffect(0.7)
-                            .shadow(radius: 10)
-                            .onTapGesture {
-                                //  vm.showNextLocation(location: location)
-                            }
-                    }
-                })
+                singlePinLocation
             }
-            
-           
-            /*Map(coordinateRegion: $mapRegion,
-                annotationItems:  [placeItem],
-                annotationContent: { placeItem in
-                MapAnnotation(coordinate: placeItem.getCoordinate()) {
-                    LocationMapAnnotationView()
-                    .scaleEffect(0.7)
-                        .shadow(radius: 10)
-                        .onTapGesture {
-                            //  vm.showNextLocation(location: location)
-                        }
-                }
-            })*/
-            
            
             topAreaSection
         }
         .onAppear {
             if let latitude = placeItem.latitude, let longitude = placeItem.longitude {
-                mapRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: latitude, longitude: longitude), span: MKCoordinateSpan(latitudeDelta: 1.0, longitudeDelta: 1.0))
+                mapRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: latitude, longitude: longitude),
+                                               span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1))
             }
         }
         .ignoresSafeArea(.all)
         
+    }
+    
+    private var singlePinLocation: some View {
+        Map(coordinateRegion: $mapRegion,
+            annotationItems:  [placeItem],
+            annotationContent: { placeItem in
+            MapAnnotation(coordinate: placeItem.getCoordinate()) {
+                LocationMapAnnotationView(placeName: placeItem.placeName)
+                .scaleEffect(0.7)
+                    .shadow(radius: 10)
+                    .onTapGesture {
+                        //  vm.showNextLocation(location: location)
+                    }
+            }
+        })
     }
     
     private var topAreaSection: some View {

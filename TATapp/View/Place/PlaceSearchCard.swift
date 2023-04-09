@@ -12,7 +12,7 @@ struct PlaceSearchCard: View {
     @ObservedObject var mainVM = MainViewModel()
     @State var isActive = false
     
-    @State var placeItem: PlaceItem = DummyplaceItem
+    @State var placeItem: PlaceItem
     
     var body: some View {
         
@@ -90,11 +90,5 @@ struct PlaceSearchCard: View {
         }
         .frame(maxHeight: 100)
         
-    }
-}
-
-struct PlaceSearchCard_Previews: PreviewProvider {
-    static var previews: some View {
-        PlaceSearchCard()
     }
 }

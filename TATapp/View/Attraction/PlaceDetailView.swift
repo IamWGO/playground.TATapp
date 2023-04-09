@@ -1,5 +1,5 @@
 //
-//  AttractionDetailView.swift
+//  PlaceDetailView.swift
 //  TATapp
 //
 //  Created by Waleerat Gottlieb on 2023-04-06.
@@ -8,26 +8,54 @@
 import SwiftUI
 import MapKit
 
-struct AttractionDetailView: View {
-    @EnvironmentObject var mainVM: MainViewModel
-    @ObservedObject var vm: AttractionViewModel
+struct PlaceDetailView: View {
     @Environment(\.colorScheme) var scheme
-    
-    @State var placeItem = DummyAttractionDetail
-    
-    @State var testIsLiked: Bool = false
-    
-    init(mainVM: MainViewModel){
-        _vm = ObservedObject(wrappedValue: AttractionViewModel(mainVM: mainVM))
-    }
-    
-    @State var isShowMap: Bool = false
+    @EnvironmentObject var mainVM: MainViewModel
+    @ObservedObject var vm: PlaceDetailViewModel = PlaceDetailViewModel()
+   
+    @State private var isShowMap: Bool = false
     
     var body: some View {
+        if let placeItem = mainVM.selectedPlaceDetail {
+            ZStack(alignment: .top) {
+                ScrollView(showsIndicators: false){
+                    placeItemUI(placeItem: placeItem)
+                }
+                .overlay(
+                    // Only Safe Area....
+                    (scheme == .dark ? Color.black : Color.white)
+                        .frame(height: mainVM.getTopSafeAreaSize())
+                        .ignoresSafeArea(.all, edges: .top)
+                        .opacity(vm.offset > 250 ? 1 : 0)
+                    ,alignment: .top
+                )
+                // Will always show on top of content
+                topAreaSection
+                
+                if vm.isOpenHoursDialog {
+                    openHoursDialog(placeItem: placeItem)
+                }
+            }
+            .sheet(isPresented: $vm.isShowMapSheet, content: {
+                    MapSheetView(mainVM: mainVM, placeItem: placeItem)
+            })
+            .sheet(isPresented: $vm.isShowMoreImagesSheet, content: {
+                //
+            })
+            .ignoresSafeArea()
+        } else {
+            LoadingView()
+        }
+        
+    }
+}
+
+extension PlaceDetailView {
+    private func placeItemUI(placeItem: PlaceItemModel) -> some View {
         ZStack(alignment: .top) {
             
             ScrollView(showsIndicators: false){
-                bodyContainer
+                bodyContainer(placeItem: placeItem)
             }
             .overlay(
                 // Only Safe Area....
@@ -37,16 +65,12 @@ struct AttractionDetailView: View {
                     .opacity(vm.offset > 250 ? 1 : 0)
                 ,alignment: .top
             )
-            
-            
             // Will always show on top of content
             topAreaSection
             
-            
             if vm.isOpenHoursDialog {
-                openHoursDialog
+                openHoursDialog(placeItem: placeItem)
             }
-            
         }
         .sheet(isPresented: $vm.isShowMapSheet, content: {
            // DispatchQueue.main.async {}
@@ -55,18 +79,8 @@ struct AttractionDetailView: View {
         .sheet(isPresented: $vm.isShowMoreImagesSheet, content: {
             //
         })
-       
         .ignoresSafeArea()
     }
-}
-
-struct AttractionDetailView_Previews: PreviewProvider {
-    static var previews: some View {
-        AttractionDetailView(mainVM: MainViewModel())
-    }
-}
-
-extension AttractionDetailView {
     
     private var topAreaSection: some View {
         HStack(alignment: .top, spacing: 8){
@@ -96,9 +110,9 @@ extension AttractionDetailView {
         .padding(.horizontal)
     }
     
-    private var bodyContainer: some View {
+    private func bodyContainer(placeItem: PlaceItemModel) -> some View {
         // Since Were Pinning Header View....
-        LazyVStack(alignment: .leading, spacing: 15, pinnedViews: [.sectionHeaders], content: {
+        return LazyVStack(alignment: .leading, spacing: 15, pinnedViews: [.sectionHeaders], content: {
             
             // Parallax Header....
             GeometryReader{ reader -> AnyView in
@@ -118,11 +132,12 @@ extension AttractionDetailView {
                         .cornerRadius(2)
                         .offset(y: (offset > 0 ? -offset : 0))
                     )
+                    
             }
             .frame(height: 250)
             
             // Cards......
-            Section(header: headerSection) {
+            Section(header: headerSection(placeItem: placeItem)) {
                 // Content Detail.....
                 VStack(alignment: .leading, spacing: 15) {
                     Text(placeItem.placeInformation.detail)
@@ -133,10 +148,11 @@ extension AttractionDetailView {
         })
     }
     
-    var headerSection: some View {
-        VStack(alignment: .leading, spacing: 0){
+    private func headerSection(placeItem: PlaceItemModel) -> some View {
+     
+        return VStack(alignment: .leading, spacing: 0){
             ZStack{
-                shortdetail
+                shortdetail(placeItem: placeItem)
             }
             // Default Frame = 60...
             // Top Fram = 40
@@ -160,13 +176,13 @@ extension AttractionDetailView {
        
     }
     
-    private var shortdetail: some View {
-        
-        VStack(alignment: .leading, spacing: 0){
+    private func shortdetail(placeItem: PlaceItemModel) -> some View {
+    
+       return VStack(alignment: .leading, spacing: 0){
             ZStack{
                 
                 VStack(alignment: .leading, spacing: 10, content: {
-                    headerDescription
+                    headerDescription(placeItem: placeItem)
                 })
                 .opacity(vm.offset > 200 ? 1 - Double((vm.offset - 200) / 50) : 1)
                  
@@ -177,7 +193,7 @@ extension AttractionDetailView {
             .frame(height: 60)
     
             if vm.offset > 250{
-                headerDescription
+                headerDescription(placeItem: placeItem)
             }
         }
         .padding(.horizontal)
@@ -186,8 +202,9 @@ extension AttractionDetailView {
         
     }
     
-    private var headerDescription: some View {
-        VStack(alignment: .leading, spacing: 6, content: {
+    private func headerDescription(placeItem: PlaceItemModel) -> some View {
+    
+       return VStack(alignment: .leading, spacing: 6, content: {
             
             HStack{
                 Spacer()
@@ -214,7 +231,7 @@ extension AttractionDetailView {
                 Image(systemName: "phone")
                     .modifier(TextModifier(fontStyle: .caption))
                 
-                Text(placeItem.contact.phones?[0] ?? "")
+                Text(mainVM.getContactNumbers(contacInfo: placeItem.contact))
                     .font(.caption)
                     .modifier(TextModifier(fontStyle: .caption))
             }
@@ -262,8 +279,8 @@ extension AttractionDetailView {
         
     }
     
-    private var openHoursDialog: some View {
-        ZStack(alignment: .top){
+    private func openHoursDialog(placeItem: PlaceItemModel) -> some View {
+        return ZStack(alignment: .top){
             Rectangle()
                 .fill(Color.theme.primary.opacity(0.3))
                 .onTapGesture {
@@ -276,36 +293,40 @@ extension AttractionDetailView {
                     VStack(alignment: .trailing, spacing: 8) {
                         
                         VStack {
-                            if openingHours.openNow {
-                                Text("Open Now")
-                                    .modifier(TextModifier(fontStyle: .body))
-                            } else {
-                                Text("Close Now")
-                                    .modifier(TextModifier(fontStyle: .body, foregroundColor: Color.red))
+                            if let openNow = openingHours.openNow {
+                                if openNow {
+                                    Text("Open Now")
+                                        .modifier(TextModifier(fontStyle: .body))
+                                } else {
+                                    Text("Close Now")
+                                        .modifier(TextModifier(fontStyle: .body, foregroundColor: Color.red))
+                                }
                             }
+                            
                         }.padding(.bottom)
-                        
-                        getOpenHours(day: openingHours.weekdayText.day1.day,
-                                     time: openingHours.weekdayText.day1.time)
-                        
-                        getOpenHours(day: openingHours.weekdayText.day2.day,
-                                     time: openingHours.weekdayText.day2.time)
-                        
-                        getOpenHours(day: openingHours.weekdayText.day3.day,
-                                     time: openingHours.weekdayText.day3.time)
-                        
-                        getOpenHours(day: openingHours.weekdayText.day4.day,
-                                     time: openingHours.weekdayText.day4.time)
-                        
-                        getOpenHours(day: openingHours.weekdayText.day5.day,
-                                     time: openingHours.weekdayText.day5.time)
-                        
-                        getOpenHours(day: openingHours.weekdayText.day6.day,
-                                     time: openingHours.weekdayText.day6.time)
-                        
-                        getOpenHours(day: openingHours.weekdayText.day7.day,
-                                     time: openingHours.weekdayText.day7.time)
-                        
+                        if let weekdayText = openingHours.weekdayText {
+                            if let openPeriod = weekdayText.day1 {
+                                getOpenHours(day: openPeriod.day, time: openPeriod.time)
+                            }
+                            if let openPeriod = weekdayText.day2 {
+                                getOpenHours(day: openPeriod.day, time: openPeriod.time)
+                            }
+                            if let openPeriod = weekdayText.day3 {
+                                getOpenHours(day: openPeriod.day, time: openPeriod.time)
+                            }
+                            if let openPeriod = weekdayText.day4 {
+                                getOpenHours(day: openPeriod.day, time: openPeriod.time)
+                            }
+                            if let openPeriod = weekdayText.day5 {
+                                getOpenHours(day: openPeriod.day, time: openPeriod.time)
+                            }
+                            if let openPeriod = weekdayText.day6 {
+                                getOpenHours(day: openPeriod.day, time: openPeriod.time)
+                            }
+                            if let openPeriod = weekdayText.day7 {
+                                getOpenHours(day: openPeriod.day, time: openPeriod.time)
+                            }
+                        }
                     }
                     .padding(20)
                     .background(Color.theme.background)

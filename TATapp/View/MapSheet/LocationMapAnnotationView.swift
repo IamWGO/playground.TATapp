@@ -39,7 +39,7 @@ struct LocationMapAnnotationView_Previews: PreviewProvider {
     static var previews: some View {
         ZStack {
             Color.black.ignoresSafeArea()
-            LocationMapAnnotationView()
+            LocationMapAnnotationView(placeName: "")
         }
     }
 }

@@ -12,8 +12,11 @@ struct ContentView: View {
     var body: some View {
         //LandingPageView(mainVM: mainVM)
         //AttractionDetailView(mainVM: mainVM)
-        MapSearchView()
-        //Text("Hello")
+        //MapSearchView()
+        
+        NavigationView {
+            HomeView()
+        }
     }
 }
 

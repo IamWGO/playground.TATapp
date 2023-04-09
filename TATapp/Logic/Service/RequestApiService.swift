@@ -17,17 +17,14 @@ enum QueryParameters {
     case SHASearch
 }
 
-class TATApiService {
-    
-    @Published var language: String = "th"
-    
+class RequestApiService {
+    @AppStorage("language") private var language: String = "TH"
+   
     @Published var placeSearchItems: PlaceSearchModel? = nil
     @Published var placeNearByItems: PlaceSearchModel? = nil
-    @Published var attractionDetail: AttractionDetailModel? = nil
-    @Published var accommodationDetail: AccommodationDetailModel?  = nil
-    @Published var restaurantDetail: RestaurantDetailModel?  = nil
-    @Published var shopDetail: ShopDetailModel? = nil
-    @Published var placeOtherDetail: PlaceOtherDetailModel?  = nil
+    
+    @Published var selectedPlaceDetail: PlaceItemResult? = nil
+    
     @Published var eventList: EventListModel?  = nil
     @Published var eventDetail: EventDetailModel?  = nil
     @Published var routeList: RouteListModel?  = nil
@@ -36,7 +33,7 @@ class TATApiService {
     @Published var shaDetail: SHADetailModel?  = nil
     
     //GetPlaceSearch
-    @Published var categorycodes:String = "RESTAURANT"
+    @Published var categorycodes:String?
     @Published var keyword:String?
     @Published var provinceName:String?
     @Published var radius:Int?
@@ -62,7 +59,6 @@ class TATApiService {
     var nearbySubscription: AnyCancellable?
     
     func getPlaceSearch() {
-       
         numberOfResult = 10
         pagenumber = 1
         parameters = getQueryParameter(parmeterOfRequest: .PlaceSearch)
@@ -79,9 +75,6 @@ class TATApiService {
     }
     
     func getPlaceNearBy() {
-        geolocation = "18.805148,98.901021"
-        radius = 100 
-        
         parameters = getQueryParameter(parmeterOfRequest: .PlaceNearBy)
         
         let apiRequest = APIStats.GetPlaceSearch.path
@@ -113,10 +106,10 @@ class TATApiService {
         // placeId = "P03000001"
         let apiRequest = APIStats.GetAttractionDetail(placeId: placeId).path 
         subscription = NetworkingManager.download(apiRequest: apiRequest, language: language, parameters: nil)
-            .decode(type: AttractionDetailModel.self, decoder: JSONDecoder())
+            .decode(type: PlaceItemResult.self, decoder: JSONDecoder())
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: NetworkingManager.handleCompletion, receiveValue: { [weak self] (result) in
-                self?.attractionDetail = result
+                self?.selectedPlaceDetail = result
                 self?.subscription?.cancel()
             })
         
@@ -140,10 +133,10 @@ class TATApiService {
          //placeId = "P02000001"
         let apiRequest = APIStats.GetAccommodationDetail(placeId: placeId).path
         subscription = NetworkingManager.download(apiRequest: apiRequest, language: language, parameters: nil)
-            .decode(type: AccommodationDetailModel.self, decoder: JSONDecoder())
+            .decode(type: PlaceItemResult.self, decoder: JSONDecoder())
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: NetworkingManager.handleCompletion, receiveValue: { [weak self] (result) in
-                self?.accommodationDetail = result
+                self?.selectedPlaceDetail = result
                 self?.subscription?.cancel()
             })
     }
@@ -151,10 +144,10 @@ class TATApiService {
     func getRestaurantDetail(placeId: String){
         let apiRequest = APIStats.GetRestaurantDetail(placeId: placeId).path
         subscription = NetworkingManager.download(apiRequest: apiRequest, language: language, parameters: nil)
-            .decode(type: RestaurantDetailModel.self, decoder: JSONDecoder())
+            .decode(type: PlaceItemResult.self, decoder: JSONDecoder())
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: NetworkingManager.handleCompletion, receiveValue: { [weak self] (result) in
-                self?.restaurantDetail = result
+                self?.selectedPlaceDetail = result
                 self?.subscription?.cancel()
             })
         
@@ -163,10 +156,10 @@ class TATApiService {
     func getShopDetail(placeId: String){
         let apiRequest = APIStats.GetShopDetail(placeId: placeId).path
         subscription = NetworkingManager.download(apiRequest: apiRequest, language: language, parameters: nil)
-            .decode(type: ShopDetailModel.self, decoder: JSONDecoder())
+            .decode(type: PlaceItemResult.self, decoder: JSONDecoder())
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: NetworkingManager.handleCompletion, receiveValue: { [weak self] (result) in
-                self?.shopDetail = result
+                self?.selectedPlaceDetail = result
                 self?.subscription?.cancel()
             })
     }
@@ -174,14 +167,15 @@ class TATApiService {
     func getPlaceOtherDetail(placeId: String){
         let apiRequest = APIStats.GetPlaceOtherDetail(placeId: placeId).path
         subscription = NetworkingManager.download(apiRequest: apiRequest, language: language, parameters: nil)
-            .decode(type: PlaceOtherDetailModel.self, decoder: JSONDecoder())
+            .decode(type: PlaceItemResult.self, decoder: JSONDecoder())
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: NetworkingManager.handleCompletion, receiveValue: { [weak self] (result) in
-                self?.placeOtherDetail = result
+                self?.selectedPlaceDetail = result
                 self?.subscription?.cancel()
             })
     }
     
+    // MARK: - Event
     func getEventList(){
         numberOfResult = 10
         pagenumber = 1
@@ -207,7 +201,7 @@ class TATApiService {
                 self?.subscription?.cancel()
             })
     }
-   
+   // MARK: - RecommenedRute
     func getRecommendedRouteList(){
         numberOfResult = 10
         pagenumber = 1
@@ -232,7 +226,7 @@ class TATApiService {
                 self?.subscription?.cancel()
             })
     }
-    
+    // MARK: - SHA Search
     func getSHASearch(){
         numberOfResult = 10
         pagenumber = 1
@@ -271,6 +265,12 @@ class TATApiService {
         
         switch (parmeterOfRequest){
         case .PlaceSearch:
+            if let categorycodes = categorycodes {
+                query["categorycodes"] = categorycodes
+            } else {
+                 query["categorycodes"] = "RESTAURANT"
+            }
+            
             query["categorycodes"] = categorycodes
             if let keyword = keyword {  query["keyword"] = keyword }
             if let geolocation = geolocation { query["geolocation"] = geolocation }
@@ -302,6 +302,25 @@ class TATApiService {
         if let filterByUpdateDate = filterByUpdateDate {  query["filterByUpdateDate"] = filterByUpdateDate }
         return query
         
+    }
+    
+    func clearAllQueryParameters(){
+        categorycodes = nil
+        keyword = nil
+        provinceName = nil
+        radius = nil
+        destination = nil
+        geolocation = nil
+        sortby = nil  // distance or distance[default]
+        day = nil
+        shatype = nil
+        provincename = nil
+        searchradius = nil
+        numberofresult = nil
+        shacategories = nil
+        pagenumber = nil
+        numberOfResult = nil
+        filterByUpdateDate = nil
     }
     
 }

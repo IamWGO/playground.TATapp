@@ -100,48 +100,7 @@ struct GridView : View {
     
     var body: some View{
         
-        LazyVGrid(columns: columns,spacing: 30){
-            
-            ForEach(placeItems){ item in
-                
-                ZStack(alignment: Alignment(horizontal: .trailing, vertical: .top)) {
-                    
-                    VStack(alignment: .leading, spacing: 20) {
-                        
-                        Text(item.placeName)
-                            .modifier(TextModifier(fontStyle: .BODY, fontWeight: .bold, foregroundColor: Color.white))
-                        
-                        Text(item.location.province)
-                            .modifier(TextModifier(fontStyle: .BODY))
-                            .padding(.top,10)
-                        
-                        HStack{
-                            
-                            Spacer(minLength: 0)
-                            
-                            Text("OK")
-                                .foregroundColor(.white)
-                        }
-                    }
-                    .padding()
-                    // image name same as color name....
-                    .background(Color.theme.button)
-                    .cornerRadius(20)
-                    // shadow....
-                    .shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: 5)
-                    
-                    // top Image....
-                    PlaceImageView(imageName: item.thumbnailUrl)
-                        .frame(width: 20)
-                        .padding()
-                        .background(Color.white.opacity(0.12))
-                        .clipShape(Circle())
-                    
-                }
-            }
-        }
-        .padding(.horizontal)
-        .padding(.top,25)
+        
     }
 }
 

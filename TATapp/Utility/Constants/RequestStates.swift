@@ -13,7 +13,7 @@ enum ScreenState {
 }
 
 /// For UI State for `Start, Rating Selection, Confirmation, result` screen.
-enum UIStates {
+enum RequestStates {
     case Landing
     case Home
     case GetPlaceSearch

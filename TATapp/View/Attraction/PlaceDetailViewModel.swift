@@ -7,9 +7,7 @@
 
 import SwiftUI
 
-class AttractionViewModel: ObservableObject {
-    
-    @Published var mainVM: MainViewModel
+class PlaceDetailViewModel: ObservableObject {
     @Published var isLiked: Bool = false
     @Published var isBookMark: Bool = false
     @Published var isCommentSheet: Bool = false
@@ -20,11 +18,7 @@ class AttractionViewModel: ObservableObject {
     
     
     @Published var offset: CGFloat = 0
-    
-    init(mainVM: MainViewModel) {
-        self.mainVM = mainVM
-    }
-    
+
     func saveLiked(){
         // TODO : - Save to database
         isLiked = !isLiked

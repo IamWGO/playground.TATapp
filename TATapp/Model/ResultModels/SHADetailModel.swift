@@ -23,7 +23,7 @@ struct SHADetail: Codable {
     let shaDetail: String?
     let location: Location
     let contact: ContactInfo
-    let openingHours: OpeningHours
+    let openingHours: BusinessHours
     let thumbnailUrl: String
     let pictureUrls: [String]
     let updateDate: String

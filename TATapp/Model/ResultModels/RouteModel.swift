@@ -46,10 +46,10 @@ struct RouteDetail: Decodable {
 
 struct DayDetails: Decodable {
     let day: Int
-    let place_stops: [PlaceDetails]
+    let place_stops: [RouteItem]
 }
 
-struct PlaceDetails: Decodable {
+struct RouteItem: Decodable {
     let place_id: String
     let place_name: String
     let latitude: Double

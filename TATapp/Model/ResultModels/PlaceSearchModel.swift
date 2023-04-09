@@ -26,8 +26,8 @@ struct PlaceItem: Codable,Identifiable,Equatable {
     let sha: SHA
     let location: Location
     let thumbnailUrl: String
-    let destination: String
-    let tags: String?
+    let destination: String?
+    let tags: [String]?
     let distance: Double?
     let updateDate: String
     

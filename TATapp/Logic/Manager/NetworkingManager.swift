@@ -79,6 +79,10 @@ class NetworkingManager {
     }
     
     static func download(apiRequest: String, language: String, parameters: [String : Any]?) -> AnyPublisher<Data, Error> {
+        print(">> ----------")
+        print(">> \(parameters ?? [:])")
+        print(">> \(apiRequest)")
+        
         // Define the URL and Authorization header
         let requestUrl = URL(string: apiRequest)!
         

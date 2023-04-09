@@ -8,17 +8,19 @@
 import Foundation
 import MapKit
 import SwiftUI
-
+import Combine
 
 class LocationsViewModel: ObservableObject {
     @Published var mainVM: MainViewModel
     // All loaded locations
-    @Published var locations: [PlaceItem]
+    @Published var placeItems: [PlaceItem]? = nil
     
     // Current location on map
-    @Published var mapLocation: PlaceItem {
+    @Published var mapPlaceItem: PlaceItem? {
         didSet {
-            updateMapRegion(location: mapLocation)
+            if let mapPlaceItem = mapPlaceItem {
+                updateMapRegion(placeItem: mapPlaceItem)
+            }
         }
     }
     
@@ -28,59 +30,77 @@ class LocationsViewModel: ObservableObject {
     
     // Show list of locations
     @Published var showLocationsList: Bool = false
-    
     // Show location detail via sheet
+    
     @Published var sheetLocation: PlaceItem? = nil
+    private var cancellables = Set<AnyCancellable>()
     
     init(mainVM: MainViewModel) {
         self.mainVM = mainVM
-        let locations = mainVM.placeNearByItems ?? []
-        self.locations = locations
-        self.mapLocation = locations.first!
+        self.setPinLocations()
     }
     
-    private func updateMapRegion(location: PlaceItem) {
-       /* withAnimation(.easeInOut) {
+    func setPinLocations(){
+        
+        mainVM.$placeNearByItems
+            .sink{ (placeNearByItems) in
+                if let placeItems = placeNearByItems {
+                    print(">>> placeItems.count \(placeItems.count)")
+                    if placeItems.count > 0 {
+                        self.placeItems = placeItems
+                        self.mapPlaceItem = placeItems.first!
+                    }
+                }
+            }
+            .store(in: &cancellables)
+        
+        
+    }
+    
+    private func updateMapRegion(placeItem: PlaceItem) {
+        withAnimation(.easeInOut) {
             mapRegion = MKCoordinateRegion(
-                center: location.getCoordinate(),
+                center: placeItem.getCoordinate(),
                 span: mapSpan)
-        }*/
+        }
     }
     
     func toggleLocationsList() {
         withAnimation(.easeInOut) {
-//            showLocationsList = !showLocationsList
+            showLocationsList = !showLocationsList
             showLocationsList.toggle()
         }
     }
     
-    func showNextLocation(location: PlaceItem) {
+    func showNextLocation(placeItem: PlaceItem) {
         withAnimation(.easeInOut) {
-            mapLocation = location
+            mapPlaceItem = placeItem
             showLocationsList = false
         }
     }
     
     func nextButtonPressed() {
+        guard let placeItems = placeItems else { return }
+        
         // Get the current index
-        guard let currentIndex = locations.firstIndex(where: { $0 == mapLocation }) else {
+        guard let currentIndex = placeItems.firstIndex(where: { $0 == mapPlaceItem }) else {
             print("Could not find current index in locations array! Should never happen.")
             return
         }
         
         // Check if the currentIndex is valid
         let nextIndex = currentIndex + 1
-        guard locations.indices.contains(nextIndex) else {
+        guard placeItems.indices.contains(nextIndex) else {
             // Next index is NOT valid
             // Restart from 0
-            guard let firstLocation = locations.first else { return }
-            showNextLocation(location: firstLocation)
+            guard let firstLocation = placeItems.first else { return }
+            showNextLocation(placeItem: firstLocation)
             return
         }
         
         // Next index IS valid
-        let nextLocation = locations[nextIndex]
-        showNextLocation(location: nextLocation)
+        let nextLocation = placeItems[nextIndex]
+        showNextLocation(placeItem: nextLocation)
     }
     
 }
