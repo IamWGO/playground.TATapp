@@ -116,13 +116,9 @@ extension MapSearchView {
                             .padding()
                             .frame(maxWidth: maxWidthForIpad)
                             .frame(maxWidth: .infinity)
-                        /*
                             .transition(.asymmetric(
                                 insertion: .move(edge: isSwiftLeft ? .trailing : .leading),
-                                removal: .move(edge: isSwiftLeft ? .leading : .trailing)))*/
-                            .transition(.asymmetric(
-                                insertion: .move(edge: .leading),
-                                removal: .move(edge: .trailing)))
+                                removal: .move(edge: isSwiftLeft ? .leading : .trailing)))
                             .modifier(SwipeGestureModifier( swipeDirection: $swipeDirection ))
                             .onChange(of: swipeDirection) { direction in
                                
@@ -136,7 +132,6 @@ extension MapSearchView {
                                 }
                                 swipeDirection = .notAllow
                             }
-                           
                     }
                 }
             } else {

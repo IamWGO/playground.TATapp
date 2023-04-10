@@ -17,6 +17,8 @@ struct LoadingView: View {
                 .background(.ultraThinMaterial)
                 .cornerRadius(20)
         }
+        .modifier(HiddenNavigationBarModifier())
+        .ignoresSafeArea(.all)
         
         
     }

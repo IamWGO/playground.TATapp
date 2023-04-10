@@ -17,7 +17,7 @@ enum QueryParameters {
 }
 
 class RequestApiService {
-    @AppStorage("language") private var language: String = "TH"
+    @AppStorage("language") private var language: String = "EN"
    
     @Published var placeSearchItems: PlaceSearchModel? = nil
     @Published var placeNearByItems: PlaceSearchModel? = nil

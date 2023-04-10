@@ -26,7 +26,7 @@ class LocationsViewModel: ObservableObject {
     
     // Current region on map
     @Published var mapRegion: MKCoordinateRegion = MKCoordinateRegion()
-    let mapSpan = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
+    let mapSpan = MKCoordinateSpan(latitudeDelta: 0.03, longitudeDelta: 0.03)
     //Setting the zoom level for MKMap
     // Show list of locations
     @Published var showLocationsList: Bool = false
@@ -73,11 +73,11 @@ class LocationsViewModel: ObservableObject {
     }
     
     func showNextLocation(placeItem: PlaceSearchItem) {
-        withAnimation(.easeInOut) {
-            DispatchQueue.main.async {
+        DispatchQueue.main.async {
+            withAnimation(.easeInOut) {
                 self.mapPlaceItem = placeItem
+                self.showLocationsList = false
             }
-            showLocationsList = false
         }
     }
     
