@@ -35,7 +35,7 @@ struct LocationsListView: View {
 
 extension LocationsListView {
     
-    private func listRowView(placeItem: PlaceItem) -> some View {
+    private func listRowView(placeItem: PlaceSearchItem) -> some View {
         HStack {
             PlaceImageView(imageName: placeItem.thumbnailUrl)
                 .frame(width: 45, height: 45)

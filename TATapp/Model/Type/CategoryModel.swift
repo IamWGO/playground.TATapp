@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-enum PlaceType: String {
+enum PlaceSearchType: String {
     case ALL //All Category,
     case OTHER //Other Place Type,
     case SHOP //Shopping Type,
@@ -26,7 +26,7 @@ enum PlaceType: String {
 
 struct CategoryModel: Identifiable{
     let name: String
-    let placeType: PlaceType
+    let placeType: PlaceSearchType
     let systemName: String
     let backgroundColor: Color
     let foregroundColor: Color

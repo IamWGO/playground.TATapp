@@ -8,8 +8,7 @@
 import SwiftUI
 
 struct LocationMapAnnotationView: View {
-    @State var placeName: String
-    let accentColor = Color.theme.primary
+    let accentColor = Color.theme.button
     
     var body: some View {
             VStack(spacing: 0) {
@@ -39,7 +38,7 @@ struct LocationMapAnnotationView_Previews: PreviewProvider {
     static var previews: some View {
         ZStack {
             Color.black.ignoresSafeArea()
-            LocationMapAnnotationView(placeName: "")
+            LocationMapAnnotationView()
         }
     }
 }

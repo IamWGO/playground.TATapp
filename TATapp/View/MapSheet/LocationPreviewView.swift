@@ -12,18 +12,17 @@ struct LocationPreviewView: View {
     @EnvironmentObject var mainVM: MainViewModel
     @EnvironmentObject private var vm: LocationsViewModel
     
-    let placeItem: PlaceItem
+    let placeItem: PlaceSearchItem
     
     var body: some View {
         HStack(alignment: .bottom, spacing: 0) {
-            VStack(alignment: .leading, spacing: 16) {
-                imageSection
+            VStack {
+                HStack {
+                    imageSection
+                    Spacer()
+                    learnMoreButton
+                }
                 titleSection
-            }
-            
-            VStack(spacing: 8) {
-                learnMoreButton
-                nextButton
             }
         }
         .padding(20)
@@ -54,18 +53,18 @@ extension LocationPreviewView {
     private var titleSection: some View {
         VStack(alignment: .leading, spacing: 4) {
             Text(placeItem.placeName)
-                .font(.title2)
-                .fontWeight(.bold)
+                .modifier(TextModifier(fontStyle: .title3))
             
             Text(mainVM.getDistrictAndProvince(location: placeItem.location))
-                .font(.subheadline)
+                .modifier(TextModifier(fontStyle: .caption))
         }
+        
         .frame(maxWidth: .infinity, alignment: .leading)
     }
     
     private var learnMoreButton: some View {
         Button {
-            vm.sheetLocation = placeItem
+            mainVM.getPlaceDetail(placeSearchItem: placeItem)
         } label: {
             Text("Learn more")
                 .font(.headline)

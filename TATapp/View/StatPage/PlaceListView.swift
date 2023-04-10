@@ -13,8 +13,6 @@ struct PlaceListView: View {
     
     var columns = Array(repeating: GridItem(.flexible(), spacing: 20), count: isIpad ? 2 : 1)
     
-    @State private var shouldNavigate = false
-    
     // MARK: - Body View
     var body: some View {
         ZStack {
@@ -47,25 +45,16 @@ struct PlaceListView: View {
         }
         .onAppear {
             mainVM.selectedplaceId = nil
-            shouldNavigate = false
         }
-        .onChange(of: mainVM.selectedplaceId, perform: { placeId in
-            if let _ = placeId {
-                shouldNavigate = true
-            }
-        })
-         
-        .background(
-            NavigationLink(destination: PlaceDetailView(), isActive:  $shouldNavigate) {
-                EmptyView()
-            }
-        )
+        .sheet(item: $mainVM.selectedPlaceDetail) { _ in
+            PlaceDetailView()
+        }
         .modifier(HiddenNavigationBarModifier())
         .ignoresSafeArea()
     }
     
     
-    private func getPlaceItemUI(placeSearchItem: PlaceItem) -> some View {
+    private func getPlaceItemUI(placeSearchItem: PlaceSearchItem) -> some View {
         
         return ZStack(alignment: Alignment(horizontal: .leading, vertical: .top)) {
             

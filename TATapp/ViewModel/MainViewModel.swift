@@ -14,8 +14,8 @@ class MainViewModel: ObservableObject {
 
     let requestService: RequestApiService
     // Api result parameters
-    @Published var placeSearchItems: [PlaceItem]? = nil
-    @Published var placeNearByItems: [PlaceItem]? = nil
+    @Published var placeSearchItems: [PlaceSearchItem]? = nil
+    @Published var placeNearByItems: [PlaceSearchItem]? = nil
     
     @Published var eventItems: [EventItem]?  = nil
     @Published var eventDetail: EventDetail? = nil
@@ -27,7 +27,7 @@ class MainViewModel: ObservableObject {
     //Select request api API
     @Published var currentState: RequestStates
     //Use when select search category
-    @Published var currentPlaceType: PlaceType? = nil
+    @Published var currentPlaceType: PlaceSearchType? = nil
     @Published var currentPinLocation: String? = nil
     
     @Published var selectedplaceId: String? = nil
@@ -45,7 +45,7 @@ class MainViewModel: ObservableObject {
 
     init() {
         self.requestService = RequestApiService()
-        self.currentState = RequestStates.GetAttractionDetail
+        self.currentState = RequestStates.GetPlaceNearBy
         
         self.apiRequestPublisher()
         self.mainPublisher()
@@ -192,9 +192,23 @@ class MainViewModel: ObservableObject {
     }
     
     // MARK: - Request STATE
-    func setRequestStateForSearchPlace(placeType: PlaceType) {
+    func setRequestStateForSearchPlace(placeType: PlaceSearchType) {
         requestService.categorycodes = placeType.value
         currentState = RequestStates.GetPlaceSearch
+    }
+    
+    func getPlaceDetail(placeSearchItem: PlaceSearchItem){
+        selectedCategoryCode = placeSearchItem.categoryCode
+        selectedplaceId = placeSearchItem.placeId
+       
+        switch(placeSearchItem.categoryCode) {
+        case "OTHER": self.currentState = RequestStates.GetPlaceOtherDetail
+        case "SHOP": self.currentState = RequestStates.GetShopDetail
+        case "RESTAURANT": self.currentState = RequestStates.GetRestaurantDetail
+        case "ACCOMMODATION": self.currentState = RequestStates.GetAccommodationDetail
+        case "ATTRACTION": self.currentState = RequestStates.GetAttractionDetail
+        default: break
+        }
     }
     
     private func getPreviewByUIState(currentState: RequestStates){
@@ -203,7 +217,11 @@ class MainViewModel: ObservableObject {
         
         switch (currentState) {
         case .None: print("-> No query") // TODO : - Some query
-        case .GetPlaceNearBy: requestService.getPlaceNearBy()
+        case .GetPlaceNearBy:
+            requestService.geolocation = "13.920694,100.600622"
+            requestService.radius = 200000
+            requestService.getPlaceNearBy()
+        
         case .GetPlaceSearch: requestService.getPlaceSearch()
         case .GetAttractionDetail:
             if let placeId = selectedplaceId {
@@ -254,19 +272,7 @@ class MainViewModel: ObservableObject {
     }
  
     // MARK: - UI Helper
-    func getPlaceDetail(placeSearchItem: PlaceItem){
-        selectedCategoryCode = placeSearchItem.categoryCode
-        selectedplaceId = placeSearchItem.placeId
-       
-        switch(placeSearchItem.categoryCode) {
-        case "OTHER": self.currentState = RequestStates.GetPlaceOtherDetail
-        case "SHOP": self.currentState = RequestStates.GetShopDetail
-        case "RESTAURANT": self.currentState = RequestStates.GetRestaurantDetail
-        case "ACCOMMODATION": self.currentState = RequestStates.GetAccommodationDetail
-        case "ATTRACTION": self.currentState = RequestStates.GetAttractionDetail
-        default: break
-        }
-    }
+
     
     func getShaTypeDescription(sha: SHA) -> String {
         return "\(sha.shaTypeDescription)"

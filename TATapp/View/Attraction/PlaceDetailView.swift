@@ -79,6 +79,7 @@ extension PlaceDetailView {
                 openHoursDialog(placeItem: placeItem)
             }
         }
+        
         .sheet(isPresented: $vm.isShowMapSheet, content: {
            // DispatchQueue.main.async {}
             MapSheetView(mainVM: mainVM, placeItem: placeItem)
@@ -170,10 +171,10 @@ extension PlaceDetailView {
             if vm.offset > 250{
                 headerDescription(placeItem: placeItem)
                     .padding(.horizontal)
-                    .padding(.top, 20)
+                    
             }
         }
-        .frame(height: vm.offset > 250 ? 200 : 160) //header with top image
+        .frame(height: vm.offset > 250 ? 200 : 140) //header with top image
         .background(scheme == .dark ? Color.black : Color.white)
         .overlay(alignment: .bottom) {
             Rectangle()
@@ -274,7 +275,7 @@ extension PlaceDetailView {
             }
             
         })
-        
+        .padding(.top, 20)
         .padding(.bottom)
         
     }

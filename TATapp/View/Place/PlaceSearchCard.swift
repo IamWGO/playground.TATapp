@@ -12,7 +12,7 @@ struct PlaceSearchCard: View {
     @ObservedObject var mainVM = MainViewModel()
     @State var isActive = false
     
-    @State var placeItem: PlaceItem
+    @State var placeItem: PlaceSearchItem
     
     var body: some View {
         

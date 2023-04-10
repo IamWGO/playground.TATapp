@@ -72,7 +72,6 @@ class RequestApiService {
     }
     
     func getPlaceNearBy() {
-        radius = 10000
         parameters = getQueryParameter(parmeterOfRequest: .PlaceSearch)
         
         let apiRequest = APIStats.GetPlaceSearch.path

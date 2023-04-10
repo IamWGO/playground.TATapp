@@ -9,8 +9,18 @@ import SwiftUI
 import MapKit
 
 struct MapSearchView: View {
-    @EnvironmentObject var mainVM: MainViewModel
-    @EnvironmentObject private var vm: LocationsViewModel
+    @ObservedObject var mainVM: MainViewModel
+    @ObservedObject var vm: LocationsViewModel
+    
+    @State var swipeDirection: SwipeDirection = .notAllow
+    @State var isSwiftLeft: Bool = false
+    
+    init(mainVM: MainViewModel){
+        self.mainVM = mainVM
+        _vm = ObservedObject(wrappedValue: LocationsViewModel(mainVM: mainVM))
+    }
+   
+    
     let maxWidthForIpad: CGFloat = 700
     
     var body: some View {
@@ -30,39 +40,42 @@ struct MapSearchView: View {
                 locationsPreviewStack
             }
         }
-        .sheet(item: $vm.sheetLocation, onDismiss: nil) { location in
-            //LocationDetailView(location: location)
-            Text(">> LocationDetailView")
+        .sheet(item: $mainVM.selectedPlaceDetail) { _ in
+            PlaceDetailView()
         }
+        
     }
 }
 
 extension MapSearchView {
     
     private var header: some View {
-        VStack {
+        VStack(alignment: .leading) {
             if let mapPlaceItem = vm.mapPlaceItem {
                 Button(action: vm.toggleLocationsList) {
-                    Text(mapPlaceItem.placeName)
-                        .font(.title2)
-                        .fontWeight(.black)
-                        .foregroundColor(.primary)
-                        .frame(height: 55)
-                        .frame(maxWidth: .infinity)
-                        .animation(.none, value: vm.mapPlaceItem)
-                        .overlay(alignment: .leading) {
-                            Image(systemName: "arrow.down")
-                                .font(.headline)
-                                .foregroundColor(.primary)
-                                .padding()
-                                .rotationEffect(Angle(degrees: vm.showLocationsList ? 180 : 0))
-                        }
+                    HStack(spacing: 10){
+                        Image(systemName: "arrow.down")
+                            .modifier(TextModifier(fontStyle: .title3))
+                            .foregroundColor(.primary)
+                            .padding()
+                            .rotationEffect(Angle(degrees: vm.showLocationsList ? 180 : 0))
+                        
+                        Text(mapPlaceItem.placeName)
+                            .modifier(TextModifier(fontStyle: .title3, alignment: .leading))
+                            .frame(height: 55)
+                            .animation(.none, value: vm.mapPlaceItem)
+                            
+                       Spacer()
+                    }
+                    
                 }
             }
             
             
             if vm.showLocationsList {
                 LocationsListView()
+                .environmentObject(vm)
+                .environmentObject(mainVM)
             }
         }
         .background(.thickMaterial)
@@ -75,9 +88,16 @@ extension MapSearchView {
             annotationItems: mainVM.placeNearByItems ?? [],
             annotationContent: { placeItem in
             MapAnnotation(coordinate: placeItem.getCoordinate()) {
-                LocationMapAnnotationView(placeName: placeItem.placeName)
+                LocationMapAnnotationView()
                     .scaleEffect(vm.mapPlaceItem == placeItem ? 1 : 0.7)
                     .shadow(radius: 10)
+                    .background(
+                        Circle()
+                            .fill(vm.mapPlaceItem == placeItem ? Color.red : Color.clear )
+                            .frame(width: 20)
+                            .shadow(radius: 10)
+                            .offset(y: 5)
+                    )
                     .onTapGesture {
                         vm.showNextLocation(placeItem: placeItem)
                     }
@@ -87,24 +107,43 @@ extension MapSearchView {
     
     private var locationsPreviewStack: some View {
         ZStack {
-            if let placeItems = vm.placeItems{
+            if let placeItems = vm.placeItems {
                 ForEach(placeItems) { placeItem in
                     if vm.mapPlaceItem == placeItem {
                         LocationPreviewView(placeItem: placeItem)
+                            .environmentObject(vm)
                             .shadow(color: Color.black.opacity(0.3), radius: 20)
                             .padding()
                             .frame(maxWidth: maxWidthForIpad)
                             .frame(maxWidth: .infinity)
+                        /*
                             .transition(.asymmetric(
-                                insertion: .move(edge: .trailing),
-                                removal: .move(edge: .leading)))
+                                insertion: .move(edge: isSwiftLeft ? .trailing : .leading),
+                                removal: .move(edge: isSwiftLeft ? .leading : .trailing)))*/
+                            .transition(.asymmetric(
+                                insertion: .move(edge: .leading),
+                                removal: .move(edge: .trailing)))
+                            .modifier(SwipeGestureModifier( swipeDirection: $swipeDirection ))
+                            .onChange(of: swipeDirection) { direction in
+                               
+                                if  direction == SwipeDirection.left  {
+                                    isSwiftLeft = true
+                                    vm.nextButtonPressed()
+                                }
+                                if  direction == SwipeDirection.right  {
+                                    isSwiftLeft = false
+                                    vm.PreviousButtonPressed()
+                                }
+                                swipeDirection = .notAllow
+                            }
+                           
                     }
                 }
             } else {
-                EmptyView()
+                LoadingView()
             }
-            
         }
+        
     }
     
 }

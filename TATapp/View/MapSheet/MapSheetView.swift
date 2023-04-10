@@ -9,6 +9,7 @@ import SwiftUI
 import MapKit
 
 struct MapSheetView: View {
+    
     @ObservedObject var mainVM: MainViewModel
     @ObservedObject var vm: LocationsViewModel
     @State var placeItem: PlaceItemModel
@@ -29,7 +30,7 @@ struct MapSheetView: View {
                                 annotationItems: placeNearByItems,
                                 annotationContent: { placeItem in
                                 MapAnnotation(coordinate: placeItem.getCoordinate()) {
-                                    LocationMapAnnotationView(placeName: placeItem.placeName)
+                                    LocationMapAnnotationView()
                                         .scaleEffect(vm.mapPlaceItem == placeItem ? 1 : 0.7)
                                         .shadow(radius: 10)
                                         .onTapGesture {
@@ -61,7 +62,7 @@ struct MapSheetView: View {
             annotationItems:  [placeItem],
             annotationContent: { placeItem in
             MapAnnotation(coordinate: placeItem.getCoordinate()) {
-                LocationMapAnnotationView(placeName: placeItem.placeName)
+                LocationMapAnnotationView()
                 .scaleEffect(0.7)
                     .shadow(radius: 10)
                     .onTapGesture {
@@ -74,9 +75,9 @@ struct MapSheetView: View {
     private var topAreaSection: some View {
         VStack{
             HStack{
-                TopAreaIconActionView(systemName: "chevron.backward", action: {
-                    // do something
-                })
+                /*TopAreaIconActionView(systemName: "chevron.backward", action: {
+                    presentationMode.wrappedValue.dismiss()
+                })*/
                 
                 Text(placeItem.placeName)
                     .modifier(TextModifier(fontStyle: .title3))

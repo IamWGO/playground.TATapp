@@ -9,11 +9,11 @@ import Foundation
 import MapKit
 
 struct PlaceSearchModel: Codable {
-    let result: [PlaceItem]
+    let result: [PlaceSearchItem]
 }
 
-struct PlaceItem: Codable,Identifiable,Equatable {
-    static func == (lhs: PlaceItem, rhs: PlaceItem) -> Bool {
+struct PlaceSearchItem: Codable,Identifiable,Equatable {
+    static func == (lhs: PlaceSearchItem, rhs: PlaceSearchItem) -> Bool {
         return lhs.id == rhs.id
     }
     
