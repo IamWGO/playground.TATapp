@@ -46,6 +46,10 @@ struct PlaceInformation: Codable {
 struct AccommodationType: Codable {
     let code, description: String
 }
+struct Service: Codable {
+    let code, description: String
+}
+
 struct ShopType: Codable {
     let code, description: String
 }

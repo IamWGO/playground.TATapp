@@ -22,14 +22,14 @@ struct PlaceItem: Codable,Identifiable,Equatable {
     let latitude: Double?
     let longitude: Double?
     let categoryCode: String
-    let categoryDescription: String
+    let categoryDescription: String?
     let sha: SHA
     let location: Location
     let thumbnailUrl: String
     let destination: String?
     let tags: [String]?
     let distance: Double?
-    let updateDate: String
+    let updateDate: String?
     
     private enum CodingKeys: String, CodingKey {
         case placeId = "place_id"

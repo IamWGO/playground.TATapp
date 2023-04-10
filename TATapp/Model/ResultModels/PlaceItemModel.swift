@@ -26,7 +26,7 @@ struct PlaceItemModel: Codable,Identifiable {
     let webPictureUrls: [String]?
     let mobilePictureUrls: [String]?
     let facilities: [Facility]?
-    let services: [String]?
+    let services: [Service]?
     let paymentMethods: [PaymentMethod]?
     let openingHours: BusinessHours?
     let howToTravel: String?
@@ -34,10 +34,9 @@ struct PlaceItemModel: Codable,Identifiable {
     let tags: [String]?
     let standard: String?
     let awards: [String]?
-    let updateDate: String?
     let rooms: [String]?
     let hitScore: Double?
-
+    let updateDate: String?
     
     enum CodingKeys: String, CodingKey {
         case placeId = "place_id"
@@ -61,9 +60,9 @@ struct PlaceItemModel: Codable,Identifiable {
         case tags
         case standard
         case awards
-        case updateDate = "update_date"
         case rooms
         case hitScore = "hit_score"
+        case updateDate = "update_date"
     }
     
     var id: String {

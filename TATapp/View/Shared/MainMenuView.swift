@@ -8,12 +8,20 @@
 import SwiftUI
 
 struct MainMenuView: View {
+    @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var mainVM: MainViewModel
+    
+    @State var isShowBackButton: Bool = false
     
     var body: some View {
         VStack(spacing: 0) {
             // Menu Icon
             HStack{
+                if isShowBackButton {
+                    TopAreaIconActionView(systemName: "chevron.backward", action: {
+                        presentationMode.wrappedValue.dismiss()
+                    })
+                }
                 
                 Spacer()
                 menuIcon

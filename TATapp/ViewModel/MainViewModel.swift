@@ -25,7 +25,7 @@ class MainViewModel: ObservableObject {
     @Published var shaDetail: SHADetail?  = nil
     
     //Select request api API
-    @Published var currentState: RequestStates = RequestStates.Home
+    @Published var currentState: RequestStates
     //Use when select search category
     @Published var currentPlaceType: PlaceType? = nil
     @Published var currentPinLocation: String? = nil
@@ -39,11 +39,13 @@ class MainViewModel: ObservableObject {
     
     // UI
     @Published var isShowCategotyMenu: Bool = false
+    @Published var isLoading: Bool = false
+    
     private var cancellables = Set<AnyCancellable>()
 
     init() {
         self.requestService = RequestApiService()
-        self.currentState = RequestStates.Landing
+        self.currentState = RequestStates.GetAttractionDetail
         
         self.apiRequestPublisher()
         self.mainPublisher()
@@ -55,6 +57,7 @@ class MainViewModel: ObservableObject {
             .sink{ (result) in
                 if let result = result {
                     self.placeSearchItems = result.result
+                    self.isLoading = false
                     print("** placeSearchItems =  \(result.result.count)")
                 }
             }
@@ -64,16 +67,17 @@ class MainViewModel: ObservableObject {
             .sink{ (result) in
                 if let result = result {
                     self.placeNearByItems = result.result
-                    print("** placeNearByItems = \(result.result.count)")
+                    self.isLoading = false
+                    print(">> placeNearByItems = \(result.result.count)")
                 }
             }
             .store(in: &cancellables)
-       
          
         requestService.$selectedPlaceDetail
             .sink{ (result) in
                 if let result = result {
                     self.selectedPlaceDetail = result.result
+                    self.isLoading = false
                     print("** attractionDetail = \(result.result.placeName)")
                 }
             }
@@ -84,6 +88,7 @@ class MainViewModel: ObservableObject {
             .sink{ [weak self] (result) in
                 if let result = result {
                     self?.eventItems = result.result
+                    self?.isLoading = false
                     print("** eventList = \(result.result.count)")
                 }
             }
@@ -93,6 +98,7 @@ class MainViewModel: ObservableObject {
             .sink{ [weak self] (result) in
                 if let result = result {
                     self?.eventDetail = result.result
+                    self?.isLoading = false
                     print("** eventDetail = \(result.result.eventName)")
                 }
             }
@@ -102,6 +108,7 @@ class MainViewModel: ObservableObject {
             .sink{ [weak self] (result) in
                 if let result = result {
                     self?.routeItems = result.result
+                    self?.isLoading = false
                     print("** routeList = \(result.result.count)")
                 }
             }
@@ -111,6 +118,7 @@ class MainViewModel: ObservableObject {
             .sink{ [weak self] (result) in
                 if let result = result {
                     self?.routeDetail = result.result
+                    self?.isLoading = false
                     print("** routeDetail = \(result.result.days)")
                 }
             }
@@ -121,6 +129,7 @@ class MainViewModel: ObservableObject {
             .sink{ [weak self] (result) in
                 if let result = result {
                     self?.shaSearchItems = result.result
+                    self?.isLoading = false
                     print("** shaSearchItems = \(result.result.count)")
                 }
             }
@@ -130,6 +139,7 @@ class MainViewModel: ObservableObject {
             .sink{ [weak self] (result) in
                 if let result = result {
                     self?.shaDetail = result.result
+                    self?.isLoading = false
                     print("** shaDetail = \(result.result.shaName)")
                 }
             }
@@ -156,8 +166,6 @@ class MainViewModel: ObservableObject {
                 } else {
                     self.currentState = RequestStates.GetEventList
                 }
-                
-                
             }
         }
         .store(in: &cancellables)
@@ -165,8 +173,9 @@ class MainViewModel: ObservableObject {
         $selectedPlaceDetail.sink{ result in
             if let placeItem = result {
                 if let latitude = placeItem.latitude, let longitude = placeItem.longitude {
+                    print("** requestService.getPlaceNearBy()")
                     self.requestService.geolocation = "\(latitude),\(longitude)"
-                    self.requestService.getPlaceNearBy()
+                    self.currentState = RequestStates.GetPlaceNearBy
                 }
             }
         }
@@ -188,11 +197,12 @@ class MainViewModel: ObservableObject {
         currentState = RequestStates.GetPlaceSearch
     }
     
-    func getPreviewByUIState(currentState: RequestStates){
+    private func getPreviewByUIState(currentState: RequestStates){
+        
+        isLoading = true
         
         switch (currentState) {
-        case .Landing: print("-> No query") // TODO : - Some query
-        case .Home: requestService.getPlaceSearch()
+        case .None: print("-> No query") // TODO : - Some query
         case .GetPlaceNearBy: requestService.getPlaceNearBy()
         case .GetPlaceSearch: requestService.getPlaceSearch()
         case .GetAttractionDetail:
@@ -201,6 +211,7 @@ class MainViewModel: ObservableObject {
             }
             
         case .GetAccommodationDetail:
+            selectedplaceId = "P02000010"
             if let placeId = selectedplaceId {
                 requestService.getAccommodationDetail(placeId: placeId)
             }

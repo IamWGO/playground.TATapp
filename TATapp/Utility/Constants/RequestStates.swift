@@ -14,8 +14,7 @@ enum ScreenState {
 
 /// For UI State for `Start, Rating Selection, Confirmation, result` screen.
 enum RequestStates {
-    case Landing
-    case Home
+    case None
     case GetPlaceSearch
     case GetPlaceNearBy
     case GetAttractionDetail

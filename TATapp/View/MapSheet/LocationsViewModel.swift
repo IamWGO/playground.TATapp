@@ -45,7 +45,6 @@ class LocationsViewModel: ObservableObject {
         mainVM.$placeNearByItems
             .sink{ (placeNearByItems) in
                 if let placeItems = placeNearByItems {
-                    print(">>> placeItems.count \(placeItems.count)")
                     if placeItems.count > 0 {
                         self.placeItems = placeItems
                         self.mapPlaceItem = placeItems.first!

@@ -24,7 +24,6 @@ struct HomeView: View {
                 ForEach(dataItems){ item in
                     Button {
                         mainVM.currentPlaceType = item.placeType
-                        shouldNavigate.toggle()
                     } label: {
                         getCard(item: item)
                     }
@@ -32,15 +31,20 @@ struct HomeView: View {
             }
             .padding(.horizontal)
             .padding(.top,25)
-            
+        }
+        .onAppear {
+            self.shouldNavigate = false
+        }
+        .onChange(of: mainVM.currentPlaceType, perform: { placeType in
+            if let _ = placeType {
+                self.shouldNavigate = true
+            }
+        })
+        .background(
             NavigationLink(destination: PlaceListView(), isActive: $shouldNavigate) {
                 EmptyView()
             }
-        }
-        .onReceive(NotificationCenter.default.publisher(for: Notification.Name("SearchPlaceNav"))) { _ in
-            self.shouldNavigate = true
-        }
-        .background(BackgroundImageView())
+        )
         .ignoresSafeArea()
         //.modifier(SwipeToGetMainMenuModifier(isShowCategotyMenu: $mainVM.isShowCategotyMenu))
     }

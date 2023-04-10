@@ -79,10 +79,6 @@ class NetworkingManager {
     }
     
     static func download(apiRequest: String, language: String, parameters: [String : Any]?) -> AnyPublisher<Data, Error> {
-        print(">> ----------")
-        print(">> \(parameters ?? [:])")
-        print(">> \(apiRequest)")
-        
         // Define the URL and Authorization header
         let requestUrl = URL(string: apiRequest)!
         
@@ -99,7 +95,9 @@ class NetworkingManager {
             let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)!
             url = urlComponents.url!
         }
-       
+        print(">> ----------")
+        print(">> Request = \(url)")
+        
         // Create a URLSession with the API key header
         let configuration = URLSessionConfiguration.default
         configuration.httpAdditionalHeaders = ["Authorization": "Bearer \(apiKey)",
@@ -114,7 +112,8 @@ class NetworkingManager {
     }
     
     static func handleURLResponse(output: URLSession.DataTaskPublisher.Output, url: URL) throws -> Data {
-        //print(output)
+       
+       
         guard let response = output.response as? HTTPURLResponse,
               response.statusCode >= 200 && response.statusCode < 300 else {
            

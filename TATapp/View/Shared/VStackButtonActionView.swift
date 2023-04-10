@@ -32,7 +32,7 @@ struct VStackButtonActionView: View {
                         .foregroundColor(!isDisable ? foregroundColor : foregroundColor.opacity(0.2))
                 }
             }
-            .padding(.horizontal)
+            .padding()
         })
         .disabled(isDisable)
         

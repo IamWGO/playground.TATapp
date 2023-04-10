@@ -11,7 +11,6 @@ import SwiftUI
 
 enum QueryParameters {
     case PlaceSearch
-    case PlaceNearBy
     case EventList
     case RouteList
     case SHASearch
@@ -59,8 +58,6 @@ class RequestApiService {
     var nearbySubscription: AnyCancellable?
     
     func getPlaceSearch() {
-        numberOfResult = 10
-        pagenumber = 1
         parameters = getQueryParameter(parmeterOfRequest: .PlaceSearch)
         
         let apiRequest = APIStats.GetPlaceSearch.path
@@ -75,7 +72,8 @@ class RequestApiService {
     }
     
     func getPlaceNearBy() {
-        parameters = getQueryParameter(parmeterOfRequest: .PlaceNearBy)
+        radius = 10000
+        parameters = getQueryParameter(parmeterOfRequest: .PlaceSearch)
         
         let apiRequest = APIStats.GetPlaceSearch.path
         subscription = NetworkingManager.download(apiRequest: apiRequest, language: language, parameters: parameters)
@@ -177,8 +175,6 @@ class RequestApiService {
     
     // MARK: - Event
     func getEventList(){
-        numberOfResult = 10
-        pagenumber = 1
         parameters = getQueryParameter(parmeterOfRequest: .EventList)
         
         let apiRequest = APIStats.GetEventList.path
@@ -203,8 +199,6 @@ class RequestApiService {
     }
    // MARK: - RecommenedRute
     func getRecommendedRouteList(){
-        numberOfResult = 10
-        pagenumber = 1
         parameters = getQueryParameter(parmeterOfRequest: .RouteList)
         
         let apiRequest = APIStats.GetRecommendedRouteList.path
@@ -228,8 +222,6 @@ class RequestApiService {
     }
     // MARK: - SHA Search
     func getSHASearch(){
-        numberOfResult = 10
-        pagenumber = 1
         parameters = getQueryParameter(parmeterOfRequest: .PlaceSearch)
         
         let apiRequest = APIStats.GetSHASearch.path
@@ -275,11 +267,9 @@ class RequestApiService {
             if let keyword = keyword {  query["keyword"] = keyword }
             if let geolocation = geolocation { query["geolocation"] = geolocation }
             if let provinceName = provinceName { query["provinceName"] = provinceName }
-            if let radius = radius { query["radius"] = String(radius) }
             if let destination = destination { query["destination"] = destination }
-        case .PlaceNearBy:
-            if let geolocation = geolocation { query["geolocation"] = geolocation }
             if let radius = radius { query["radius"] = String(radius) }
+       
         case .EventList:
             if let geolocation = geolocation {  query["geolocation"] = geolocation }
             if let sortby = sortby { query["sortby"] = sortby }
@@ -293,8 +283,6 @@ class RequestApiService {
             if let searchradius = searchradius {  query["searchradius"] = String(searchradius) }
             if let numberofresult = numberofresult {  query["numberofresult"] = String(numberofresult) }
             if let shacategories = shacategories {  query["shacategories"] = shacategories }
-            
-            
         }
         
         if let numberOfResult = numberOfResult {  query["numberOfResult"] = String(numberOfResult) }

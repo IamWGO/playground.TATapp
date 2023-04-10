@@ -8,31 +8,24 @@
 import SwiftUI
 
 struct PlaceListView: View {
-   
     @EnvironmentObject var mainVM: MainViewModel
-    var columns = Array(repeating: GridItem(.flexible(), spacing: 20), count: 1)
+    @ObservedObject var vm: PlaceViewModel = PlaceViewModel()
     
-    @State private var isLoding = false
+    var columns = Array(repeating: GridItem(.flexible(), spacing: 20), count: isIpad ? 2 : 1)
+    
+    @State private var shouldNavigate = false
     
     // MARK: - Body View
     var body: some View {
         ZStack {
-            MainMenuView()
             if let placeSearchItems =  mainVM.placeSearchItems {
                 ScrollView(showsIndicators: false) {
                     LazyVGrid(columns: columns,spacing: 30){
                         ForEach(placeSearchItems){ placeSearchItem in
                             Button {
-                                isLoding = true
                                 mainVM.getPlaceDetail(placeSearchItem: placeSearchItem)
                             } label: {
                                 getPlaceItemUI(placeSearchItem: placeSearchItem)
-                            }
-                            
-                            if let _ = mainVM.$selectedPlaceDetail {
-                                NavigationLink(destination: PlaceDetailView(), isActive: .constant((mainVM.selectedPlaceDetail != nil) ? true : false)) {
-                                    EmptyView()
-                                }
                             }
                         }
                     }
@@ -40,58 +33,97 @@ struct PlaceListView: View {
                     .padding(.top,25)
                     
                 }
-                if isLoding {
+                .padding(.top, mainVM.getTopSafeAreaSize() + 70)
+                .padding(.bottom, 25)
+                
+                if mainVM.isLoading {
                     LoadingView()
                 }
             } else {
                 LoadingView()
             }
-            
+            // Main Menu
+            MainMenuView(isShowBackButton: true)
         }
-        .onReceive(mainVM.$selectedPlaceDetail, perform: { placeDetail in
-            if let _ = placeDetail {
-                isLoding = false
+        .onAppear {
+            mainVM.selectedplaceId = nil
+            shouldNavigate = false
+        }
+        .onChange(of: mainVM.selectedplaceId, perform: { placeId in
+            if let _ = placeId {
+                shouldNavigate = true
             }
         })
-        .background(BackgroundImageView())
-       // .ignoresSafeArea()
+         
+        .background(
+            NavigationLink(destination: PlaceDetailView(), isActive:  $shouldNavigate) {
+                EmptyView()
+            }
+        )
+        .modifier(HiddenNavigationBarModifier())
+        .ignoresSafeArea()
     }
     
     
     private func getPlaceItemUI(placeSearchItem: PlaceItem) -> some View {
         
-        return ZStack(alignment: Alignment(horizontal: .trailing, vertical: .top)) {
+        return ZStack(alignment: Alignment(horizontal: .leading, vertical: .top)) {
             
-            VStack(alignment: .leading, spacing: 20) {
+            HStack(alignment: .top) {
                 
-                Text(placeSearchItem.placeName)
-                    .modifier(TextModifier(fontStyle: .body, fontWeight: .bold, foregroundColor: Color.white))
-                
-                Text(placeSearchItem.location.province)
-                    .modifier(TextModifier(fontStyle: .body))
-                    .padding(.top,10)
-                
-                HStack{
+                VStack(alignment: .leading, spacing: 5) {
+                    Text(placeSearchItem.placeName)
+                        .modifier(TextModifier(fontStyle: .body, fontWeight: .bold))
                     
-                    Spacer(minLength: 0)
+                    Text(mainVM.getDistrictAndProvince(location: placeSearchItem.location))
+                        .modifier(TextModifier(fontStyle: .caption))
                     
-                    Text("OK")
-                        .foregroundColor(.white)
+                    /*HStack (spacing: 10){
+                        Spacer()
+                        VStackButtonActionView(systemName: .constant("magnifyingglass"),
+                                               textButton: .constant(nil),
+                                               foregroundColor: .constant(vm.isLiked ? Color.theme.active : Color.theme.inactive),
+                                               isDisable: $vm.isLiked) {
+                            vm.saveLiked()
+                        }
+                         
+                        VStackButtonActionView(systemName: .constant("map"),
+                                               textButton: .constant(nil),
+                                               foregroundColor: .constant(vm.isShowMapSheet ? Color.theme.active : Color.theme.inactive),
+                                               isDisable: .constant(!placeSearchItem.isHasLocation())) {
+                            
+                            vm.toggleMapIcon()
+                        }
+                    }*/
+                    Spacer()
                 }
+                .frame(minHeight: 70)
+                .padding(.leading, 60)
+               
+                Spacer()
+               
             }
+            .padding([.trailing, .top], 8)
+            .padding(.leading)
             .padding()
             // image name same as color name....
-            .background(Color.theme.button)
+            .background(Color.theme.background)
             .cornerRadius(20)
-            // shadow....
-            .shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: 5)
+           
+            .modifier(ShadowModifier())
             
-            // top Image....
-            PlaceImageView(imageName: placeSearchItem.thumbnailUrl)
-                .frame(width: 20)
-                .padding()
-                .background(Color.white.opacity(0.12))
-                .clipShape(Circle())
+           
+                PlaceImageView(imageName: placeSearchItem.thumbnailUrl)
+                    .frame(width: 80)
+                    .clipShape(Circle())
+                    .offset(x: -10, y: -30)
+                
+                
+           
+            
+            
+            
+           
             
         }
     }

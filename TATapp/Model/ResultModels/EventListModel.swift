@@ -26,7 +26,7 @@ struct EventItem: Codable {
     let destination: String
     let tags: [String]?
     let location: String
-    let updateDate: String
+    let updateDate: String?
     
     enum CodingKeys: String, CodingKey {
         case eventId = "event_id"

@@ -9,32 +9,40 @@ import SwiftUI
 import MapKit
 
 struct PlaceDetailView: View {
+    @Environment(\.presentationMode) var presentationMode
     @Environment(\.colorScheme) var scheme
+    
     @EnvironmentObject var mainVM: MainViewModel
-    @ObservedObject var vm: PlaceDetailViewModel = PlaceDetailViewModel()
+    @ObservedObject var vm: PlaceViewModel = PlaceViewModel()
    
     @State private var isShowMap: Bool = false
     
     var body: some View {
         if let placeItem = mainVM.selectedPlaceDetail {
             ZStack(alignment: .top) {
-                ScrollView(showsIndicators: false){
-                    placeItemUI(placeItem: placeItem)
-                }
-                .overlay(
-                    // Only Safe Area....
-                    (scheme == .dark ? Color.black : Color.white)
-                        .frame(height: mainVM.getTopSafeAreaSize())
-                        .ignoresSafeArea(.all, edges: .top)
-                        .opacity(vm.offset > 250 ? 1 : 0)
-                    ,alignment: .top
-                )
-                // Will always show on top of content
-                topAreaSection
                 
-                if vm.isOpenHoursDialog {
-                    openHoursDialog(placeItem: placeItem)
+                if mainVM.isLoading {
+                    LoadingView()
+                } else {
+                    placeItemUI(placeItem: placeItem)
+                    .overlay(
+                        // Only Safe Area....
+                        (scheme == .dark ? Color.black : Color.white)
+                            .frame(height: mainVM.getTopSafeAreaSize())
+                            .ignoresSafeArea(.all, edges: .top)
+                            .opacity(vm.offset > 250 ? 1 : 0)
+                        ,alignment: .top
+                    )
+                    // Will always show on top of content
+                    if vm.offset < 250{
+                        topAreaSection
+                    }
+                    
+                    if vm.isOpenHoursDialog {
+                        openHoursDialog(placeItem: placeItem)
+                    }
                 }
+                
             }
             .sheet(isPresented: $vm.isShowMapSheet, content: {
                     MapSheetView(mainVM: mainVM, placeItem: placeItem)
@@ -46,7 +54,6 @@ struct PlaceDetailView: View {
         } else {
             LoadingView()
         }
-        
     }
 }
 
@@ -66,7 +73,7 @@ extension PlaceDetailView {
                 ,alignment: .top
             )
             // Will always show on top of content
-            topAreaSection
+          //  topAreaSection
             
             if vm.isOpenHoursDialog {
                 openHoursDialog(placeItem: placeItem)
@@ -79,32 +86,33 @@ extension PlaceDetailView {
         .sheet(isPresented: $vm.isShowMoreImagesSheet, content: {
             //
         })
+        .modifier(HiddenNavigationBarModifier())
         .ignoresSafeArea()
     }
     
     private var topAreaSection: some View {
         HStack(alignment: .top, spacing: 8){
             TopAreaIconActionView(systemName: "chevron.backward", action: {
-                // do something
+                presentationMode.wrappedValue.dismiss()
             })
             
             Spacer()
-            if vm.offset < 250 {
-                VStack {
-                    TopAreaIconActionView(systemName: "photo.on.rectangle.angled", action: {
-                        vm.toggleMoreImageIcon()
-                    })
-                    
-                    TopAreaIconActionView(systemName: "square.and.arrow.up", action: {
-                        vm.toggleSharedIcon()
-                    })
-                    
-                    TopAreaIconActionView(systemName: "clock", action: {
-                        vm.toggleClockIcon()
-                    })
-                }
+            
+            VStack {
+                TopAreaIconActionView(systemName: "photo.on.rectangle.angled", action: {
+                    vm.toggleMoreImageIcon()
+                })
+                
+                TopAreaIconActionView(systemName: "square.and.arrow.up", action: {
+                    vm.toggleSharedIcon()
+                })
+                
+                TopAreaIconActionView(systemName: "clock", action: {
+                    vm.toggleClockIcon()
+                })
             }
-           
+            
+            
         }
         .padding(.top, mainVM.getTopSafeAreaSize())
         .padding(.horizontal)
@@ -160,7 +168,9 @@ extension PlaceDetailView {
             .frame(height: 60)
     
             if vm.offset > 250{
-              
+                headerDescription(placeItem: placeItem)
+                    .padding(.horizontal)
+                    .padding(.top, 20)
             }
         }
         .frame(height: vm.offset > 250 ? 200 : 160) //header with top image
@@ -191,13 +201,8 @@ extension PlaceDetailView {
             // Top Fram = 40
             // So Total = 100
             .frame(height: 60)
-    
-            if vm.offset > 250{
-                headerDescription(placeItem: placeItem)
-            }
         }
         .padding(.horizontal)
-        .frame(height: vm.offset > 250 ? 100 : 160) // header with now image
         .background(scheme == .dark ? Color.black : Color.white)
         
     }
@@ -206,16 +211,10 @@ extension PlaceDetailView {
     
        return VStack(alignment: .leading, spacing: 6, content: {
             
-            HStack{
-                Spacer()
-                
-                Text(placeItem.placeName)
-                    .modifier(TextModifier(fontStyle: .title3, fontWeight: .semibold))
-                
-                Spacer()
-            }
-            .padding(.horizontal)
-            
+           Text(placeItem.placeName)
+               .modifier(TextModifier(fontStyle: .title3, fontWeight: .semibold))
+           
+          
             Spacer()
             
             HStack(spacing: 8){
@@ -273,8 +272,9 @@ extension PlaceDetailView {
                     vm.toogleComentIcon()
                 }
             }
-            .frame(maxWidth: .infinity)
+            
         })
+        
         .padding(.bottom)
         
     }

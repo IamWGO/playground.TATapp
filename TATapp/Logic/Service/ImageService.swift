@@ -39,10 +39,10 @@ class ImageService {
             })
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: NetworkingManager.handleCompletion, receiveValue: { [weak self] (returnedImage) in
-                guard let self = self, let downloadedImage = returnedImage else { return }
+               /* guard let self = self, let downloadedImage = returnedImage else { return }
                 self.image = downloadedImage
                 self.imageSubscription?.cancel()
-                self.fileManager.saveImage(image: downloadedImage, imageName: self.imageName, folderName: self.folderName)
+                self.fileManager.saveImage(image: downloadedImage, imageName: self.imageName, folderName: self.folderName)*/
             })
     }
     

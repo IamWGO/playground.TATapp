@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-class PlaceDetailViewModel: ObservableObject {
+class PlaceViewModel: ObservableObject {
     @Published var isLiked: Bool = false
     @Published var isBookMark: Bool = false
     @Published var isCommentSheet: Bool = false
