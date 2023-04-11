@@ -10,23 +10,44 @@ import MapKit
 
 struct MapSheetView: View {
     @ObservedObject var mainVM: MainViewModel
-    @ObservedObject var vm: LocationsViewModel
+    @ObservedObject var locationVM: LocationsViewModel
+    @EnvironmentObject var vm: PlaceViewModel
     
     @State var placeItem: PlaceItemModel
     @State var mapRegion: MKCoordinateRegion = MKCoordinateRegion()
-    @State var isShowDetailIcon: Bool = false
-    @State var isShowDetail: Bool = false
     
-    init(mainVM: MainViewModel,placeItem: PlaceItemModel, isShowDetailIcon: Bool){
+    init(mainVM: MainViewModel,placeItem: PlaceItemModel){
         self.mainVM = mainVM
         self.placeItem = placeItem
-        self.isShowDetailIcon = isShowDetailIcon
-        _vm = ObservedObject(wrappedValue: LocationsViewModel(mainVM: mainVM))
+        _locationVM = ObservedObject(wrappedValue: LocationsViewModel(mainVM: mainVM))
     }
     
     var body: some View {
+        
+        if vm.isShowNearBySheet {
+            //LocationNearByView(mainVM: mainVM)
+            Button {
+                vm.toggleNearByIcon()
+            } label: {
+                HStack {
+                    Image(systemName: "mappin.and.ellipse")
+                        .modifier(TextModifier(fontStyle: .caption))
+                    
+                    Text("nearBy")
+                        .font(.caption)
+                        .modifier(TextModifier(fontStyle: .caption))
+                }
+                .padding(8)
+                .background(Color.theme.button.opacity(0.2))
+                .cornerRadius(5)
+            }
+        } else {
+            mapLocation
+        }
+    }
+    
+    private var mapLocation:some View {
         ZStack(alignment: .top) {
-            
            if let placeNearByItems = mainVM.placeNearByItems {
                if placeNearByItems.count > 0 {
                    Map(coordinateRegion: $mapRegion,
@@ -34,10 +55,10 @@ struct MapSheetView: View {
                                 annotationContent: { placeItem in
                                 MapAnnotation(coordinate: placeItem.getCoordinate()) {
                                     LocationMapAnnotationView()
-                                        .scaleEffect(vm.mapPlaceItem == placeItem ? 1 : 0.7)
+                                        .scaleEffect(locationVM.mapPlaceItem == placeItem ? 1 : 0.7)
                                         .shadow(radius: 10)
                                         .onTapGesture {
-                                            vm.showNextLocation(placeItem: placeItem)
+                                            locationVM.showNextLocation(placeItem: placeItem)
                                         }
                                 }
                             })
@@ -52,13 +73,14 @@ struct MapSheetView: View {
         }
         
         .onAppear {
+            vm.isShowNearBySheet = false
+            
             if let latitude = placeItem.latitude, let longitude = placeItem.longitude {
                 mapRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: latitude, longitude: longitude),
-                                               span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1))
+                                               span: MKCoordinateSpan(latitudeDelta: 0.03, longitudeDelta: 0.03))
             }
         }
         .ignoresSafeArea(.all)
-        
     }
     
     private var singlePinLocation: some View {
@@ -90,19 +112,21 @@ struct MapSheetView: View {
             
             HStack(spacing: 8){
                 
-                Image(systemName: "mappin.and.ellipse")
+                Image(systemName: "pin")
                     .font(.caption)
                 Text(mainVM.getDistrictAndProvince(location: placeItem.location))
                     .modifier(TextModifier(fontStyle: .caption))
                
                 
                 Spacer()
-                if isShowDetailIcon {
+                Button {
+                    vm.toggleNearByIcon()
+                } label: {
                     HStack {
-                        Image(systemName: "magnifyingglass")
+                        Image(systemName: "mappin.and.ellipse")
                             .modifier(TextModifier(fontStyle: .caption))
                         
-                        Text("Detail")
+                        Text("nearBy")
                             .font(.caption)
                             .modifier(TextModifier(fontStyle: .caption))
                     }
@@ -119,3 +143,10 @@ struct MapSheetView: View {
         
     }
 }
+
+
+/*
+ .sheet(item: $mainVM.placeNearByItems) { _ in
+     MapSearchView(mainVM: mainVM)
+ }
+ */

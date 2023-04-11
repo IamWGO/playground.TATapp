@@ -13,14 +13,25 @@ struct IconWithRoundBackgroundActionView: View {
     var action: () -> Void
     var body: some View {
         
-        Button(action: action, label: {
-            Image(systemName: systemName)
-                .font(.body)
-                .foregroundColor(Color.theme.primary)
-                .padding(15)
-                .background((backgroundColor != nil) ? backgroundColor?.opacity(0.5) : Color.theme.primary.opacity(0.1))
-                .clipShape(Circle())
-        })
+        if let backgroundColor = backgroundColor {
+            Button(action: action, label: {
+                Image(systemName: systemName)
+                    .font(.body)
+                    .foregroundColor(Color.theme.primary)
+                    .padding(15)
+                    .background(backgroundColor.opacity(0.5))
+                    .clipShape(Circle())
+            })
+        } else {
+            Button(action: action, label: {
+                Image(systemName: systemName)
+                    .font(.body)
+                    .foregroundColor(Color.theme.primary)
+                    .padding(15)
+                    .background(.ultraThinMaterial)
+                    .clipShape(Circle())
+            })
+        }
     }
 }
 
@@ -29,3 +40,7 @@ struct TopAreaIconActionView_Previews: PreviewProvider {
         IconWithRoundBackgroundActionView() {}
     }
 }
+
+/*
+
+ */

@@ -73,6 +73,22 @@ struct PlaceItemModel: Codable,Identifiable {
         return (latitude != nil && longitude != nil)
     }
     
+    func getLatitude() -> Double {
+        if let latitude = latitude {
+            return latitude
+        } else {
+            return 13.74983106
+        }
+    }
+    
+    func getLongitude() -> Double {
+        if let longitude = longitude {
+            return longitude
+        } else {
+            return 100.4912889
+        }
+    }
+    
     func getCoordinate() -> CLLocationCoordinate2D {
         if let latitude = latitude, let longitude = longitude {
             return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)

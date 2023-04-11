@@ -58,7 +58,7 @@ class MainViewModel: ObservableObject {
                 if let result = result {
                     self.placeSearchItems = result.result
                     self.isLoading = false
-                    print("** placeSearchItems =  \(result.result.count)")
+                    print(">> placeSearchItems =  \(result.result.count)")
                 }
             }
             .store(in: &cancellables)
@@ -78,7 +78,7 @@ class MainViewModel: ObservableObject {
                 if let result = result {
                     self.selectedPlaceDetail = result.result
                     self.isLoading = false
-                    print("** attractionDetail = \(result.result.placeName)")
+                    print(">> attractionDetail = \(result.result.placeName)")
                 }
             }
             .store(in: &cancellables)
@@ -169,18 +169,6 @@ class MainViewModel: ObservableObject {
             }
         }
         .store(in: &cancellables)
-        
-        $selectedPlaceDetail.sink{ result in
-            if let placeItem = result {
-                if let latitude = placeItem.latitude, let longitude = placeItem.longitude {
-                    print("** requestService.getPlaceNearBy()")
-                    self.requestService.geolocation = "\(latitude),\(longitude)"
-                    self.currentState = RequestStates.GetPlaceNearBy
-                }
-            }
-        }
-        .store(in: &cancellables)
-        
     }
     
     // MARK: - Core UIStates
@@ -218,7 +206,13 @@ class MainViewModel: ObservableObject {
         switch (currentState) {
         case .None: print("-> No query") // TODO : - Some query
         case .GetPlaceNearBy:
-            requestService.geolocation = "13.920694,100.600622"
+            
+            if let placeItem = selectedPlaceDetail {
+                requestService.geolocation = "\(placeItem.getLatitude()),\(placeItem.getLongitude())"
+            } else {
+                requestService.geolocation = "13.74983106, 100.4912889"
+            }
+            requestService.categorycodes = nil
             requestService.radius = 200000
             requestService.getPlaceNearBy()
         
@@ -229,7 +223,6 @@ class MainViewModel: ObservableObject {
             }
             
         case .GetAccommodationDetail:
-            selectedplaceId = "P02000010"
             if let placeId = selectedplaceId {
                 requestService.getAccommodationDetail(placeId: placeId)
             }

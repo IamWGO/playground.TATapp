@@ -13,7 +13,7 @@ struct PlaceDetailView: View {
     @Environment(\.colorScheme) var scheme
     
     @EnvironmentObject var mainVM: MainViewModel
-    @ObservedObject var vm: PlaceViewModel = PlaceViewModel()
+    @EnvironmentObject var vm: PlaceViewModel
    
     @State private var isShowMap: Bool = false
     
@@ -41,15 +41,11 @@ struct PlaceDetailView: View {
                         openHoursDialog(placeItem: placeItem)
                     }
                 }
-                
             }
-            
             .sheet(isPresented: $vm.isShowMapSheet, content: {
-                MapSheetView(mainVM: mainVM, placeItem: placeItem, isShowDetailIcon: false)
+                MapSheetView(mainVM: mainVM, placeItem: placeItem)
             })
-            .sheet(isPresented: $vm.isShowMoreImagesSheet, content: {
-                //
-            })
+            
             .ignoresSafeArea()
         } else {
             LoadingView()
@@ -81,9 +77,9 @@ extension PlaceDetailView {
         }
         .sheet(isPresented: $vm.isShowMapSheet, content: {
            // DispatchQueue.main.async {}
-            MapSheetView(mainVM: mainVM, placeItem: placeItem, isShowDetailIcon: false)
+            MapSheetView(mainVM: mainVM, placeItem: placeItem)
         })
-        .sheet(isPresented: $vm.isShowMoreImagesSheet, content: {
+        .sheet(isPresented: $vm.isShowNearBySheet, content: {
             //
         })
         .modifier(HiddenNavigationBarModifier())
@@ -220,8 +216,7 @@ extension PlaceDetailView {
                 Image(systemName: "mappin.and.ellipse")
                     .font(.caption)
                 Text(mainVM.getDistrictAndProvince(location: placeItem.location))
-                    .modifier(TextModifier(fontStyle: .caption))
-               
+                    .modifier(TextModifier(fontStyle: .caption)) 
                 
                 Spacer()
                 
@@ -261,14 +256,15 @@ extension PlaceDetailView {
                     vm.toggleMapIcon()
                 }
                 
-                
+               /*
                 Spacer()
-                VStackButtonActionView(systemName: .constant("bubble.right"),
-                                       textButton: .constant("Review"),
+                VStackButtonActionView(systemName: .constant("mappin.and.ellipse"),
+                                       textButton: .constant("Near by"),
                                        foregroundColor: .constant(vm.isCommentSheet ? Color.theme.active : Color.theme.inactive),
                                        isDisable: $vm.isCommentSheet) {
-                    vm.toogleComentIcon()
-                }
+                    vm.toggleNearByIcon()
+                    mainVM.currentState = RequestStates.GetPlaceNearBy
+                }*/
             }
             
         })

@@ -52,7 +52,7 @@
 		ABCB63BB29E0B88100A7C715 /* LocationsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCB63BA29E0B88100A7C715 /* LocationsViewModel.swift */; };
 		ABCB63BF29E126E100A7C715 /* LocationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCB63BE29E126E100A7C715 /* LocationModel.swift */; };
 		ABCB63C129E131FB00A7C715 /* LocationMapAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCB63C029E131FB00A7C715 /* LocationMapAnnotationView.swift */; };
-		ABCB63C329E1D62D00A7C715 /* MapSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCB63C229E1D62D00A7C715 /* MapSearchView.swift */; };
+		ABCB63C329E1D62D00A7C715 /* LocationNearByView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCB63C229E1D62D00A7C715 /* LocationNearByView.swift */; };
 		ABCB63C529E1D88D00A7C715 /* LocationsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCB63C429E1D88D00A7C715 /* LocationsListView.swift */; };
 		ABCB63C729E1F8F000A7C715 /* LocationPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCB63C629E1F8F000A7C715 /* LocationPreviewView.swift */; };
 		ABCB63CA29E1FC1B00A7C715 /* SelectionLanguageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCB63C929E1FC1B00A7C715 /* SelectionLanguageView.swift */; };
@@ -90,7 +90,6 @@
 		ABDCB76F29E0754C00083C52 /* MapSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABDCB76E29E0754C00083C52 /* MapSheetView.swift */; };
 		ABDCB77129E0789700083C52 /* IconWithRoundBackgroundActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABDCB77029E0789700083C52 /* IconWithRoundBackgroundActionView.swift */; };
 		ABDFEF8D29DC218D00699F5E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = ABDFEF8C29DC218D00699F5E /* GoogleService-Info.plist */; };
-		ABEFF4CD29E5463F00F8F665 /* PlaceSearchListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEFF4CC29E5463F00F8F665 /* PlaceSearchListItemView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -140,7 +139,7 @@
 		ABCB63BA29E0B88100A7C715 /* LocationsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationsViewModel.swift; sourceTree = "<group>"; };
 		ABCB63BE29E126E100A7C715 /* LocationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationModel.swift; sourceTree = "<group>"; };
 		ABCB63C029E131FB00A7C715 /* LocationMapAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationMapAnnotationView.swift; sourceTree = "<group>"; };
-		ABCB63C229E1D62D00A7C715 /* MapSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSearchView.swift; sourceTree = "<group>"; };
+		ABCB63C229E1D62D00A7C715 /* LocationNearByView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationNearByView.swift; sourceTree = "<group>"; };
 		ABCB63C429E1D88D00A7C715 /* LocationsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationsListView.swift; sourceTree = "<group>"; };
 		ABCB63C629E1F8F000A7C715 /* LocationPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationPreviewView.swift; sourceTree = "<group>"; };
 		ABCB63C929E1FC1B00A7C715 /* SelectionLanguageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionLanguageView.swift; sourceTree = "<group>"; };
@@ -179,7 +178,6 @@
 		ABDCB76E29E0754C00083C52 /* MapSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSheetView.swift; sourceTree = "<group>"; };
 		ABDCB77029E0789700083C52 /* IconWithRoundBackgroundActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconWithRoundBackgroundActionView.swift; sourceTree = "<group>"; };
 		ABDFEF8C29DC218D00699F5E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		ABEFF4CC29E5463F00F8F665 /* PlaceSearchListItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceSearchListItemView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -283,7 +281,7 @@
 			isa = PBXGroup;
 			children = (
 				ABCB63C029E131FB00A7C715 /* LocationMapAnnotationView.swift */,
-				ABCB63C229E1D62D00A7C715 /* MapSearchView.swift */,
+				ABCB63C229E1D62D00A7C715 /* LocationNearByView.swift */,
 				ABCB63C629E1F8F000A7C715 /* LocationPreviewView.swift */,
 				ABCB63C429E1D88D00A7C715 /* LocationsListView.swift */,
 				ABCB63BA29E0B88100A7C715 /* LocationsViewModel.swift */,
@@ -509,7 +507,6 @@
 			isa = PBXGroup;
 			children = (
 				ABCB63D029E2A53100A7C715 /* PlaceSearchListView.swift */,
-				ABEFF4CC29E5463F00F8F665 /* PlaceSearchListItemView.swift */,
 				AB288F9E29DF36FE00AB92B0 /* PlaceDetailView.swift */,
 				ABDCB76E29E0754C00083C52 /* MapSheetView.swift */,
 				ABDCB76229DFD82600083C52 /* PlaceViewModel.swift */,
@@ -615,10 +612,9 @@
 				AB288F2F29DC6BAE00AB92B0 /* GetPlaceOtherDetail.swift in Sources */,
 				AB288F1529DC48DD00AB92B0 /* PlaceSearch.swift in Sources */,
 				ABCB63D329E2AE5D00A7C715 /* PlaceItemModel.swift in Sources */,
-				ABCB63C329E1D62D00A7C715 /* MapSearchView.swift in Sources */,
+				ABCB63C329E1D62D00A7C715 /* LocationNearByView.swift in Sources */,
 				ABDCB76B29DFE6CF00083C52 /* SwipeToGetMainMenuModifier.swift in Sources */,
 				ABD6D18329DB17B70090C299 /* PlaceSearchCard.swift in Sources */,
-				ABEFF4CD29E5463F00F8F665 /* PlaceSearchListItemView.swift in Sources */,
 				AB288F8B29DDEB8500AB92B0 /* CircleButtonAnimationView.swift in Sources */,
 				AB288F4629DD7E3700AB92B0 /* TextModifier.swift in Sources */,
 				ABCB63D729E32EB600A7C715 /* LoadingView.swift in Sources */,
