@@ -10,7 +10,7 @@ import SwiftUI
 class PlaceViewModel: ObservableObject {
     @Published var isLiked: Bool = false
     @Published var isBookMark: Bool = false
-    @Published var isCommentSheet: Bool = false
+    @Published var isShowDetailSheet: Bool = false
     @Published var isShowMapSheet: Bool = false
     @Published var isShowNearBySheet: Bool = false
     @Published var isShowMoreImagesSheet: Bool = false
@@ -32,10 +32,10 @@ class PlaceViewModel: ObservableObject {
         isBookMark = !isBookMark
     }
     
-    func toogleComentIcon(){
+    func toogleDetailIcon(){
         // TODO : - Save to database
         withAnimation(.easeInOut) {
-            isCommentSheet = !isCommentSheet
+            isShowDetailSheet = !isShowDetailSheet
         }
     }
     

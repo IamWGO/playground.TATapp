@@ -212,7 +212,7 @@ class MainViewModel: ObservableObject {
             } else {
                 requestService.geolocation = "13.74983106, 100.4912889"
             }
-            requestService.categorycodes = nil
+          //  requestService.categorycodes = nil
             requestService.radius = 200000
             requestService.getPlaceNearBy()
         
@@ -316,27 +316,27 @@ class MainViewModel: ObservableObject {
        
     }
     
-    func getColorBySearchTypeCateogry(placeTypeString: String?) -> Color {
-       
-        guard let placeTypeString = placeTypeString else { return Color.theme.button }
-        
-        var placeType: PlaceSearchType = .ALL
-        switch(placeTypeString) {
-        case "OTHER": placeType = .OTHER
-        case "SHOP": placeType = .SHOP
-        case "RESTAURANT": placeType = .RESTAURANT
-        case "ACCOMMODATION": placeType = .ACCOMMODATION
-        case "ATTRACTION": placeType = .ATTRACTION
-        default: return Color.theme.button
-        }
-        
-        guard let currentType = searchTypeItems.first(where: { $0.placeType == placeType }) else {
-            print("Could not find current index in locations array! Should never happen.")
-            return Color.theme.button
-        }
-        
-        return currentType.backgroundColor
-    }
+//    func getColorBySearchTypeCateogry(placeTypeString: String?) -> Color {
+//       
+//        guard let placeTypeString = placeTypeString else { return Color.theme.button }
+//        
+//        var placeType: PlaceSearchType = .ALL
+//        switch(placeTypeString) {
+//        case "OTHER": placeType = .OTHER
+//        case "SHOP": placeType = .SHOP
+//        case "RESTAURANT": placeType = .RESTAURANT
+//        case "ACCOMMODATION": placeType = .ACCOMMODATION
+//        case "ATTRACTION": placeType = .ATTRACTION
+//        default: return Color.theme.button
+//        }
+//        
+//        guard let currentType = searchTypeItems.first(where: { $0.placeType == placeType }) else {
+//            print("Could not find current index in locations array! Should never happen.")
+//            return Color.theme.button
+//        }
+//        
+//        return currentType.backgroundColor
+//    }
     
    
 }

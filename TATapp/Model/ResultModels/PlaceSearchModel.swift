@@ -5,7 +5,7 @@
 //  Created by Waleerat Gottlieb on 2023-03-26.
 //
 
-import Foundation
+import SwiftUI
 import MapKit
 
 struct PlaceSearchModel: Codable {
@@ -57,6 +57,18 @@ struct PlaceSearchItem: Codable,Identifiable,Equatable {
         } else {
             return CLLocationCoordinate2D(latitude: kDefaultLocation.latitude, longitude: kDefaultLocation.longitude)
         }
+    }
+    
+    func getPlaceTypeColor() -> Color {
+        switch(categoryCode) {
+        case "OTHER":  return Color.Placetype.other
+        case "SHOP":  return Color.Placetype.shopping
+        case "RESTAURANT":  return Color.Placetype.restaurant
+        case "ACCOMMODATION":  return Color.Placetype.accommodation
+        case "ATTRACTION":  return Color.Placetype.attraction
+        default: return Color.theme.button
+        }
+        
     }
   
 }

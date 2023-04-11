@@ -64,6 +64,7 @@ extension LocationPreviewView {
     
     private var learnMoreButton: some View {
         Button {
+            mainVM.selectedPlaceDetail = nil
             mainVM.getPlaceDetail(placeSearchItem: placeItem)
         } label: {
             Text("Learn more")

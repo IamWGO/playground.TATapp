@@ -23,53 +23,34 @@ struct MapSheetView: View {
     }
     
     var body: some View {
-        
-        if vm.isShowNearBySheet {
-            //LocationNearByView(mainVM: mainVM)
-            Button {
-                vm.toggleNearByIcon()
-            } label: {
-                HStack {
-                    Image(systemName: "mappin.and.ellipse")
-                        .modifier(TextModifier(fontStyle: .caption))
-                    
-                    Text("nearBy")
-                        .font(.caption)
-                        .modifier(TextModifier(fontStyle: .caption))
-                }
-                .padding(8)
-                .background(Color.theme.button.opacity(0.2))
-                .cornerRadius(5)
-            }
-        } else {
-            mapLocation
-        }
+        mapLocation
     }
     
     private var mapLocation:some View {
         ZStack(alignment: .top) {
-           if let placeNearByItems = mainVM.placeNearByItems {
-               if placeNearByItems.count > 0 {
-                   Map(coordinateRegion: $mapRegion,
-                                annotationItems: placeNearByItems,
-                                annotationContent: { placeItem in
-                                MapAnnotation(coordinate: placeItem.getCoordinate()) {
-                                    LocationMapAnnotationView()
-                                        .scaleEffect(locationVM.mapPlaceItem == placeItem ? 1 : 0.7)
-                                        .shadow(radius: 10)
-                                        .onTapGesture {
-                                            locationVM.showNextLocation(placeItem: placeItem)
-                                        }
-                                }
-                            })
-               } else {
-                   singlePinLocation
-               }
-            } else {
-                singlePinLocation
-            }
-           
-            topAreaSection
+//           if let placeNearByItems = mainVM.placeNearByItems {
+//               if placeNearByItems.count > 0 {
+//                   Map(coordinateRegion: $mapRegion,
+//                                annotationItems: placeNearByItems,
+//                                annotationContent: { placeItem in
+//                                MapAnnotation(coordinate: placeItem.getCoordinate()) {
+//                                    LocationMapAnnotationView()
+//                                        .scaleEffect(locationVM.mapPlaceItem == placeItem ? 1 : 0.7)
+//                                        .shadow(radius: 10)
+//                                        .onTapGesture {
+//                                            locationVM.showNextLocation(placeItem: placeItem)
+//                                        }
+//                                }
+//                            })
+//               } else {
+//                   singlePinLocation
+//               }
+//            } else {
+//                singlePinLocation
+//            }
+            singlePinLocation
+            MapTopAreaView(placeItem: placeItem)
+            
         }
         
         .onAppear {
@@ -98,50 +79,7 @@ struct MapSheetView: View {
         })
     }
     
-    private var topAreaSection: some View {
-        VStack{
-            HStack{
-                /*TopAreaIconActionView(systemName: "chevron.backward", action: {
-                    presentationMode.wrappedValue.dismiss()
-                })*/
-                
-                Text(placeItem.placeName)
-                    .modifier(TextModifier(fontStyle: .title3))
-                Spacer()
-            }
-            
-            HStack(spacing: 8){
-                
-                Image(systemName: "pin")
-                    .font(.caption)
-                Text(mainVM.getDistrictAndProvince(location: placeItem.location))
-                    .modifier(TextModifier(fontStyle: .caption))
-               
-                
-                Spacer()
-                Button {
-                    vm.toggleNearByIcon()
-                } label: {
-                    HStack {
-                        Image(systemName: "mappin.and.ellipse")
-                            .modifier(TextModifier(fontStyle: .caption))
-                        
-                        Text("nearBy")
-                            .font(.caption)
-                            .modifier(TextModifier(fontStyle: .caption))
-                    }
-                    .padding(8)
-                    .background(Color.theme.button.opacity(0.2))
-                    .cornerRadius(5)
-                }
-            }
-            .frame(maxWidth: .infinity,alignment: .leading)
-            
-        }
-        .padding()
-        .background(.ultraThinMaterial)
-        
-    }
+     
 }
 
 

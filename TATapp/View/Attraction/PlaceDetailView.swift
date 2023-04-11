@@ -18,8 +18,9 @@ struct PlaceDetailView: View {
     @State private var isShowMap: Bool = false
     
     var body: some View {
+        ZStack(alignment: .top) {
         if let placeItem = mainVM.selectedPlaceDetail {
-            ZStack(alignment: .top) {
+            
                 if mainVM.isLoading {
                     LoadingView()
                 } else {
@@ -41,15 +42,12 @@ struct PlaceDetailView: View {
                         openHoursDialog(placeItem: placeItem)
                     }
                 }
-            }
-            .sheet(isPresented: $vm.isShowMapSheet, content: {
-                MapSheetView(mainVM: mainVM, placeItem: placeItem)
-            })
             
-            .ignoresSafeArea()
         } else {
             LoadingView()
         }
+        }
+        .ignoresSafeArea()
     }
 }
 
@@ -80,7 +78,8 @@ extension PlaceDetailView {
             MapSheetView(mainVM: mainVM, placeItem: placeItem)
         })
         .sheet(isPresented: $vm.isShowNearBySheet, content: {
-            //
+            LocationNearByView(mainVM: mainVM)
+                .environmentObject(vm)
         })
         .modifier(HiddenNavigationBarModifier())
     }
@@ -207,7 +206,6 @@ extension PlaceDetailView {
             
            Text(placeItem.placeName)
                .modifier(TextModifier(fontStyle: .title3, fontWeight: .semibold))
-           
           
             Spacer()
             
@@ -255,16 +253,15 @@ extension PlaceDetailView {
                     
                     vm.toggleMapIcon()
                 }
-                
-               /*
+               
                 Spacer()
                 VStackButtonActionView(systemName: .constant("mappin.and.ellipse"),
                                        textButton: .constant("Near by"),
-                                       foregroundColor: .constant(vm.isCommentSheet ? Color.theme.active : Color.theme.inactive),
-                                       isDisable: $vm.isCommentSheet) {
+                                       foregroundColor: .constant(vm.isShowNearBySheet ? Color.theme.active : Color.theme.inactive),
+                                       isDisable: $vm.isShowNearBySheet) {
                     vm.toggleNearByIcon()
                     mainVM.currentState = RequestStates.GetPlaceNearBy
-                }*/
+                }
             }
             
         })

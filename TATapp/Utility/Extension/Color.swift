@@ -42,6 +42,15 @@ extension Color {
             opacity: Double(a) / 255
         )
     }
+    
+    struct Placetype {
+        static let attraction = Color(hex: "FF7B54")
+        static let shopping = Color(hex: "FFBF00")
+        static let restaurant = Color(hex: "A555EC")
+        static let accommodation = Color(hex: "009FBD")
+        static let other = Color(hex: "6EBF8B")
+        static let event = Color(hex: "FF6464")
+    }
 }
 
 struct GreenTheme {
@@ -72,11 +81,4 @@ struct LaunchTheme {
     
 }
 
-struct ColorSpot {
-    static let attraction = Color(hex: "FF7B54")
-    static let shopping = Color(hex: "FFBF00")
-    static let restaurant = Color(hex: "A555EC")
-    static let accommodation = Color(hex: "009FBD")
-    static let other = Color(hex: "6EBF8B")
-    static let event = Color(hex: "FF6464")
-}
+

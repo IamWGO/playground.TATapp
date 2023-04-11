@@ -25,42 +25,58 @@ struct LocationNearByView: View {
     let maxWidthForIpad: CGFloat = 700
     
     var body: some View {
-        ZStack {
+        ZStack(alignment: .top) {
             if let _ = mainVM.placeNearByItems {
                 mapLayer
                     .ignoresSafeArea()
             }
             
             VStack(spacing: 0) {
+                if let placeItem = mainVM.selectedPlaceDetail {
+                    MapTopAreaView(placeItem: placeItem)
+                }
                 
-                header
+                nearBySearchItems
                     .padding(.trailing, 8)
-                    .padding([.top, .leading, .bottom])
+                    .padding(.horizontal)
                     .frame(maxWidth: maxWidthForIpad)
                 
                 Spacer()
                 locationsPreviewStack
             }
-            .padding(.top, mainVM.getTopSafeAreaSize())
             .padding(.bottom, 25)
         }
-        .sheet(item: $mainVM.selectedPlaceDetail) { _ in
-            PlaceDetailView()
-        }
+        
+//        ZStack {
+//            if let _ = mainVM.placeNearByItems {
+//                mapLayer
+//                    .ignoresSafeArea()
+//            }
+//
+//            VStack(spacing: 0) {
+//
+//                header
+//                    .padding(.trailing, 8)
+//                    .padding([.top, .leading, .bottom])
+//                    .frame(maxWidth: maxWidthForIpad)
+//
+//                Spacer()
+//                locationsPreviewStack
+//            }
+//            .padding(.top, mainVM.getTopSafeAreaSize())
+//            .padding(.bottom, 25)
+//        }
+//        .sheet(item: $mainVM.selectedPlaceDetail) { _ in
+//            PlaceDetailView()
+//        }
     }
 }
 
 extension LocationNearByView {
     
-    private var header: some View {
-//        VStack {
-//            HStack(alignment: .top, spacing: 8){
-//                Spacer()
-//            }
-//        }
-//
+    private var nearBySearchItems: some View {
         ZStack(alignment: .topLeading) {
-            VStack(alignment: .leading) {
+            VStack(alignment: .leading, spacing: 0) {
                 if let mapPlaceItem = locationVM.mapPlaceItem {
                     Button(action: locationVM.toggleLocationsList) {
                         HStack(spacing: 10){
@@ -76,7 +92,7 @@ extension LocationNearByView {
                                 .foregroundColor(.primary)
                                 .padding([.top,.bottom, .trailing])
                                 .rotationEffect(Angle(degrees: locationVM.showLocationsList ? 180 : 0))
-                        }.padding(.leading, 40)
+                        }.padding(.leading, 15)
                     }
                 }
                 if locationVM.showLocationsList {
@@ -88,15 +104,16 @@ extension LocationNearByView {
             .background(.thickMaterial)
             .cornerRadius(10)
             .shadow(color: Color.black.opacity(0.3), radius: 20, x: 0, y: 15)
+            .offset(y: -10)
             
-            IconWithRoundBackgroundActionView(systemName: "chevron.backward", backgroundColor: Color.theme.button, action: {
-                mainVM.placeNearByItems = nil
-                vm.toggleNearByIcon()
-            })
-            .background(
-                Color.white.clipShape(Circle())
-            )
-            .offset(x: -8, y: 4)
+//            IconWithRoundBackgroundActionView(systemName: "chevron.backward", backgroundColor: Color.theme.button, action: {
+//                mainVM.placeNearByItems = nil
+//                vm.toggleNearByIcon()
+//            })
+//            .background(
+//                Color.white.clipShape(Circle())
+//            )
+//            .offset(x: -8, y: 4)
         }
        
     }

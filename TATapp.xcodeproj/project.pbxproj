@@ -90,6 +90,7 @@
 		ABDCB76F29E0754C00083C52 /* MapSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABDCB76E29E0754C00083C52 /* MapSheetView.swift */; };
 		ABDCB77129E0789700083C52 /* IconWithRoundBackgroundActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABDCB77029E0789700083C52 /* IconWithRoundBackgroundActionView.swift */; };
 		ABDFEF8D29DC218D00699F5E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = ABDFEF8C29DC218D00699F5E /* GoogleService-Info.plist */; };
+		ABEFF4CF29E5CCF000F8F665 /* MapTopAreaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEFF4CE29E5CCEF00F8F665 /* MapTopAreaView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -178,6 +179,7 @@
 		ABDCB76E29E0754C00083C52 /* MapSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSheetView.swift; sourceTree = "<group>"; };
 		ABDCB77029E0789700083C52 /* IconWithRoundBackgroundActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconWithRoundBackgroundActionView.swift; sourceTree = "<group>"; };
 		ABDFEF8C29DC218D00699F5E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		ABEFF4CE29E5CCEF00F8F665 /* MapTopAreaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTopAreaView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -510,6 +512,7 @@
 				AB288F9E29DF36FE00AB92B0 /* PlaceDetailView.swift */,
 				ABDCB76E29E0754C00083C52 /* MapSheetView.swift */,
 				ABDCB76229DFD82600083C52 /* PlaceViewModel.swift */,
+				ABEFF4CE29E5CCEF00F8F665 /* MapTopAreaView.swift */,
 			);
 			path = Attraction;
 			sourceTree = "<group>";
@@ -636,6 +639,7 @@
 				ABD6D16C29DADB9C0090C299 /* PlaceSearchModel.swift in Sources */,
 				AB288F4229DD737900AB92B0 /* String.swift in Sources */,
 				ABCB63CE29E1FFE400A7C715 /* UserDefaultManager.swift in Sources */,
+				ABEFF4CF29E5CCF000F8F665 /* MapTopAreaView.swift in Sources */,
 				AB288F3729DD47EF00AB92B0 /* SHASearchModel.swift in Sources */,
 				ABCB63BB29E0B88100A7C715 /* LocationsViewModel.swift in Sources */,
 				AB288F1029DC2FE200AB92B0 /* RequestStates.swift in Sources */,

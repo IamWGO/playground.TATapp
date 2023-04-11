@@ -16,41 +16,32 @@ struct PlaceSearchListView: View {
     // MARK: - Body View
     var body: some View {
         ZStack {
-            
-            if let _ = mainVM.placeNearByItems {
-                LocationNearByView(mainVM: mainVM)
-                    .environmentObject(vm)
-            } else {
-                if let placeSearchItems =  mainVM.placeSearchItems {
-                    ScrollView(showsIndicators: false) {
-                        LazyVGrid(columns: columns,spacing: 5){
-                            ForEach(placeSearchItems){ placeSearchItem in
-                                PlaceSearchListItemView(placeItem: placeSearchItem)
-                                    .environmentObject(vm)
-                            }
+            if let placeSearchItems =  mainVM.placeSearchItems {
+                ScrollView(showsIndicators: false) {
+                    LazyVGrid(columns: columns,spacing: 5){
+                        ForEach(placeSearchItems){ placeSearchItem in
+                            PlaceSearchListItemView(placeItem: placeSearchItem)
+                                .environmentObject(vm)
                         }
-                        .padding(.horizontal)
-                        .padding(.top,25)
-                        
                     }
-                    .padding(.top, mainVM.getTopSafeAreaSize() + 70)
-                    .padding(.bottom, 25)
+                    .padding(.horizontal)
+                    .padding(.top,25)
                     
-                    if mainVM.isLoading {
-                        LoadingView()
-                    }
-                    
-                    // Main Menu
-                    MainMenuView(isShowBackButton: true)
                 }
+                .padding(.top, mainVM.getTopSafeAreaSize() + 70)
+                .padding(.bottom, 25)
+                
+                if mainVM.isLoading {
+                    LoadingView()
+                }
+                
+                // Main Menu
+                MainMenuView(isShowBackButton: true)
             }
-            
-           
         }
-        .onAppear {
-            mainVM.selectedplaceId = nil
+        .onAppear{
+            mainVM.selectedPlaceDetail = nil
         }
-
         .sheet(item: $mainVM.selectedPlaceDetail) { placeItem in
             PlaceDetailView()
                 .environmentObject(vm)
@@ -84,7 +75,7 @@ struct PlaceSearchListItemView: View {
         .background(
             RoundedRectangle(cornerRadius: 10)
                 //.fill(.ultraThinMaterial)
-                .fill(mainVM.getColorBySearchTypeCateogry(placeTypeString: placeItem.categoryCode).opacity(0.2))
+                .fill(placeItem.getPlaceTypeColor().opacity(0.2))
                 .offset(y: 65)
                 //.shadow(radius: 10)
         )
@@ -123,17 +114,18 @@ extension PlaceSearchListItemView {
  
         HStack{
          
-            IconWithRoundBackgroundActionView(systemName: "mappin.and.ellipse",
-                                              backgroundColor: mainVM.getColorBySearchTypeCateogry(placeTypeString: placeItem.categoryCode)) {
-                mainVM.currentState = RequestStates.GetPlaceNearBy
-                vm.toggleNearByIcon()
-            }
-            .background(
-                Color.white.clipShape(Circle())
-            )
+//            IconWithRoundBackgroundActionView(systemName: "mappin.and.ellipse",
+//                                              backgroundColor: mainVM.getColorBySearchTypeCateogry(placeTypeString: placeItem.categoryCode)) {
+//                mainVM.currentState = RequestStates.GetPlaceNearBy
+//                vm.toggleNearByIcon()
+//            }
+//            .background(
+//                Color.white.clipShape(Circle())
+//            )
             
             IconWithRoundBackgroundActionView(systemName: "magnifyingglass",
-                                              backgroundColor: mainVM.getColorBySearchTypeCateogry(placeTypeString: placeItem.categoryCode)) {
+                                              backgroundColor: placeItem.getPlaceTypeColor()) {
+                
                 mainVM.getPlaceDetail(placeSearchItem: placeItem)
             }
             .background(
