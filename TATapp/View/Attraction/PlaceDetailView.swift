@@ -20,7 +20,6 @@ struct PlaceDetailView: View {
     var body: some View {
         if let placeItem = mainVM.selectedPlaceDetail {
             ZStack(alignment: .top) {
-                
                 if mainVM.isLoading {
                     LoadingView()
                 } else {
@@ -44,8 +43,9 @@ struct PlaceDetailView: View {
                 }
                 
             }
+            
             .sheet(isPresented: $vm.isShowMapSheet, content: {
-                    MapSheetView(mainVM: mainVM, placeItem: placeItem)
+                MapSheetView(mainVM: mainVM, placeItem: placeItem, isShowDetailIcon: false)
             })
             .sheet(isPresented: $vm.isShowMoreImagesSheet, content: {
                 //
@@ -79,41 +79,37 @@ extension PlaceDetailView {
                 openHoursDialog(placeItem: placeItem)
             }
         }
-        
         .sheet(isPresented: $vm.isShowMapSheet, content: {
            // DispatchQueue.main.async {}
-            MapSheetView(mainVM: mainVM, placeItem: placeItem)
+            MapSheetView(mainVM: mainVM, placeItem: placeItem, isShowDetailIcon: false)
         })
         .sheet(isPresented: $vm.isShowMoreImagesSheet, content: {
             //
         })
         .modifier(HiddenNavigationBarModifier())
-        .ignoresSafeArea()
     }
     
     private var topAreaSection: some View {
         HStack(alignment: .top, spacing: 8){
-            TopAreaIconActionView(systemName: "chevron.backward", action: {
+            IconWithRoundBackgroundActionView(systemName: "chevron.backward", action: {
                 presentationMode.wrappedValue.dismiss()
             })
             
             Spacer()
             
             VStack {
-                TopAreaIconActionView(systemName: "photo.on.rectangle.angled", action: {
+                IconWithRoundBackgroundActionView(systemName: "photo.on.rectangle.angled", action: {
                     vm.toggleMoreImageIcon()
                 })
                 
-                TopAreaIconActionView(systemName: "square.and.arrow.up", action: {
+                IconWithRoundBackgroundActionView(systemName: "square.and.arrow.up", action: {
                     vm.toggleSharedIcon()
                 })
                 
-                TopAreaIconActionView(systemName: "clock", action: {
+                IconWithRoundBackgroundActionView(systemName: "clock", action: {
                     vm.toggleClockIcon()
                 })
             }
-            
-            
         }
         .padding(.top, mainVM.getTopSafeAreaSize())
         .padding(.horizontal)
@@ -167,12 +163,6 @@ extension PlaceDetailView {
             // Top Fram = 40
             // So Total = 100
             .frame(height: 60)
-    
-            if vm.offset > 250{
-                headerDescription(placeItem: placeItem)
-                    .padding(.horizontal)
-                    
-            }
         }
         .frame(height: vm.offset > 250 ? 200 : 140) //header with top image
         .background(scheme == .dark ? Color.black : Color.white)
@@ -202,9 +192,16 @@ extension PlaceDetailView {
             // Top Fram = 40
             // So Total = 100
             .frame(height: 60)
+           
+           if vm.offset > 250{
+               headerDescription(placeItem: placeItem)
+                   .padding(.horizontal)
+                   
+           }
         }
         .padding(.horizontal)
         .background(scheme == .dark ? Color.black : Color.white)
+        
         
     }
     
@@ -275,7 +272,7 @@ extension PlaceDetailView {
             }
             
         })
-        .padding(.top, 20)
+        .padding(.top, vm.offset > 250 ? 0 : 20)
         .padding(.bottom)
         
     }
@@ -339,7 +336,7 @@ extension PlaceDetailView {
                 }
             }
            // .frame(height: kScreen.height * 0.5)
-            .padding(.top, 210)
+            .padding(.top, 210) // padding top
         }
     }
     

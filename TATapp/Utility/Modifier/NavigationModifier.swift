@@ -38,6 +38,8 @@ struct NavigationBarTitleModifier : ViewModifier {
 struct ShadowModifier : ViewModifier {
     func body(content: Content) -> some View {
         content
-            .shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: 5)
+            .shadow(
+                color: Color.theme.primary.opacity(0.25),
+                radius: 10, x: 0, y: 0)
     }
 }

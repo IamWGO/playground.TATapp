@@ -7,8 +7,9 @@
 
 import SwiftUI
 
-struct TopAreaIconActionView: View {
+struct IconWithRoundBackgroundActionView: View {
     var systemName: String = "chevron.backward"
+    var backgroundColor: Color?
     var action: () -> Void
     var body: some View {
         
@@ -17,7 +18,7 @@ struct TopAreaIconActionView: View {
                 .font(.body)
                 .foregroundColor(Color.theme.primary)
                 .padding(15)
-                .background(.ultraThinMaterial)
+                .background((backgroundColor != nil) ? backgroundColor?.opacity(0.5) : Color.theme.primary.opacity(0.1))
                 .clipShape(Circle())
         })
     }
@@ -25,6 +26,6 @@ struct TopAreaIconActionView: View {
 
 struct TopAreaIconActionView_Previews: PreviewProvider {
     static var previews: some View {
-        TopAreaIconActionView() {}
+        IconWithRoundBackgroundActionView() {}
     }
 }

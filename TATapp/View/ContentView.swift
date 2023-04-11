@@ -14,11 +14,11 @@ struct ContentView: View {
         //AttractionDetailView(mainVM: mainVM)
         //MapSearchView()
         
-//        NavigationView {
-//            HomeView()
-//        }
-//        .navigationViewStyle(StackNavigationViewStyle())
-        MapSearchView(mainVM: mainVM)
+        NavigationView {
+            HomeView()
+        }
+        .navigationViewStyle(StackNavigationViewStyle())
+//        MapSearchView(mainVM: mainVM)
     }
 }
 

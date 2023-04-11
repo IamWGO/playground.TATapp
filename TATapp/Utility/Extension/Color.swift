@@ -73,10 +73,10 @@ struct LaunchTheme {
 }
 
 struct ColorSpot {
-    static let attraction = Color(hex: "FD9D6F")
-    static let shopping = Color(hex: "C053EB")
-    static let restaurant = Color(hex: "1F639B")
-    static let accommodation = Color(hex: "CE5959")
-    static let other = Color(hex: "FAE14E")
-    static let event = Color(hex: "77037B")
+    static let attraction = Color(hex: "FF7B54")
+    static let shopping = Color(hex: "FFBF00")
+    static let restaurant = Color(hex: "A555EC")
+    static let accommodation = Color(hex: "009FBD")
+    static let other = Color(hex: "6EBF8B")
+    static let event = Color(hex: "FF6464")
 }

@@ -12,18 +12,18 @@ struct HomeView: View {
     
     @State private var shouldNavigate = false
     
-    var dataItems: [CategoryModel] = categoryItems
+    var placeSearchTypeItems: [CategoryModel] = searchTypeItems
     var columns = Array(repeating: GridItem(.flexible(), spacing: 20), count: 2)
     
     var body: some View {
         
         ZStack {
-            MainMenuView()
             LazyVGrid(columns: columns,spacing: 5){
                 
-                ForEach(dataItems){ item in
+                ForEach(placeSearchTypeItems){ item in
                     Button {
                         mainVM.currentPlaceType = item.placeType
+                        mainVM.isShowCategotyMenu = false
                     } label: {
                         getCard(item: item)
                     }
@@ -31,6 +31,8 @@ struct HomeView: View {
             }
             .padding(.horizontal)
             .padding(.top,25)
+            
+            MainMenuView()
         }
         .onAppear {
             self.shouldNavigate = false
@@ -41,7 +43,7 @@ struct HomeView: View {
             }
         })
         .background(
-            NavigationLink(destination: PlaceListView(), isActive: $shouldNavigate) {
+            NavigationLink(destination: PlaceSearchListView(), isActive: $shouldNavigate) {
                 EmptyView()
             }
         )

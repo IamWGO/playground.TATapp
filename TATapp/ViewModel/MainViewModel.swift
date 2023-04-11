@@ -45,7 +45,7 @@ class MainViewModel: ObservableObject {
 
     init() {
         self.requestService = RequestApiService()
-        self.currentState = RequestStates.GetPlaceNearBy
+        self.currentState = RequestStates.None
         
         self.apiRequestPublisher()
         self.mainPublisher()
@@ -321,6 +321,28 @@ class MainViewModel: ObservableObject {
             return "EN"
         }
        
+    }
+    
+    func getColorBySearchTypeCateogry(placeTypeString: String?) -> Color {
+       
+        guard let placeTypeString = placeTypeString else { return Color.theme.button }
+        
+        var placeType: PlaceSearchType = .ALL
+        switch(placeTypeString) {
+        case "OTHER": placeType = .OTHER
+        case "SHOP": placeType = .SHOP
+        case "RESTAURANT": placeType = .RESTAURANT
+        case "ACCOMMODATION": placeType = .ACCOMMODATION
+        case "ATTRACTION": placeType = .ATTRACTION
+        default: return Color.theme.button
+        }
+        
+        guard let currentType = searchTypeItems.first(where: { $0.placeType == placeType }) else {
+            print("Could not find current index in locations array! Should never happen.")
+            return Color.theme.button
+        }
+        
+        return currentType.backgroundColor
     }
     
    

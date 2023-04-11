@@ -10,7 +10,7 @@ import SwiftUI
 struct GridView : View {
     @EnvironmentObject var mainVM: MainViewModel
     
-    var dataItems: [CategoryModel] = categoryItems
+    var dataItems: [CategoryModel] = searchTypeItems
     var columns = Array(repeating: GridItem(.flexible(), spacing: 20), count: 2)
    
     var body: some View{

@@ -12,6 +12,7 @@ class PlaceViewModel: ObservableObject {
     @Published var isBookMark: Bool = false
     @Published var isCommentSheet: Bool = false
     @Published var isShowMapSheet: Bool = false
+    @Published var isShowDetailSheet: Bool = false
     @Published var isShowMoreImagesSheet: Bool = false
     @Published var isShowSharedSheet: Bool = false
     @Published var isOpenHoursDialog: Bool = false
@@ -40,6 +41,10 @@ class PlaceViewModel: ObservableObject {
     
     func toggleMapIcon() {
         isShowMapSheet = !isShowMapSheet
+    }
+    
+    func toggleDetailIcon() {
+        isShowDetailSheet = !isShowDetailSheet
     }
     
     func toggleClockIcon() {

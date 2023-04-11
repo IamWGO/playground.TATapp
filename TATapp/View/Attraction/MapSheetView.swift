@@ -9,15 +9,18 @@ import SwiftUI
 import MapKit
 
 struct MapSheetView: View {
-    
     @ObservedObject var mainVM: MainViewModel
     @ObservedObject var vm: LocationsViewModel
+    
     @State var placeItem: PlaceItemModel
     @State var mapRegion: MKCoordinateRegion = MKCoordinateRegion()
+    @State var isShowDetailIcon: Bool = false
+    @State var isShowDetail: Bool = false
     
-    init(mainVM: MainViewModel,placeItem: PlaceItemModel){
+    init(mainVM: MainViewModel,placeItem: PlaceItemModel, isShowDetailIcon: Bool){
         self.mainVM = mainVM
         self.placeItem = placeItem
+        self.isShowDetailIcon = isShowDetailIcon
         _vm = ObservedObject(wrappedValue: LocationsViewModel(mainVM: mainVM))
     }
     
@@ -47,6 +50,7 @@ struct MapSheetView: View {
            
             topAreaSection
         }
+        
         .onAppear {
             if let latitude = placeItem.latitude, let longitude = placeItem.longitude {
                 mapRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: latitude, longitude: longitude),
@@ -93,13 +97,19 @@ struct MapSheetView: View {
                
                 
                 Spacer()
-                
-                Image(systemName: "phone")
-                    .modifier(TextModifier(fontStyle: .caption))
-                
-                Text(placeItem.contact.phones?[0] ?? "")
-                    .font(.caption)
-                    .modifier(TextModifier(fontStyle: .caption))
+                if isShowDetailIcon {
+                    HStack {
+                        Image(systemName: "magnifyingglass")
+                            .modifier(TextModifier(fontStyle: .caption))
+                        
+                        Text("Detail")
+                            .font(.caption)
+                            .modifier(TextModifier(fontStyle: .caption))
+                    }
+                    .padding(8)
+                    .background(Color.theme.button.opacity(0.2))
+                    .cornerRadius(5)
+                }
             }
             .frame(maxWidth: .infinity,alignment: .leading)
             

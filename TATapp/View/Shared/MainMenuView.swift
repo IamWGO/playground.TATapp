@@ -12,13 +12,14 @@ struct MainMenuView: View {
     @EnvironmentObject var mainVM: MainViewModel
     
     @State var isShowBackButton: Bool = false
+    var placeSearchTypeItems: [CategoryModel] = searchTypeItems
     
     var body: some View {
         VStack(spacing: 0) {
             // Menu Icon
             HStack{
                 if isShowBackButton {
-                    TopAreaIconActionView(systemName: "chevron.backward", action: {
+                    IconWithRoundBackgroundActionView(systemName: "chevron.backward", action: {
                         presentationMode.wrappedValue.dismiss()
                     })
                 }
@@ -59,10 +60,11 @@ struct MainMenuView: View {
         HStack{
             Spacer()
             VStack(alignment: .trailing) {
-                ForEach(categoryItems) { item in
+                ForEach(placeSearchTypeItems) { item in
                     
                     Button {
                         mainVM.currentPlaceType = item.placeType
+                        mainVM.isShowCategotyMenu = false
                     } label: {
                         HStack(spacing: 8){
                             
@@ -71,7 +73,7 @@ struct MainMenuView: View {
                             
                             Text(item.name)
                                 .fontWeight(.semibold)
-                                .modifier(TextModifier(fontStyle: .body, foregroundColor: item.foregroundColor))
+                                .modifier(TextModifier(fontStyle: .body, foregroundColor: Color.theme.primary))
                             
                             Spacer()
                         }

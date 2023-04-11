@@ -25,6 +25,7 @@ struct VStackButtonActionView: View {
                     Image(systemName: systemName)
                         .font(.body)
                         .foregroundColor(!isDisable ? foregroundColor : foregroundColor.opacity(0.2))
+                        .padding(textButton != nil ? 0 : 10)
                 }
                 if let textButton = textButton {
                     Text(textButton)
