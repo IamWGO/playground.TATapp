@@ -43,7 +43,7 @@ struct HomeView: View {
             }
         })
         .background(
-            NavigationLink(destination: PlaceSearchListView(), isActive: $shouldNavigate) {
+            NavigationLink(destination: PlaceSearchListView(mainVM: mainVM), isActive: $shouldNavigate) {
                 EmptyView()
             }
         )

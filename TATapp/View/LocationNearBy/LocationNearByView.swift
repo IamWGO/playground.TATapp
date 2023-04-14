@@ -9,66 +9,40 @@ import SwiftUI
 import MapKit
 
 struct LocationNearByView: View {
+    @EnvironmentObject var mainVM: MainViewModel
+    @EnvironmentObject var locationVM: LocationsViewModel
     @EnvironmentObject var vm: PlaceViewModel
-    
-    @ObservedObject var mainVM: MainViewModel
-    @ObservedObject var locationVM: LocationsViewModel
     
     @State var swipeDirection: SwipeDirection = .notAllow
     @State var isSwiftLeft: Bool = false
-    
-    init(mainVM: MainViewModel){
-        self.mainVM = mainVM
-        _locationVM = ObservedObject(wrappedValue: LocationsViewModel(mainVM: mainVM))
-    }
    
     let maxWidthForIpad: CGFloat = 700
     
     var body: some View {
-        ZStack(alignment: .top) {
-            if let _ = mainVM.placeNearByItems {
+        if let _ = mainVM.placeNearByItems {
+            ZStack(alignment: .top) {
                 mapLayer
                     .ignoresSafeArea()
-            }
-            
-            VStack(spacing: 0) {
-                if let placeItem = mainVM.selectedPlaceDetail {
-                    MapTopAreaView(placeItem: placeItem)
+                
+                VStack(spacing: 0) {
+                    nearBySearchItems
+                        .padding(.trailing, 8)
+                        .padding(.horizontal)
+                        .frame(maxWidth: maxWidthForIpad)
+                    Spacer()
+                    locationsPreviewStack
                 }
+                .padding(.top, mainVM.getTopSafeAreaSize() + 60)
+                .padding(.bottom, 25)
                 
-                nearBySearchItems
-                    .padding(.trailing, 8)
-                    .padding(.horizontal)
-                    .frame(maxWidth: maxWidthForIpad)
-                
-                Spacer()
-                locationsPreviewStack
+                MainMenuView(isShowBackButton: true)
             }
-            .padding(.bottom, 25)
+            .modifier(HiddenNavigationBarModifier())
+            .ignoresSafeArea()
+            .background(.ultraThinMaterial)
+        } else {
+            LoadingView()
         }
-        
-//        ZStack {
-//            if let _ = mainVM.placeNearByItems {
-//                mapLayer
-//                    .ignoresSafeArea()
-//            }
-//
-//            VStack(spacing: 0) {
-//
-//                header
-//                    .padding(.trailing, 8)
-//                    .padding([.top, .leading, .bottom])
-//                    .frame(maxWidth: maxWidthForIpad)
-//
-//                Spacer()
-//                locationsPreviewStack
-//            }
-//            .padding(.top, mainVM.getTopSafeAreaSize())
-//            .padding(.bottom, 25)
-//        }
-//        .sheet(item: $mainVM.selectedPlaceDetail) { _ in
-//            PlaceDetailView()
-//        }
     }
 }
 
@@ -90,7 +64,7 @@ extension LocationNearByView {
                             Image(systemName: "arrow.down")
                                 .modifier(TextModifier(fontStyle: .title3))
                                 .foregroundColor(.primary)
-                                .padding([.top,.bottom, .trailing])
+                                .padding(locationVM.showLocationsList ? [.top,.bottom, .leading] : [.top,.bottom, .trailing])
                                 .rotationEffect(Angle(degrees: locationVM.showLocationsList ? 180 : 0))
                         }.padding(.leading, 15)
                     }
@@ -105,15 +79,6 @@ extension LocationNearByView {
             .cornerRadius(10)
             .shadow(color: Color.black.opacity(0.3), radius: 20, x: 0, y: 15)
             .offset(y: -10)
-            
-//            IconWithRoundBackgroundActionView(systemName: "chevron.backward", backgroundColor: Color.theme.button, action: {
-//                mainVM.placeNearByItems = nil
-//                vm.toggleNearByIcon()
-//            })
-//            .background(
-//                Color.white.clipShape(Circle())
-//            )
-//            .offset(x: -8, y: 4)
         }
        
     }

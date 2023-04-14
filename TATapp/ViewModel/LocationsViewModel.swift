@@ -14,7 +14,7 @@ class LocationsViewModel: ObservableObject {
     @Published var mainVM: MainViewModel
     // All loaded locations
     @Published var placeItems: [PlaceSearchItem]? = nil
-    
+    @Published var isShowPlaceDetail: Bool = false
     // Current location on map
     @Published var mapPlaceItem: PlaceSearchItem? {
         didSet {
@@ -64,6 +64,13 @@ class LocationsViewModel: ObservableObject {
                 span: self.mapSpan)
             }
         }
+    }
+    
+    func toggleShowDetail() {
+       // withAnimation(.easeInOut) {
+            isShowPlaceDetail = !isShowPlaceDetail
+        print(">> isShowPlaceDetail \(isShowPlaceDetail)")
+       // }
     }
     
     func toggleLocationsList() {

@@ -47,6 +47,10 @@ struct PlaceSearchItem: Codable,Identifiable,Equatable {
         placeId
     }
     
+    var mapRegion: MKCoordinateRegion {
+        MKCoordinateRegion(center: getCoordinate(), span: MKCoordinateSpan(latitudeDelta: 0.03, longitudeDelta: 0.03))
+    }
+    
     func isHasLocation() -> Bool {
         return (latitude != nil && longitude != nil)
     }
@@ -57,7 +61,7 @@ struct PlaceSearchItem: Codable,Identifiable,Equatable {
         } else {
             return CLLocationCoordinate2D(latitude: kDefaultLocation.latitude, longitude: kDefaultLocation.longitude)
         }
-    }
+    } 
     
     func getPlaceTypeColor() -> Color {
         switch(categoryCode) {
@@ -69,6 +73,28 @@ struct PlaceSearchItem: Codable,Identifiable,Equatable {
         default: return Color.theme.button
         }
         
+    }
+    
+    func getFullAddress() -> String {
+        var address = ""
+        if (location.address != "") { address +=  "\(location.address) " }
+        if (location.subDistrict != "") { address +=  "\(location.subDistrict) " }
+        if (location.district != "") { address +=  "\(location.district) " }
+        if (location.province != "") { address +=  "\(location.province) " }
+        if (location.postcode != "") { address +=  "\(location.postcode) " }
+        
+        return address
+    }
+    
+    func getDistrictAndProvince() -> String {
+        var address = ""
+        if (location.district != "") { address +=  "\(location.district) " }
+        if (location.province != "") { address +=  "\(location.province) " }
+        return address
+    }
+    
+    func getShaTypeDescription() -> String {
+        return "\(sha.shaTypeDescription)"
     }
   
 }

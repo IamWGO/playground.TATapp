@@ -44,10 +44,10 @@ extension LocationsListView {
             VStack(alignment: .leading) {
                 Text(placeItem.placeName)
                     .font(.headline)
-                Text(mainVM.getShaTypeDescription(sha: placeItem.sha))
+                Text(placeItem.getShaTypeDescription())
                     .font(.caption)
                     .padding(.bottom, 8)
-                Text(mainVM.getFullAddress(location: placeItem.location))
+                Text(placeItem.getDistrictAndProvince())
                     .font(.subheadline)
                 
             }

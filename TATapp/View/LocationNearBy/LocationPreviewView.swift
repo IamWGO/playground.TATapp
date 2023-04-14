@@ -9,6 +9,7 @@
 import SwiftUI
 
 struct LocationPreviewView: View {
+    //@Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var mainVM: MainViewModel
     @EnvironmentObject private var vm: LocationsViewModel
     
@@ -55,7 +56,7 @@ extension LocationPreviewView {
             Text(placeItem.placeName)
                 .modifier(TextModifier(fontStyle: .title3))
             
-            Text(mainVM.getDistrictAndProvince(location: placeItem.location))
+            Text(placeItem.getDistrictAndProvince())
                 .modifier(TextModifier(fontStyle: .caption))
         }
         
@@ -64,8 +65,8 @@ extension LocationPreviewView {
     
     private var learnMoreButton: some View {
         Button {
-            mainVM.selectedPlaceDetail = nil
             mainVM.getPlaceDetail(placeSearchItem: placeItem)
+            //presentationMode.wrappedValue.dismiss()
         } label: {
             Text("Learn more")
                 .font(.headline)

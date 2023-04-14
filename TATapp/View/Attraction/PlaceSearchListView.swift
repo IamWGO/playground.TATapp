@@ -8,10 +8,16 @@
 import SwiftUI
 
 struct PlaceSearchListView: View {
-    @EnvironmentObject var mainVM: MainViewModel
+    @ObservedObject var mainVM: MainViewModel
     @StateObject var vm: PlaceViewModel = PlaceViewModel()
+    @StateObject var locationVM: LocationsViewModel
     
     var columns = Array(repeating: GridItem(.flexible(), spacing: 20), count: isIpad ? 2 : 1)
+    
+    init(mainVM: MainViewModel){
+        self.mainVM = mainVM
+        _locationVM = StateObject(wrappedValue: LocationsViewModel(mainVM: mainVM))
+    }
     
     // MARK: - Body View
     var body: some View {
@@ -20,7 +26,9 @@ struct PlaceSearchListView: View {
                 ScrollView(showsIndicators: false) {
                     LazyVGrid(columns: columns,spacing: 5){
                         ForEach(placeSearchItems){ placeSearchItem in
-                            PlaceSearchListItemView(placeItem: placeSearchItem)
+                            PlaceSearchListItemView(placeSearchItem: placeSearchItem)
+                                .environmentObject(locationVM)
+                                .environmentObject(mainVM)
                                 .environmentObject(vm)
                         }
                     }
@@ -42,10 +50,6 @@ struct PlaceSearchListView: View {
         .onAppear{
             mainVM.selectedPlaceDetail = nil
         }
-        .sheet(item: $mainVM.selectedPlaceDetail) { placeItem in
-            PlaceDetailView()
-                .environmentObject(vm)
-        }
         .modifier(HiddenNavigationBarModifier())
         .ignoresSafeArea()
     }
@@ -57,25 +61,47 @@ struct PlaceSearchListView: View {
 struct PlaceSearchListItemView: View {
     @EnvironmentObject var mainVM: MainViewModel
     @EnvironmentObject var vm: PlaceViewModel
-    @State var shouldNavigate: Bool = false
-    let placeItem: PlaceSearchItem
+    @EnvironmentObject var locationVM: LocationsViewModel
+     
+    @State private var selection: Int? = nil
+    let placeSearchItem: PlaceSearchItem
     
     var body: some View {
         HStack(alignment: .bottom, spacing: 0) {
+            
             VStack {
                 HStack {
-                    imageSection
+                    Button {
+                        mainVM.getPlaceDetail(placeSearchItem: placeSearchItem)
+                        selection = 2
+                    } label: {
+                        imageSection
+                    }
                     Spacer()
                     learnMoreButton
                 }
                 titleSection
             }
+            
+            NavigationLink(destination:
+                            LocationNearByView()
+                                .environmentObject(locationVM)
+                                .environmentObject(mainVM)
+                                .environmentObject(vm),
+                           tag: 1, selection: $selection) {  EmptyView() }
+            
+            NavigationLink(destination: PlaceDetailView()
+                                        .environmentObject(locationVM)
+                                        .environmentObject(mainVM)
+                                        .environmentObject(vm),
+                           tag: 2, selection: $selection) {  EmptyView() }
+        
         }
         .padding(20)
         .background(
             RoundedRectangle(cornerRadius: 10)
                 //.fill(.ultraThinMaterial)
-                .fill(placeItem.getPlaceTypeColor().opacity(0.2))
+                .fill(placeSearchItem.getPlaceTypeColor().opacity(0.2))
                 .offset(y: 65)
                 //.shadow(radius: 10)
         )
@@ -88,7 +114,7 @@ extension PlaceSearchListItemView {
     
     private var imageSection: some View {
         ZStack {
-            PlaceImageView(imageName: placeItem.thumbnailUrl)
+            PlaceImageView(imageName: placeSearchItem.thumbnailUrl)
                     .frame(width: 100, height: 100)
                     .cornerRadius(10)
         }
@@ -100,10 +126,10 @@ extension PlaceSearchListItemView {
     
     private var titleSection: some View {
         VStack(alignment: .leading, spacing: 4) {
-            Text(placeItem.placeName)
+            Text(placeSearchItem.placeName)
                 .modifier(TextModifier(fontStyle: .title3))
             
-            Text(mainVM.getDistrictAndProvince(location: placeItem.location))
+            Text(placeSearchItem.getDistrictAndProvince())
                 .modifier(TextModifier(fontStyle: .caption))
         }
         
@@ -114,19 +140,19 @@ extension PlaceSearchListItemView {
  
         HStack{
          
-//            IconWithRoundBackgroundActionView(systemName: "mappin.and.ellipse",
-//                                              backgroundColor: mainVM.getColorBySearchTypeCateogry(placeTypeString: placeItem.categoryCode)) {
-//                mainVM.currentState = RequestStates.GetPlaceNearBy
-//                vm.toggleNearByIcon()
-//            }
-//            .background(
-//                Color.white.clipShape(Circle())
-//            )
+            IconWithRoundBackgroundActionView(systemName: "mappin.and.ellipse",
+                                              backgroundColor: placeSearchItem.getPlaceTypeColor()) {
+                mainVM.currentState = RequestStates.GetPlaceNearBy
+                selection = 1
+            }
+            .background(
+                Color.white.clipShape(Circle())
+            )
             
             IconWithRoundBackgroundActionView(systemName: "magnifyingglass",
-                                              backgroundColor: placeItem.getPlaceTypeColor()) {
-                
-                mainVM.getPlaceDetail(placeSearchItem: placeItem)
+                                              backgroundColor: placeSearchItem.getPlaceTypeColor()) {
+                mainVM.getPlaceDetail(placeSearchItem: placeSearchItem)
+                selection = 2
             }
             .background(
                 Color.white.clipShape(Circle())

@@ -264,35 +264,7 @@ class MainViewModel: ObservableObject {
         }
     }
  
-    // MARK: - UI Helper
-
-    
-    func getShaTypeDescription(sha: SHA) -> String {
-        return "\(sha.shaTypeDescription)"
-    }
-    
-    func getFullAddress(location: Location) -> String {
-        var address = ""
-        if (location.address != "") { address +=  "\(location.address) " }
-        if (location.subDistrict != "") { address +=  "\(location.subDistrict) " }
-        if (location.district != "") { address +=  "\(location.district) " }
-        if (location.province != "") { address +=  "\(location.province) " }
-        if (location.postcode != "") { address +=  "\(location.postcode) " }
-        
-        return address
-    }
-    
-    func getDistrictAndProvince(location: Location) -> String {
-        var address = ""
-        if (location.district != "") { address +=  "\(location.district) " }
-        if (location.province != "") { address +=  "\(location.province) " } 
-        return address
-    }
-    
-    func getContactNumbers(contacInfo: ContactInfo) -> String {
-        return contacInfo.phones?[0] ?? ""
-    }
-    
+    // MARK: - UI Helper 
     func toggleMenuIcon() {
         withAnimation(.easeInOut) {
             isShowCategotyMenu = !isShowCategotyMenu

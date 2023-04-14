@@ -28,26 +28,9 @@ struct MapTopAreaView: View {
                 
                 Image(systemName: "pin")
                     .font(.caption)
-                Text(mainVM.getDistrictAndProvince(location: placeItem.location))
+                Text(placeItem.getDistrictAndProvince())
                     .modifier(TextModifier(fontStyle: .caption))
-               
-                
-//                Spacer()
-//                Button {
-//                    vm.toggleNearByIcon()
-//                } label: {
-//                    HStack {
-//                        Image(systemName: "mappin.and.ellipse")
-//                            .modifier(TextModifier(fontStyle: .caption))
-//                        
-//                        Text("nearBy")
-//                            .font(.caption)
-//                            .modifier(TextModifier(fontStyle: .caption))
-//                    }
-//                    .padding(8)
-//                    .background(Color.theme.button.opacity(0.2))
-//                    .cornerRadius(5)
-//                }
+                 
             }
             .frame(maxWidth: .infinity,alignment: .leading)
             

@@ -28,31 +28,9 @@ struct MapSheetView: View {
     
     private var mapLocation:some View {
         ZStack(alignment: .top) {
-//           if let placeNearByItems = mainVM.placeNearByItems {
-//               if placeNearByItems.count > 0 {
-//                   Map(coordinateRegion: $mapRegion,
-//                                annotationItems: placeNearByItems,
-//                                annotationContent: { placeItem in
-//                                MapAnnotation(coordinate: placeItem.getCoordinate()) {
-//                                    LocationMapAnnotationView()
-//                                        .scaleEffect(locationVM.mapPlaceItem == placeItem ? 1 : 0.7)
-//                                        .shadow(radius: 10)
-//                                        .onTapGesture {
-//                                            locationVM.showNextLocation(placeItem: placeItem)
-//                                        }
-//                                }
-//                            })
-//               } else {
-//                   singlePinLocation
-//               }
-//            } else {
-//                singlePinLocation
-//            }
             singlePinLocation
             MapTopAreaView(placeItem: placeItem)
-            
         }
-        
         .onAppear {
             vm.isShowNearBySheet = false
             

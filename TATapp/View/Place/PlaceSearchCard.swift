@@ -28,14 +28,14 @@ struct PlaceSearchCard: View {
                         Text(placeItem.placeName)
                             .font(.body)
                         Spacer()
-                        Text(mainVM.getShaTypeDescription(sha: placeItem.sha))
+                        Text(placeItem.getShaTypeDescription())
                            .font(.caption)
                            .fontWeight(.bold)
                            .foregroundColor(.gray)
                     }
                     
                     HStack{
-                        Text(mainVM.getFullAddress(location: placeItem.location))
+                        Text(placeItem.getFullAddress())
                             .font(.caption)
                             .fontWeight(.bold)
                             .foregroundColor(.gray)

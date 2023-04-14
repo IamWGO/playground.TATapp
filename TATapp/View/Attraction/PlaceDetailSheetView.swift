@@ -1,14 +1,14 @@
 //
-//  PlaceDetailSheet.swift
+//  PlaceDetailSheetView.swift
 //  TATapp
 //
-//  Created by Waleerat Gottlieb on 2023-04-14.
+//  Created by Waleerat Gottlieb on 2023-04-06.
 //
 
 import SwiftUI
 import MapKit
 
-struct PlaceDetailView: View {
+struct PlaceDetailSheetView: View {
     @Environment(\.presentationMode) var presentationMode
     @Environment(\.colorScheme) var scheme
     
@@ -30,13 +30,9 @@ struct PlaceDetailView: View {
                         (scheme == .dark ? Color.black : Color.white)
                             .frame(height: mainVM.getTopSafeAreaSize())
                             .ignoresSafeArea(.all, edges: .top)
-                            .opacity(vm.offset > 350 ? 1 : 0)
+                            .opacity(vm.offset > 250 ? 1 : 0)
                         ,alignment: .top
                     )
-                    // Will always show on top of content
-                    if vm.offset < 350{
-                        MainMenuView(isShowBackButton: true)
-                    }
                 }
             
         } else {

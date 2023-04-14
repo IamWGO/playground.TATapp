@@ -69,6 +69,10 @@ struct PlaceItemModel: Codable,Identifiable {
         placeId
     }
     
+    var mapRegion: MKCoordinateRegion {
+        MKCoordinateRegion(center: getCoordinate(), span: MKCoordinateSpan(latitudeDelta: 0.03, longitudeDelta: 0.03))
+    }
+    
     func isHasLocation() -> Bool {
         return (latitude != nil && longitude != nil)
     }
@@ -93,7 +97,55 @@ struct PlaceItemModel: Codable,Identifiable {
         if let latitude = latitude, let longitude = longitude {
             return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
         } else {
-            return CLLocationCoordinate2D(latitude: 0, longitude: 0)
+            return CLLocationCoordinate2D(latitude: kDefaultLocation.latitude, longitude: kDefaultLocation.longitude)
         }
+    }
+    
+    func getMapRegion() -> MKCoordinateRegion {
+        return MKCoordinateRegion(center: getCoordinate(), span: MKCoordinateSpan(latitudeDelta: 0.03, longitudeDelta: 0.03))
+    }
+    
+    func getShaTypeDescription() -> String {
+        return "\(sha.shaTypeDescription)"
+    }
+    
+    func getContactNumbers() -> String {
+        return contact.phones?[0] ?? ""
+    }
+    
+    func getWebURL() -> String? {
+        if let urls = contact.urls {
+            return urls[0]
+        } else {
+            return nil
+        }
+    }
+    
+    func getImages() -> [String] {
+        return [
+                "https://tatapi.tourismthailand.org/tatfs/Image/custompoi/picture/P03000001_1.jpg",
+                "https://tatapi.tourismthailand.org/tatfs/Image/custompoi/picture/P03000001_2.jpg",
+                "https://tatapi.tourismthailand.org/tatfs/Image/custompoi/picture/P03000001_3.jpg",
+                "https://tatapi.tourismthailand.org/tatfs/Image/custompoi/picture/P03000001_4.jpg",
+                "https://tatapi.tourismthailand.org/tatfs/Image/custompoi/picture/P03000001_5.jpg"
+                ]
+    }
+    
+    func getFullAddress() -> String {
+        var address = ""
+        if (location.address != "") { address +=  "\(location.address) " }
+        if (location.subDistrict != "") { address +=  "\(location.subDistrict) " }
+        if (location.district != "") { address +=  "\(location.district) " }
+        if (location.province != "") { address +=  "\(location.province) " }
+        if (location.postcode != "") { address +=  "\(location.postcode) " }
+        
+        return address
+    }
+    
+    func getDistrictAndProvince() -> String {
+        var address = ""
+        if (location.district != "") { address +=  "\(location.district) " }
+        if (location.province != "") { address +=  "\(location.province) " }
+        return address
     }
 }
