@@ -25,18 +25,18 @@ struct PlaceDetailView: View {
                     LoadingView()
                 } else {
                     PlaceDescriptionView(placeItem: placeItem, offsetHeight: 350)
-                    .overlay(
-                        // Only Safe Area....
-                        (scheme == .dark ? Color.black : Color.white)
-                            .frame(height: mainVM.getTopSafeAreaSize())
-                            .ignoresSafeArea(.all, edges: .top)
-                            .opacity(vm.offset > 350 ? 1 : 0)
-                        ,alignment: .top
-                    )
-                    // Will always show on top of content
-                    if vm.offset < 350{
-                        MainMenuView(isShowBackButton: true)
-                    }
+                        .sheet(isPresented: $vm.isShowDetailSheet, content: {
+                            PlaceDetailView()
+                        })
+                        .overlay(
+                            // Only Safe Area....
+                            (scheme == .dark ? Color.black : Color.white)
+                                .frame(height: mainVM.getTopSafeAreaSize())
+                                .ignoresSafeArea(.all, edges: .top)
+                                .opacity(vm.offset > 350 ? 1 : 0)
+                            ,alignment: .top
+                        )
+                    
                 }
             
         } else {

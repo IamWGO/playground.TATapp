@@ -33,9 +33,10 @@ class PlaceViewModel: ObservableObject {
     }
     
     func toogleDetailIcon(){
-        // TODO : - Save to database
         withAnimation(.easeInOut) {
-            isShowDetailSheet = !isShowDetailSheet
+            DispatchQueue.main.async {
+                self.isShowDetailSheet = !self.isShowDetailSheet
+            }
         }
     }
     

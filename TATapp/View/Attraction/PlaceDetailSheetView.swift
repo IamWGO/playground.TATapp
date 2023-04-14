@@ -30,7 +30,7 @@ struct PlaceDetailSheetView: View {
                         (scheme == .dark ? Color.black : Color.white)
                             .frame(height: mainVM.getTopSafeAreaSize())
                             .ignoresSafeArea(.all, edges: .top)
-                            .opacity(vm.offset > 250 ? 1 : 0)
+                            .opacity(vm.offset > 350 ? 1 : 0)
                         ,alignment: .top
                     )
                 }

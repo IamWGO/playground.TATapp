@@ -11,7 +11,10 @@ import SwiftUI
 struct LocationPreviewView: View {
     //@Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var mainVM: MainViewModel
-    @EnvironmentObject private var vm: LocationsViewModel
+    @EnvironmentObject private var locationVM: LocationsViewModel
+    @EnvironmentObject private var vm: PlaceViewModel
+    
+    @State var isShowDetailSheet: Bool = false
     
     let placeItem: PlaceSearchItem
     
@@ -26,6 +29,9 @@ struct LocationPreviewView: View {
                 titleSection
             }
         }
+        .sheet(isPresented: $isShowDetailSheet, content: {
+            PlaceDetailSheetView()
+        })
         .padding(20)
         .background(
             RoundedRectangle(cornerRadius: 10)
@@ -46,6 +52,7 @@ extension LocationPreviewView {
                     .cornerRadius(10)
              
         }
+        
         .padding(6)
         .background(Color.white)
         .cornerRadius(10)
@@ -66,18 +73,20 @@ extension LocationPreviewView {
     private var learnMoreButton: some View {
         Button {
             mainVM.getPlaceDetail(placeSearchItem: placeItem)
-            //presentationMode.wrappedValue.dismiss()
+            isShowDetailSheet.toggle()
         } label: {
             Text("Learn more")
                 .font(.headline)
                 .frame(width: 125, height: 35)
         }
         .buttonStyle(.borderedProminent)
+        .accentColor(Color.theme.button)
+        
     }
     
     private var nextButton: some View {
         Button {
-            vm.nextButtonPressed()
+            locationVM.nextButtonPressed()
         } label: {
             Text("Next")
                 .font(.headline)

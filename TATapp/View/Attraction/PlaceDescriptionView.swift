@@ -21,21 +21,10 @@ struct PlaceDescriptionView: View {
         ZStack(alignment: .top) {
             
             ScrollView(showsIndicators: false){
-                bodyContainer(placeItem: placeItem)
-            }
-            .overlay(
-                // Only Safe Area....
-                (scheme == .dark ? Color.black : Color.white)
-                    .frame(height: mainVM.getTopSafeAreaSize())
-                    .ignoresSafeArea(.all, edges: .top)
-                    .opacity(vm.offset > offsetHeight ? 1 : 0)
-                ,alignment: .top
-            )
-            // Will always show on top of content
-        
+                bodyContainer
+            } 
         }
         .sheet(isPresented: $vm.isShowMapSheet, content: {
-           // DispatchQueue.main.async {}
             MapSheetView(mainVM: mainVM, placeItem: placeItem)
         })
         .modifier(HiddenNavigationBarModifier())
@@ -44,7 +33,7 @@ struct PlaceDescriptionView: View {
 
 extension PlaceDescriptionView {
     
-    private func bodyContainer(placeItem: PlaceItemModel) -> some View {
+    private var bodyContainer: some View {
         // Since Were Pinning Header View....
         return LazyVStack(alignment: .leading, spacing: 15, pinnedViews: [.sectionHeaders], content: {
             
@@ -79,19 +68,30 @@ extension PlaceDescriptionView {
             .frame(height: offsetHeight)
             
             // Cards......
-            Section(header: headerSection(placeItem: placeItem)) {
+            Section(header: headerSection) {
                 // Content Detail.....
-                placeInformation(placeItem: placeItem)
+                placeInformation
             }
         })
     }
     
-    func placeInformation(placeItem: PlaceItemModel) -> some View {
+    private var placeInformation: some View {
         VStack(alignment: .leading, spacing: 15) {
+            
+            if let phoneNumber = placeItem.getContactNumbers() {
+                VStack(alignment: .trailing, spacing: 8) {
+                    Image(systemName: "phone")
+                        .font(.caption)
+                    Text(phoneNumber)
+                        .modifier(TextModifier(fontStyle: .body))
+                }
+                .padding(.bottom)
+            }
+            
             Text(placeItem.placeInformation.detail)
                 .modifier(TextModifier(fontStyle: .body))
             
-            mapLayer(placeItem: placeItem)
+            mapLayerSection
             
             if let openingHours = placeItem.openingHours {
                 openingHoursSection(openingHours: openingHours)
@@ -99,7 +99,7 @@ extension PlaceDescriptionView {
         }.padding()
     }
     
-    func mapLayer(placeItem: PlaceItemModel) -> some View {
+    private var mapLayerSection: some View {
         Map(coordinateRegion: .constant(placeItem.mapRegion),
             annotationItems: [placeItem]) { placeItem in
             MapAnnotation(coordinate: placeItem.getCoordinate()) {
@@ -112,24 +112,11 @@ extension PlaceDescriptionView {
             .cornerRadius(30)
     }
     
-    private var topAreaSection: some View {
-        HStack(alignment: .top, spacing: 8){
-            IconWithRoundBackgroundActionView(systemName: "chevron.backward", action: {
-                presentationMode.wrappedValue.dismiss()
-            })
-            Spacer()
-        }
-        .padding(.top, mainVM.getTopSafeAreaSize())
-        .padding(.horizontal)
-    }
-    
-    
-    
-    private func headerSection(placeItem: PlaceItemModel) -> some View {
+    private var headerSection: some View {
      
         return VStack(alignment: .leading, spacing: 0){
             ZStack{
-                shortdetail(placeItem: placeItem)
+                shortDetailSection
             }
             // Default Frame = 60...
             // Top Fram = 40
@@ -149,13 +136,13 @@ extension PlaceDescriptionView {
        
     }
     
-    private func shortdetail(placeItem: PlaceItemModel) -> some View {
+    private var shortDetailSection: some View {
     
        return VStack(alignment: .leading, spacing: 0){
             ZStack{
                 
                 VStack(alignment: .leading, spacing: 10, content: {
-                    headerDescription(placeItem: placeItem)
+                    headerDescription
                 })
                 .opacity(vm.offset > 200 ? 1 - Double((vm.offset - 200) / 50) : 1)
                  
@@ -166,7 +153,7 @@ extension PlaceDescriptionView {
             .frame(height: 60)
            
            if vm.offset > offsetHeight{
-               headerDescription(placeItem: placeItem)
+               headerDescription
                    .padding(.horizontal)
                    
            }
@@ -177,7 +164,7 @@ extension PlaceDescriptionView {
         
     }
     
-    private func headerDescription(placeItem: PlaceItemModel) -> some View {
+    private var headerDescription: some View {
     
        return VStack(alignment: .leading, spacing: 6, content: {
             
@@ -194,13 +181,6 @@ extension PlaceDescriptionView {
                     .modifier(TextModifier(fontStyle: .caption))
                 
                 Spacer()
-                
-                Image(systemName: "phone")
-                    .modifier(TextModifier(fontStyle: .caption))
-                
-                Text(placeItem.getContactNumbers())
-                    .font(.caption)
-                    .modifier(TextModifier(fontStyle: .caption))
             }
             .frame(maxWidth: .infinity,alignment: .leading)
             
@@ -236,6 +216,10 @@ extension PlaceDescriptionView {
         })
         .padding(.top, vm.offset > offsetHeight ? 0 : 20)
         .padding(.bottom)
+    }
+    
+    private var addressSection: some View {
+        Text(placeItem.placeName)
     }
     
     private func openingHoursSection(openingHours: BusinessHours) -> some View {
@@ -284,7 +268,7 @@ extension PlaceDescriptionView {
         }
     }
     
-    func getOpenHours(day: String, time: String)  -> some View {
+    private func getOpenHours(day: String, time: String)  -> some View {
        return HStack {
             Text(day)
                .modifier(TextModifier(fontStyle: .body))

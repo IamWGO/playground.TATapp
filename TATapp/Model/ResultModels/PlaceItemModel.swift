@@ -109,8 +109,8 @@ struct PlaceItemModel: Codable,Identifiable {
         return "\(sha.shaTypeDescription)"
     }
     
-    func getContactNumbers() -> String {
-        return contact.phones?[0] ?? ""
+    func getContactNumbers() -> String? {
+        return contact.phones?[0] ?? nil
     }
     
     func getWebURL() -> String? {
