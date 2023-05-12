@@ -45,9 +45,9 @@ struct PlaceSearchListView: View {
                 
                 // Main Menu
                 MainMenuView(isShowBackButton: true)
+                
+                FilterView()
             }
-            
-            
         }
         
         .onAppear{

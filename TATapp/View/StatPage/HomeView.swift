@@ -56,12 +56,12 @@ struct HomeView: View {
     func getCard(item: CategoryModel) -> some View {
         return ZStack(alignment: Alignment(horizontal: .trailing, vertical: .top)) {
             
-            VStack(spacing: 20) {
+            VStack(spacing: 15) {
                 Image(systemName: item.systemName)
                     .resizable()
                     .scaledToFit()
                     .font(.body)
-                    .frame(height: 50)
+                    .frame(height: 20)
                     .foregroundColor(item.foregroundColor)
                 
                 Text(mainVM.local.getText(item.name))

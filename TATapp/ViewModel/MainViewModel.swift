@@ -32,6 +32,7 @@ class MainViewModel: ObservableObject {
     @Published var currentPinLocation: String? = nil
     
     @Published var selectedplaceId: String? = nil
+    @Published var selectedPlaceSearchType: PlaceSearchType = PlaceSearchType.ATTRACTION
     @Published var selectedCategoryCode: String? = nil
     @Published var selectedPlaceDetail: PlaceItemModel?  = nil
     
@@ -292,6 +293,19 @@ class MainViewModel: ObservableObject {
             return "EN"
         }
        
+    }
+    
+    func getSelectedCategoryItem() -> CategoryModel {
+        if let selected = searchTypeItems.first(where: { $0.placeType == selectedPlaceSearchType }) {
+           return selected
+        } else {
+            selectedPlaceSearchType = PlaceSearchType.ATTRACTION
+            return searchTypeItems.first(where: { $0.placeType == selectedPlaceSearchType })!
+        }
+    }
+    
+    func getSearchTypeList() -> [CategoryModel] {
+        return searchTypeItems.filter({ $0.placeType != selectedPlaceSearchType })
     }
    
 }

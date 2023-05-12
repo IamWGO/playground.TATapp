@@ -1,0 +1,388 @@
+[
+  {
+    "provinceNameTH": "กรุงเทพมหานคร",
+    "provinceNameEN": "Bangkok",
+    "provinceCode": "BKK"
+  },
+  {
+    "provinceNameTH": "อำนาจเจริญ",
+    "provinceNameEN": "Amnat Charoen",
+    "provinceCode": "ACR"
+  },
+  {
+    "provinceNameTH": "อ่างทอง",
+    "provinceNameEN": "Ang Thong",
+    "provinceCode": "ATG"
+  },
+  {
+    "provinceNameTH": "บึงกาฬ",
+    "provinceNameEN": "Bueng Kan",
+    "provinceCode": "BKN"
+  },
+  {
+    "provinceNameTH": "บุรีรัมย์",
+    "provinceNameEN": "Buriram",
+    "provinceCode": "BRM"
+  },
+  {
+    "provinceNameTH": "ฉะเชิงเทรา",
+    "provinceNameEN": "Chachoengsao",
+    "provinceCode": "CCO"
+  },
+  {
+    "provinceNameTH": "ชัยนาท",
+    "provinceNameEN": "Chai Nat",
+    "provinceCode": "CNT"
+  },
+  {
+    "provinceNameTH": "ชัยภูมิ",
+    "provinceNameEN": "Chaiyaphum",
+    "provinceCode": "CPM"
+  },
+  {
+    "provinceNameTH": "จันทบุรี",
+    "provinceNameEN": "Chanthaburi",
+    "provinceCode": "CTI"
+  },
+  {
+    "provinceNameTH": "เชียงใหม่",
+    "provinceNameEN": "Chiang Mai",
+    "provinceCode": "CMI"
+  },
+  {
+    "provinceNameTH": "เชียงราย",
+    "provinceNameEN": "Chiang Rai",
+    "provinceCode": "CRI"
+  },
+  {
+    "provinceNameTH": "ชลบุรี",
+    "provinceNameEN": "Chonburi",
+    "provinceCode": "CBI"
+  },
+  {
+    "provinceNameTH": "ชุมพร",
+    "provinceNameEN": "Chumphon",
+    "provinceCode": "CPN"
+  },
+  {
+    "provinceNameTH": "กาฬสินธุ์",
+    "provinceNameEN": "Kalasin",
+    "provinceCode": "KSN"
+  },
+  {
+    "provinceNameTH": "กำแพงเพชร",
+    "provinceNameEN": "Kamphaeng Phet",
+    "provinceCode": "KPT"
+  },
+  {
+    "provinceNameTH": "กาญจนบุรี",
+    "provinceNameEN": "Kanchanaburi",
+    "provinceCode": "KRI"
+  },
+  {
+    "provinceNameTH": "ขอนแก่น",
+    "provinceNameEN": "Khon Kaen",
+    "provinceCode": "KKN"
+  },
+  {
+    "provinceNameTH": "กระบี่",
+    "provinceNameEN": "Krabi",
+    "provinceCode": "KBI"
+  },
+  {
+    "provinceNameTH": "ลำปาง",
+    "provinceNameEN": "Lampang",
+    "provinceCode": "LPG"
+  },
+  {
+    "provinceNameTH": "ลำพูน",
+    "provinceNameEN": "Lamphun",
+    "provinceCode": "LPN"
+  },
+  {
+    "provinceNameTH": "เลย",
+    "provinceNameEN": "Loei",
+    "provinceCode": "LEI"
+  },
+  {
+    "provinceNameTH": "ลพบุรี",
+    "provinceNameEN": "Lopburi",
+    "provinceCode": "LRI"
+  },
+  {
+    "provinceNameTH": "แม่ฮ่องสอน",
+    "provinceNameEN": "Mae Hong Son",
+    "provinceCode": "MSN"
+  },
+  {
+    "provinceNameTH": "มหาสารคาม",
+    "provinceNameEN": "Maha Sarakham",
+    "provinceCode": "MKM"
+  },
+  {
+    "provinceNameTH": "มุกดาหาร",
+    "provinceNameEN": "Mukdahan",
+    "provinceCode": "MDH"
+  },
+  {
+    "provinceNameTH": "นครนายก",
+    "provinceNameEN": "Nakhon Nayok",
+    "provinceCode": "NYK"
+  },
+  {
+    "provinceNameTH": "นครปฐม",
+    "provinceNameEN": "Nakhon Pathom",
+    "provinceCode": "NPT"
+  },
+  {
+    "provinceNameTH": "นครพนม",
+    "provinceNameEN": "Nakhon Phanom",
+    "provinceCode": "NPM"
+  },
+  {
+    "provinceNameTH": "นครราชสีมา",
+    "provinceNameEN": "Nakhon Ratchasima",
+    "provinceCode": "NMA"
+  },
+  {
+    "provinceNameTH": "นครสวรรค์",
+    "provinceNameEN": "Nakhon Sawan",
+    "provinceCode": "NSN"
+  },
+  {
+    "provinceNameTH": "นครศรีธรรมราช",
+    "provinceNameEN": "Nakhon Si Thammarat",
+    "provinceCode": "NRT"
+  },
+  {
+    "provinceNameTH": "น่าน",
+    "provinceNameEN": "Nan",
+    "provinceCode": "NAN"
+  },
+  {
+    "provinceNameTH": "นราธิวาส",
+    "provinceNameEN": "Narathiwat",
+    "provinceCode": "NWT"
+  },
+  {
+    "provinceNameTH": "หนองบัวลำภู",
+    "provinceNameEN": "Nong Bua Lamphu",
+    "provinceCode": "NBP"
+  },
+  {
+    "provinceNameTH": "หนองคาย",
+    "provinceNameEN": "Nong Khai",
+    "provinceCode": "NKI"
+  },
+  {
+    "provinceNameTH": "นนทบุรี",
+    "provinceNameEN": "Nonthaburi",
+    "provinceCode": "NBI"
+  },
+  {
+    "provinceNameTH": "ปทุมธานี",
+    "provinceNameEN": "Pathum Thani",
+    "provinceCode": "PTE"
+  },
+  {
+    "provinceNameTH": "ปัตตานี",
+    "provinceNameEN": "Pattani",
+    "provinceCode": "PTN"
+  },
+  {
+    "provinceNameTH": "พังงา",
+    "provinceNameEN": "Phang Nga",
+    "provinceCode": "PNA"
+  },
+    {
+      "provinceNameTH": "พัทลุง",
+      "provinceNameEN": "Phatthalung",
+      "provinceCode": "PLG"
+    },
+    {
+      "provinceNameTH": "พะเยา",
+      "provinceNameEN": "Phayao",
+      "provinceCode": "PYO"
+    },
+    {
+      "provinceNameTH": "เพชรบูรณ์",
+      "provinceNameEN": "Phetchabun",
+      "provinceCode": "PNB"
+    },
+    {
+      "provinceNameTH": "เพชรบุรี",
+      "provinceNameEN": "Phetchaburi",
+      "provinceCode": "PBI"
+    },
+    {
+      "provinceNameTH": "พิจิตร",
+      "provinceNameEN": "Phichit",
+      "provinceCode": "PCT"
+    },
+    {
+      "provinceNameTH": "พิษณุโลก",
+      "provinceNameEN": "Phitsanulok",
+      "provinceCode": "PLK"
+    },
+    {
+      "provinceNameTH": "พระนครศรีอยุธยา",
+      "provinceNameEN": "Phra Nakhon Si Ayutthaya",
+      "provinceCode": "AYA"
+    },
+    {
+      "provinceNameTH": "แพร่",
+      "provinceNameEN": "Phrae",
+      "provinceCode": "PRE"
+    },
+    {
+      "provinceNameTH": "ภูเก็ต",
+      "provinceNameEN": "Phuket",
+      "provinceCode": "PKT"
+    },
+    {
+      "provinceNameTH": "ปราจีนบุรี",
+      "provinceNameEN": "Prachinburi",
+      "provinceCode": "PRI"
+    },
+    {
+      "provinceNameTH": "ประจวบคีรีขันธ์",
+      "provinceNameEN": "Prachuap Khiri Khan",
+      "provinceCode": "PKN"
+    },
+    {
+      "provinceNameTH": "ระนอง",
+      "provinceNameEN": "Ranong",
+      "provinceCode": "RNG"
+    },
+    {
+      "provinceNameTH": "ราชบุรี",
+      "provinceNameEN": "Ratchaburi",
+      "provinceCode": "RBR"
+    },
+    {
+      "provinceNameTH": "ระยอง",
+      "provinceNameEN": "Rayong",
+      "provinceCode": "RYG"
+    },
+    {
+      "provinceNameTH": "ร้อยเอ็ด",
+      "provinceNameEN": "Roi Et",
+      "provinceCode": "RET"
+    },
+    {
+      "provinceNameTH": "สระแก้ว",
+      "provinceNameEN": "Sa Kaeo",
+      "provinceCode": "SKW"
+    },
+    {
+      "provinceNameTH": "สกลนคร",
+      "provinceNameEN": "Sakon Nakhon",
+      "provinceCode": "SNK"
+    },
+    {
+      "provinceNameTH": "สมุทรปราการ",
+      "provinceNameEN": "Samut Prakan",
+      "provinceCode": "SPK"
+    },
+    {
+      "provinceNameTH": "สมุทรสาคร",
+      "provinceNameEN": "Samut Sakhon",
+      "provinceCode": "SKN"
+    },
+    {
+      "provinceNameTH": "สมุทรสงคราม",
+      "provinceNameEN": "Samut Songkhram",
+      "provinceCode": "SKM"
+    },
+    {
+      "provinceNameTH": "สระบุรี",
+      "provinceNameEN": "Saraburi",
+      "provinceCode": "SRI"
+    },
+    {
+      "provinceNameTH": "สตูล",
+      "provinceNameEN": "Satun",
+      "provinceCode": "STN"
+    },
+    {
+      "provinceNameTH": "สิงห์บุรี",
+      "provinceNameEN": "Sing Buri",
+      "provinceCode": "SBR"
+    },
+    {
+      "provinceNameTH": "ศรีสะเกษ",
+      "provinceNameEN": "Sisaket",
+      "provinceCode": "SSK"
+    },
+    {
+      "provinceNameTH": "สงขลา",
+      "provinceNameEN": "Songkhla",
+      "provinceCode": "SKA"
+    },
+    {
+      "provinceNameTH": "สุโขทัย",
+      "provinceNameEN": "Sukhothai",
+      "provinceCode": "STI"
+    },
+    {
+      "provinceNameTH": "สุพรรณบุรี",
+      "provinceNameEN": "Suphan Buri",
+      "provinceCode": "SPB"
+    },
+    {
+      "provinceNameTH": "สุราษฎร์ธานี",
+      "provinceNameEN": "Surat Thani",
+      "provinceCode": "SNI"
+    },
+    {
+      "provinceNameTH": "สุรินทร์",
+      "provinceNameEN": "Surin",
+      "provinceCode": "SRN"
+    },
+    {
+      "provinceNameTH": "ตาก",
+      "provinceNameEN": "Tak",
+      "provinceCode": "TAK"
+    },
+    {
+      "provinceNameTH": "ตรัง",
+      "provinceNameEN": "Trang",
+      "provinceCode": "TRG"
+    },
+    {
+      "provinceNameTH": "ตราด",
+      "provinceNameEN": "Trat",
+      "provinceCode": "TRT"
+    },
+    {
+      "provinceNameTH": "อุบลราชธานี",
+      "provinceNameEN": "Ubon Ratchathani",
+      "provinceCode": "UBN"
+    },
+    {
+      "provinceNameTH": "อุดรธานี",
+      "provinceNameEN": "Udon Thani",
+      "provinceCode": "UDN"
+    },
+    {
+      "provinceNameTH": "อุทัยธานี",
+      "provinceNameEN": "Uthai Thani",
+      "provinceCode": "UTI"
+    },
+    {
+      "provinceNameTH": "อุตรดิตถ์",
+      "provinceNameEN": "Uttaradit",
+      "provinceCode": "UTD"
+    },
+    {
+      "provinceNameTH": "ยะลา",
+      "provinceNameEN": "Yala",
+      "provinceCode": "YLA"
+    },
+    {
+      "provinceNameTH": "ยโสธร",
+      "provinceNameEN": "Yasothon",
+      "provinceCode": "YST"
+    }
+  ]
+

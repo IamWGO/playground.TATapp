@@ -19,5 +19,4 @@ struct ContactInfo: Codable {
     }
 }
 
-
  

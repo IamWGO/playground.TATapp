@@ -10,8 +10,8 @@ import SwiftUI
 struct MainMenuView: View {
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var mainVM: MainViewModel
-    
     @State var isShowBackButton: Bool = false
+    
     var placeSearchTypeItems: [CategoryModel] = searchTypeItems
     
     var body: some View {
@@ -33,7 +33,6 @@ struct MainMenuView: View {
                 menuItems
             }
             Spacer()
-            
         }
         .padding(.top, mainVM.getTopSafeAreaSize())
     }
@@ -65,7 +64,10 @@ struct MainMenuView: View {
                                        textButton: .constant(mainVM.local.getText("search")),
                                        foregroundColor: .constant(Color.theme.primary),
                                        isDisable: .constant(false)) {
-                    //
+                   
+                    mainVM.isShowFillterSheet = true
+                    mainVM.isShowCategotyMenu = false
+                     
                 }
                 
                 ForEach(placeSearchTypeItems) { item in
@@ -76,25 +78,8 @@ struct MainMenuView: View {
                                            isDisable: .constant(false)) {
                         mainVM.currentPlaceType = item.placeType
                         mainVM.isShowCategotyMenu = false
+                        mainVM.isShowFillterSheet = false
                     }
-                    
-//                    Button {
-//
-//                    } label: {
-//                        HStack(spacing: 8){
-//
-//                            Image(systemName: item.systemName)
-//                                .modifier(TextModifier(fontStyle: .title, foregroundColor: item.backgroundColor))
-//
-//                            Text(item.name)
-//                                .fontWeight(.semibold)
-//                                .modifier(TextModifier(fontStyle: .body, foregroundColor: Color.theme.primary))
-//
-//                            Spacer()
-//                        }
-//                        .frame(width: isIpad ? 300 : 200)
-//                        .padding([.horizontal, .bottom])
-//                    }
                 }
             }
             .padding(.vertical)
@@ -106,5 +91,5 @@ struct MainMenuView: View {
         }
         .padding(.horizontal)
     }
+     
 }
-

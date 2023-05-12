@@ -24,7 +24,7 @@ enum PlaceSearchType: String {
 }
 
 
-struct CategoryModel: Identifiable{
+struct CategoryModel: Identifiable, Equatable{
     let name: String
     let placeType: PlaceSearchType
     let systemName: String
@@ -36,3 +36,13 @@ struct CategoryModel: Identifiable{
     }
 }
 
+
+struct Province: Codable, Identifiable, Equatable {
+    let provinceNameTh: String
+    let provinceNameEn: String
+    let provinceCode: String
+   
+    var id: String {
+        provinceCode
+    }
+}

@@ -53,6 +53,8 @@
 		AB288F9729DEAFA700AB92B0 /* LandingPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB288F9629DEAFA700AB92B0 /* LandingPageViewModel.swift */; };
 		AB288F9B29DF23BF00AB92B0 /* SHATypeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB288F9A29DF23BF00AB92B0 /* SHATypeModel.swift */; };
 		AB288F9F29DF36FE00AB92B0 /* PlaceDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB288F9E29DF36FE00AB92B0 /* PlaceDetailView.swift */; };
+		AB337EF429F07A2F00B3B69C /* FilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB337EF329F07A2F00B3B69C /* FilterView.swift */; };
+		AB55A71329EF1F6A00C20E3D /* province_th_en.json in Resources */ = {isa = PBXBuildFile; fileRef = AB55A71229EF1F6900C20E3D /* province_th_en.json */; };
 		ABCB63BB29E0B88100A7C715 /* LocationsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCB63BA29E0B88100A7C715 /* LocationsViewModel.swift */; };
 		ABCB63BF29E126E100A7C715 /* LocationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCB63BE29E126E100A7C715 /* LocationModel.swift */; };
 		ABCB63C129E131FB00A7C715 /* LocationMapAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCB63C029E131FB00A7C715 /* LocationMapAnnotationView.swift */; };
@@ -146,6 +148,8 @@
 		AB288F9629DEAFA700AB92B0 /* LandingPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingPageViewModel.swift; sourceTree = "<group>"; };
 		AB288F9A29DF23BF00AB92B0 /* SHATypeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SHATypeModel.swift; sourceTree = "<group>"; };
 		AB288F9E29DF36FE00AB92B0 /* PlaceDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceDetailView.swift; sourceTree = "<group>"; };
+		AB337EF329F07A2F00B3B69C /* FilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterView.swift; sourceTree = "<group>"; };
+		AB55A71229EF1F6900C20E3D /* province_th_en.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = province_th_en.json; sourceTree = "<group>"; };
 		ABCB63BA29E0B88100A7C715 /* LocationsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationsViewModel.swift; sourceTree = "<group>"; };
 		ABCB63BE29E126E100A7C715 /* LocationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationModel.swift; sourceTree = "<group>"; };
 		ABCB63C029E131FB00A7C715 /* LocationMapAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationMapAnnotationView.swift; sourceTree = "<group>"; };
@@ -248,6 +252,7 @@
 				ABDCB76C29DFED4300083C52 /* BackgroundImageView.swift */,
 				ABDCB77029E0789700083C52 /* IconWithRoundBackgroundActionView.swift */,
 				ABCB63D629E32EB600A7C715 /* LoadingView.swift */,
+				AB337EF329F07A2F00B3B69C /* FilterView.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -292,6 +297,23 @@
 			path = Type;
 			sourceTree = "<group>";
 		};
+		AB55A71029EF1F2A00C20E3D /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				AB55A71129EF1F4800C20E3D /* data */,
+				AB288F5829DDD2FE00AB92B0 /* Font */,
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
+		AB55A71129EF1F4800C20E3D /* data */ = {
+			isa = PBXGroup;
+			children = (
+				AB55A71229EF1F6900C20E3D /* province_th_en.json */,
+			);
+			path = data;
+			sourceTree = "<group>";
+		};
 		ABCB63B929E0B81400A7C715 /* LocationNearBy */ = {
 			isa = PBXGroup;
 			children = (
@@ -329,7 +351,7 @@
 				ABD6D15629DAD8DE0090C299 /* ViewModel */,
 				ABD6D15B29DAD9550090C299 /* Logic */,
 				ABD6D15829DAD9100090C299 /* Utility */,
-				AB288F5829DDD2FE00AB92B0 /* Font */,
+				AB55A71029EF1F2A00C20E3D /* Resource */,
 				ABDFEF8C29DC218D00699F5E /* GoogleService-Info.plist */,
 				ABD6D14C29DAD8740090C299 /* Preview Content */,
 			);
@@ -596,6 +618,7 @@
 				ABD6D14B29DAD8740090C299 /* Assets.xcassets in Resources */,
 				AB288F4F29DD8BCA00AB92B0 /* LocalText.json in Resources */,
 				ABDFEF8D29DC218D00699F5E /* GoogleService-Info.plist in Resources */,
+				AB55A71329EF1F6A00C20E3D /* province_th_en.json in Resources */,
 				AB288F8929DDE3C000AB92B0 /* NotoSerifThai-ExtraLight.ttf in Resources */,
 				AB288F7129DDE38200AB92B0 /* Charmonman-Bold.ttf in Resources */,
 				AB288F8529DDE3C000AB92B0 /* NotoSerifThai-Medium.ttf in Resources */,
@@ -630,6 +653,7 @@
 				AB288F2F29DC6BAE00AB92B0 /* GetPlaceOtherDetail.swift in Sources */,
 				AB022BB729EDCB180031FDC4 /* FillterSheetView.swift in Sources */,
 				AB022BB529E9F8340031FDC4 /* PlaceDescriptionView.swift in Sources */,
+				AB337EF429F07A2F00B3B69C /* FilterView.swift in Sources */,
 				AB022BBB29EDD7910031FDC4 /* Constant+Text.swift in Sources */,
 				AB288F1529DC48DD00AB92B0 /* PlaceSearch.swift in Sources */,
 				ABCB63D329E2AE5D00A7C715 /* PlaceItemModel.swift in Sources */,
