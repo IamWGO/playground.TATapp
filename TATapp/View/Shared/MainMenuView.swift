@@ -60,26 +60,41 @@ struct MainMenuView: View {
         HStack{
             Spacer()
             VStack(alignment: .trailing) {
+                
+                HStackButtonActionView(systemName: .constant("line.3.horizontal.decrease"),
+                                       textButton: .constant(mainVM.local.getText("search")),
+                                       foregroundColor: .constant(Color.theme.primary),
+                                       isDisable: .constant(false)) {
+                    //
+                }
+                
                 ForEach(placeSearchTypeItems) { item in
                     
-                    Button {
+                    HStackButtonActionView(systemName: .constant(item.systemName),
+                                           textButton: .constant(mainVM.local.getText(item.name)),
+                                           foregroundColor: .constant(item.backgroundColor),
+                                           isDisable: .constant(false)) {
                         mainVM.currentPlaceType = item.placeType
                         mainVM.isShowCategotyMenu = false
-                    } label: {
-                        HStack(spacing: 8){
-                            
-                            Image(systemName: item.systemName)
-                                .modifier(TextModifier(fontStyle: .title, foregroundColor: item.backgroundColor))
-                            
-                            Text(item.name)
-                                .fontWeight(.semibold)
-                                .modifier(TextModifier(fontStyle: .body, foregroundColor: Color.theme.primary))
-                            
-                            Spacer()
-                        }
-                        .frame(width: isIpad ? 300 : 200)
-                        .padding([.horizontal, .bottom])
                     }
+                    
+//                    Button {
+//
+//                    } label: {
+//                        HStack(spacing: 8){
+//
+//                            Image(systemName: item.systemName)
+//                                .modifier(TextModifier(fontStyle: .title, foregroundColor: item.backgroundColor))
+//
+//                            Text(item.name)
+//                                .fontWeight(.semibold)
+//                                .modifier(TextModifier(fontStyle: .body, foregroundColor: Color.theme.primary))
+//
+//                            Spacer()
+//                        }
+//                        .frame(width: isIpad ? 300 : 200)
+//                        .padding([.horizontal, .bottom])
+//                    }
                 }
             }
             .padding(.vertical)
@@ -93,8 +108,3 @@ struct MainMenuView: View {
     }
 }
 
-struct MenuListView_Previews: PreviewProvider {
-    static var previews: some View {
-        MainMenuView()
-    }
-}

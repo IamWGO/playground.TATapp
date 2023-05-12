@@ -18,7 +18,7 @@ struct HomeView: View {
     var body: some View {
         
         ZStack {
-            LazyVGrid(columns: columns,spacing: 5){
+            LazyVGrid(columns: columns,spacing: 15){
                 
                 ForEach(placeSearchTypeItems){ item in
                     Button {
@@ -34,6 +34,7 @@ struct HomeView: View {
             
             MainMenuView()
         }
+       
         .onAppear {
             self.shouldNavigate = false
         }
@@ -59,11 +60,11 @@ struct HomeView: View {
                 Image(systemName: item.systemName)
                     .resizable()
                     .scaledToFit()
-                    .font(.largeTitle)
+                    .font(.body)
                     .frame(height: 50)
                     .foregroundColor(item.foregroundColor)
                 
-                Text(item.name)
+                Text(mainVM.local.getText(item.name))
                     .modifier(TextModifier(fontStyle: .body, fontWeight: .bold, foregroundColor: item.foregroundColor))
             }
             .padding()

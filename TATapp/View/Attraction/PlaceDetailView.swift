@@ -36,7 +36,10 @@ struct PlaceDetailView: View {
                                 .opacity(vm.offset > 350 ? 1 : 0)
                             ,alignment: .top
                         )
-                    
+                    // Will always show on top of content
+                    if vm.offset < 350{
+                        MainMenuView(isShowBackButton: true)
+                    }
                 }
             
         } else {

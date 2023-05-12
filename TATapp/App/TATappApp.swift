@@ -10,7 +10,6 @@ import SwiftUI
 @main
 struct TATappApp: App {
     @StateObject private var mainVM = MainViewModel()
-    @StateObject private var localVM = LocalizedViewModel()
     
     @State private var showLaunchView: Bool = true
     
@@ -25,7 +24,6 @@ struct TATappApp: App {
         WindowGroup {
             ContentView()
                 .environmentObject(mainVM)
-                .environmentObject(localVM)
         }
     }
 }

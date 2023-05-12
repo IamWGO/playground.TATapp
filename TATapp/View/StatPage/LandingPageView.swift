@@ -9,7 +9,6 @@ import SwiftUI
 
 struct LandingPageView: View {
     @EnvironmentObject var mainVM: MainViewModel
-    @EnvironmentObject var localVM: LocalizedViewModel
     @ObservedObject var vm: LandingPageViewModel
     
     @State var swipeDirection: SwipeDirection = .notAllow

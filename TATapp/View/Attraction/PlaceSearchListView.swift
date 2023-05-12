@@ -21,7 +21,7 @@ struct PlaceSearchListView: View {
     
     // MARK: - Body View
     var body: some View {
-        ZStack {
+        ZStack(alignment: .topTrailing) {
             if let placeSearchItems =  mainVM.placeSearchItems {
                 ScrollView(showsIndicators: false) {
                     LazyVGrid(columns: columns,spacing: 5){
@@ -36,8 +36,8 @@ struct PlaceSearchListView: View {
                     .padding(.top,25)
                     
                 }
-                .padding(.top, mainVM.getTopSafeAreaSize() + 70)
                 .padding(.bottom, 25)
+                .padding(.top, mainVM.getTopSafeAreaSize() + 70)
                 
                 if mainVM.isLoading {
                     LoadingView()
@@ -46,7 +46,10 @@ struct PlaceSearchListView: View {
                 // Main Menu
                 MainMenuView(isShowBackButton: true)
             }
+            
+            
         }
+        
         .onAppear{
             mainVM.selectedPlaceDetail = nil
         }

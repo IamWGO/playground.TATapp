@@ -11,7 +11,8 @@ import SwiftUI
 import MapKit
 
 class MainViewModel: ObservableObject {
-
+    let local = LocalizedService.instance
+    
     let requestService: RequestApiService
     // Api result parameters
     @Published var placeSearchItems: [PlaceSearchItem]? = nil
@@ -39,6 +40,7 @@ class MainViewModel: ObservableObject {
     
     // UI
     @Published var isShowCategotyMenu: Bool = false
+    @Published var isShowFillterSheet: Bool = false
     @Published var isLoading: Bool = false
     
     private var cancellables = Set<AnyCancellable>()
@@ -271,7 +273,11 @@ class MainViewModel: ObservableObject {
         }
     }
     
-    
+    func toggleFillterSheetIcon() {
+        withAnimation(.easeInOut) {
+            isShowFillterSheet = !isShowFillterSheet
+        }
+    }
     
    // MARK: - Location
     func setLanguage(language: String) {
@@ -287,29 +293,6 @@ class MainViewModel: ObservableObject {
         }
        
     }
-    
-//    func getColorBySearchTypeCateogry(placeTypeString: String?) -> Color {
-//       
-//        guard let placeTypeString = placeTypeString else { return Color.theme.button }
-//        
-//        var placeType: PlaceSearchType = .ALL
-//        switch(placeTypeString) {
-//        case "OTHER": placeType = .OTHER
-//        case "SHOP": placeType = .SHOP
-//        case "RESTAURANT": placeType = .RESTAURANT
-//        case "ACCOMMODATION": placeType = .ACCOMMODATION
-//        case "ATTRACTION": placeType = .ATTRACTION
-//        default: return Color.theme.button
-//        }
-//        
-//        guard let currentType = searchTypeItems.first(where: { $0.placeType == placeType }) else {
-//            print("Could not find current index in locations array! Should never happen.")
-//            return Color.theme.button
-//        }
-//        
-//        return currentType.backgroundColor
-//    }
-    
    
 }
  
