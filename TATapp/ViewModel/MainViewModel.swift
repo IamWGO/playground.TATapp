@@ -49,9 +49,9 @@ class MainViewModel: ObservableObject {
     init() {
         self.requestService = RequestApiService()
         self.currentState = RequestStates.None
-        
-        self.apiRequestPublisher()
-        self.mainPublisher()
+//
+//        self.apiRequestPublisher()
+//        self.mainPublisher()
         
     }
     // MARK: - Combine

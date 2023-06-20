@@ -19,7 +19,6 @@ struct HomeView: View {
         
         ZStack {
             LazyVGrid(columns: columns,spacing: 15){
-                
                 ForEach(placeSearchTypeItems){ item in
                     Button {
                         mainVM.currentPlaceType = item.placeType

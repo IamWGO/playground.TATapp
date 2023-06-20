@@ -95,8 +95,8 @@ class NetworkingManager {
             let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)!
             url = urlComponents.url!
         }
-        print(">> ----------")
-        print(">> Request = \(url)")
+        //print(">> ----------")
+        //print(">> Request = \(url)")
         
         // Create a URLSession with the API key header
         let configuration = URLSessionConfiguration.default

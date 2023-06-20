@@ -15,7 +15,8 @@ struct ContentView: View {
         //MapSearchView()
         
         NavigationView {
-            HomeView()
+            //HomeView()
+            SinkView()
         }
         .navigationViewStyle(StackNavigationViewStyle())
 //        MapSearchView(mainVM: mainVM)
