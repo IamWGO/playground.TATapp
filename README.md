@@ -1,7 +1,7 @@
 
 # Amazing Thailand App
 
-A hobby project playing arround with APIs. 
+A hobby project playing arround with APIs, search and show list.
 
 ## Document
 
