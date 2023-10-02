@@ -45,7 +45,7 @@ struct Users: Codable {
 struct SinkView: View {
     @EnvironmentObject var mainVM: MainViewModel
     let collectionRef: FCollectionReference = .User
-    let username = "Lee"
+    let username = "Lee2"
     let email = "waleerat.gottlieb@gmail.com"
     
     
@@ -54,25 +54,19 @@ struct SinkView: View {
             Text("page")
               
             Button {
-                
-                let user = ["username" : username,
-                            "email" : email]
-                let id = email
-                
-                let dictionary = Users.structureToDictionary(row: Users.dictionaryToStructrue(user))
-                
-                FirebaseManager<Users>(fCollection: collectionRef).insert(objectId: id, dictionaryRowData: dictionary, completion: { isCompleted in
-                    print("Added")
-                })
-                
-                //
+                mainVM.sinkData()
             } label: {
-                Text("Add Record")
+                Text("Add Record page \(mainVM.pagenumber)")
                     .padding()
                     .foregroundColor(Color.white)
                     .background(Color.blue)
             }
 
+        }
+        .onAppear {
+            mainVM.currentPlaceType = PlaceSearchType.RESTAURANT
+            mainVM.requestService.pagenumber = 1
+            mainVM.requestService.numberofresult = 50
         }
         
     }

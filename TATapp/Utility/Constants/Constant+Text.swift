@@ -16,6 +16,4 @@ let kText: [String: LanguageModel] = [
     "Accommodation": LanguageModel(th: "โรงแรม/ที่พัก", en: "Accommodation"),
     "Other": LanguageModel(th: "สถานที่อื่นๆ", en: "Other"),
     "Event": LanguageModel(th: "กิจกรรม", en: "Event"),
-    
-    
 ]

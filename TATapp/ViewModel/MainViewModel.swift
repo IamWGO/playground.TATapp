@@ -26,7 +26,7 @@ class MainViewModel: ObservableObject {
     @Published var shaDetail: SHADetail?  = nil
     
     //Select request api API
-    @Published var currentState: RequestStates
+    @Published var currentState: RequestStates = RequestStates.None
     //Use when select search category
     @Published var currentPlaceType: PlaceSearchType? = nil
     @Published var currentPinLocation: String? = nil
@@ -43,17 +43,27 @@ class MainViewModel: ObservableObject {
     @Published var isShowCategotyMenu: Bool = false
     @Published var isShowFillterSheet: Bool = false
     @Published var isLoading: Bool = false
+    @Published var pagenumber: Int = 0
     
     private var cancellables = Set<AnyCancellable>()
 
     init() {
         self.requestService = RequestApiService()
-        self.currentState = RequestStates.None
 //
-//        self.apiRequestPublisher()
+        self.apiRequestPublisher()
 //        self.mainPublisher()
         
     }
+    
+    
+    func sinkData(){
+        currentState = RequestStates.GetPlaceSearch
+        pagenumber += 1
+        requestService.pagenumber = pagenumber
+        requestService.getPlaceSearch()
+    }
+    
+    
     // MARK: - Combine
     func apiRequestPublisher() {
         requestService.$placeSearchItems
@@ -61,6 +71,20 @@ class MainViewModel: ObservableObject {
                 if let result = result {
                     self.placeSearchItems = result.result
                     self.isLoading = false
+                    
+                    
+                    if let results = self.placeSearchItems {
+                        for item in results {
+                            let id = item.placeId
+                            let dictionary = PlaceSearchItem.structureToDictionary(row: item)
+                            FirebaseManager<PlaceSearchItem>(fCollection: FCollectionReference.Place).insert(objectId: id, dictionaryRowData: dictionary, completion: { isCompleted in
+                                print("Added  \(id)")
+                            })
+                        }
+                    }
+                    
+                    
+                    
                     print(">> placeSearchItems =  \(result.result.count)")
                 }
             }

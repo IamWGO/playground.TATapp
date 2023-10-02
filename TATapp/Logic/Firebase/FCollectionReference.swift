@@ -9,7 +9,8 @@ import Foundation
 import Firebase
 
 enum FCollectionReference: String {
-    case User = "pia_user"
+    case User = "Users"
+    case Place = "Place"
 }
 
 func FirebaseReference(_ collectionReference: FCollectionReference) -> CollectionReference {
